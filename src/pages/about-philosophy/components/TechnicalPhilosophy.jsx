@@ -61,7 +61,7 @@ const TechnicalPhilosophy = () => {
             Technical Philosophy
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            My approach to development is rooted in four core principles that ensure every project delivers exceptional value and long-term success.
+            Our approach to development is rooted in core principles that ensure every project delivers exceptional value and long-term success.
           </p>
         </div>
 

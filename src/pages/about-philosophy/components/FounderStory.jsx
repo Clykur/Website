@@ -5,23 +5,23 @@ const FounderStory = () => {
   const storyPoints = [
     {
       icon: "GraduationCap",
-      title: "Educational Foundation",
-      description: "Computer Science degree with focus on software architecture and system design, building the theoretical foundation for scalable solutions."
+      title: "Our Foundation",
+      description: "Grounded in Computer Science and system design, we apply strong architectural principles to build scalable, reliable solutions."
     },
     {
       icon: "Building2",
-      title: "Corporate Experience",
-      description: "5+ years at leading tech companies, working on enterprise-scale applications and learning the importance of maintainable, production-ready code."
+      title: "Industry Experience",
+      description: "Years at leading tech companies working on enterprise-scale applications taught us the value of maintainable, production-ready code."
     },
     {
       icon: "Lightbulb",
       title: "The Realization",
-      description: "Discovered the gap between typical development services and what ambitious businesses actually need—a technical partner, not just a vendor."
+      description: "We saw the gap between typical development services and what ambitious businesses need—a technical partner, not just a vendor."
     },
     {
       icon: "Rocket",
-      title: "Clykur\'s Birth",
-      description: "Founded Clykur to bridge this gap, combining technical excellence with business understanding to help startups and businesses thrive digitally."
+      title: "Clykur’s Mission",
+      description: "We built Clykur to bridge this gap—combining technical excellence with business understanding to help startups and enterprises thrive digitally."
     }
   ];
 
@@ -33,7 +33,7 @@ const FounderStory = () => {
             The Journey to Clykur
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            From corporate developer to technical co-founder—the story of how Clykur was born from a vision to transform how businesses approach digital development.
+            From corporate developers to technical co-founders—the story of how we built Clykur to transform how businesses approach digital development.
           </p>
         </div>
 
@@ -42,15 +42,15 @@ const FounderStory = () => {
           <div className="space-y-8">
             <div className="prose prose-lg max-w-none">
               <p className="text-text-secondary leading-relaxed">
-                My journey began in the corporate world, where I spent years building enterprise applications for Fortune 500 companies. While the technical challenges were exciting, I noticed a recurring pattern: businesses struggling to find development partners who truly understood their vision.
+                Our journey began in the corporate world, where we spent years building enterprise applications for Fortune 500 companies. While the technical challenges were exciting, we noticed a recurring pattern: businesses struggling to find development partners who truly understood their vision.
               </p>
               
               <p className="text-text-secondary leading-relaxed">
-                Too often, I saw brilliant business ideas get lost in translation between stakeholders and development teams. The missing piece wasn't just technical skill—it was the ability to think like a business owner while coding like an architect.
+                Too often, we saw brilliant business ideas get lost in translation between stakeholders and development teams. The missing piece wasn’t just technical skill—it was the ability to think like product owners while engineering like architects.
               </p>
               
               <p className="text-text-secondary leading-relaxed">
-                That's when I realized my calling: to be the technical co-founder that every ambitious business deserves. Someone who doesn't just build what you ask for, but helps you discover what you actually need.
+                That’s when we found our calling: to be the technical partners that ambitious businesses deserve—teams who don’t just build what’s asked, but help uncover what’s truly needed.
               </p>
             </div>
 
@@ -61,9 +61,10 @@ const FounderStory = () => {
                 </div>
                 <div>
                   <blockquote className="text-text-primary font-medium italic">
-                    "I don't just build applications; I build the digital foundations that help businesses thrive. Every line of code is written with your success in mind."
+                    "We don’t just build applications—we craft digital foundations that help businesses thrive. Every line of code is written with your success in mind."
                   </blockquote>
                   <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru, Founder</cite>
+                  <cite className="text-text-secondary text-sm mt-2 block">— Karthik Naramala, Co-Founder</cite>
                 </div>
               </div>
             </div>

@@ -1,77 +1,80 @@
-import React, { useState } from 'react';
-import Icon from '../../../components/AppIcon';
-import Button from '../../../components/ui/Button';
+import React, { useState } from "react";
+import Icon from "../../../components/AppIcon";
+import Button from "../../../components/ui/Button";
 
 const ConsultationCTA = () => {
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    projectType: '',
-    message: ''
+    name: "",
+    email: "",
+    company: "",
+    projectType: "",
+    message: "",
   });
 
   const availableSlots = [
-    { day: 'Monday', time: '10:00 AM - 11:00 AM', available: true },
-    { day: 'Monday', time: '2:00 PM - 3:00 PM', available: false },
-    { day: 'Tuesday', time: '9:00 AM - 10:00 AM', available: true },
-    { day: 'Tuesday', time: '3:00 PM - 4:00 PM', available: true },
-    { day: 'Wednesday', time: '11:00 AM - 12:00 PM', available: true },
-    { day: 'Wednesday', time: '4:00 PM - 5:00 PM', available: false },
-    { day: 'Thursday', time: '10:00 AM - 11:00 AM', available: true },
-    { day: 'Thursday', time: '1:00 PM - 2:00 PM', available: true },
-    { day: 'Friday', time: '9:00 AM - 10:00 AM', available: true },
-    { day: 'Friday', time: '2:00 PM - 3:00 PM', available: true }
+    { day: "Monday", time: "10:00 AM - 11:00 AM", available: true },
+    { day: "Monday", time: "2:00 PM - 3:00 PM", available: false },
+    { day: "Tuesday", time: "9:00 AM - 10:00 AM", available: true },
+    { day: "Tuesday", time: "3:00 PM - 4:00 PM", available: true },
+    { day: "Wednesday", time: "11:00 AM - 12:00 PM", available: true },
+    { day: "Wednesday", time: "4:00 PM - 5:00 PM", available: false },
+    { day: "Thursday", time: "10:00 AM - 11:00 AM", available: true },
+    { day: "Thursday", time: "1:00 PM - 2:00 PM", available: true },
+    { day: "Friday", time: "9:00 AM - 10:00 AM", available: true },
+    { day: "Friday", time: "2:00 PM - 3:00 PM", available: true },
   ];
 
   const projectTypes = [
-    'Web Application Development',
-    'Mobile App Development',
-    'E-commerce Platform',
-    'SaaS Product',
-    'API Development',
-    'Technical Consultation',
-    'Code Review & Optimization',
-    'Other'
+    "Web Application Development",
+    "Mobile App Development",
+    "E-commerce Platform",
+    "SaaS Product",
+    "API Development",
+    "Technical Consultation",
+    "Code Review & Optimization",
+    "Other",
   ];
 
   const commitments = [
     {
       icon: "Clock",
       title: "Response Time",
-      description: "I personally respond to all inquiries within 24 hours"
+      description: "We personally respond to all inquiries within 24 hours",
     },
     {
       icon: "Users",
       title: "Direct Access",
-      description: "You'll work directly with me, not a team of intermediaries"
+      description: "You'll work directly with me, not a team of intermediaries",
     },
     {
       icon: "Shield",
       title: "Confidentiality",
-      description: "All project discussions are covered by strict NDAs"
+      description: "All project discussions are covered by strict NDAs",
     },
     {
       icon: "TrendingUp",
       title: "Success Focus",
-      description: "My success is measured by your business growth and satisfaction"
-    }
+      description:
+        "Our success is measured by your business growth and satisfaction",
+    },
   ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', { ...formData, timeSlot: selectedTimeSlot });
-    alert('Thank you for your interest! I\'ll be in touch within 24 hours to confirm your consultation.');
+    console.log("Form submitted:", { ...formData, timeSlot: selectedTimeSlot });
+    alert(
+      "Thank you for your interest! I'll be in touch within 24 hours to confirm your consultation."
+    );
   };
 
   return (
@@ -82,7 +85,9 @@ const ConsultationCTA = () => {
             Ready to Start Your Project?
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Let's discuss how I can help transform your vision into a scalable digital reality. Book a free consultation to explore your project needs.
+            Let's discuss how we can help transform your vision into a scalable
+            digital reality. Book a free consultation to explore your project
+            needs.
           </p>
         </div>
 
@@ -94,7 +99,8 @@ const ConsultationCTA = () => {
                 Schedule Your Free Consultation
               </h3>
               <p className="text-text-secondary">
-                Tell me about your project and let's find the perfect time to discuss your needs in detail.
+                Tell us about your project and let's find the perfect time to
+                discuss your needs in detail.
               </p>
             </div>
 
@@ -157,7 +163,9 @@ const ConsultationCTA = () => {
                 >
                   <option value="">Select project type</option>
                   {projectTypes.map((type, index) => (
-                    <option key={index} value={type}>{type}</option>
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -172,7 +180,7 @@ const ConsultationCTA = () => {
                   onChange={handleInputChange}
                   rows={4}
                   className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
-                  placeholder="Tell me about your project goals, timeline, and any specific requirements..."
+                  placeholder="Tell us about your project goals, timeline, and any specific requirements..."
                 />
               </div>
 
@@ -196,24 +204,34 @@ const ConsultationCTA = () => {
               <h3 className="text-xl font-bold text-text-primary mb-6">
                 Available Time Slots
               </h3>
-              
+
               <div className="space-y-3">
                 {availableSlots.map((slot, index) => (
                   <div
                     key={index}
                     className={`flex items-center justify-between p-4 rounded-lg border transition-colors ${
                       slot.available
-                        ? 'border-border hover:border-secondary cursor-pointer' :'border-border bg-surface opacity-50 cursor-not-allowed'
+                        ? "border-border hover:border-secondary cursor-pointer"
+                        : "border-border bg-surface opacity-50 cursor-not-allowed"
                     }`}
-                    onClick={() => slot.available && setSelectedTimeSlot(`${slot.day} ${slot.time}`)}
+                    onClick={() =>
+                      slot.available &&
+                      setSelectedTimeSlot(`${slot.day} ${slot.time}`)
+                    }
                   >
                     <div className="flex items-center space-x-3">
-                      <div className={`w-3 h-3 rounded-full ${
-                        slot.available ? 'bg-success' : 'bg-gray-400'
-                      }`}></div>
+                      <div
+                        className={`w-3 h-3 rounded-full ${
+                          slot.available ? "bg-success" : "bg-gray-400"
+                        }`}
+                      ></div>
                       <div>
-                        <div className="font-medium text-text-primary">{slot.day}</div>
-                        <div className="text-sm text-text-secondary">{slot.time}</div>
+                        <div className="font-medium text-text-primary">
+                          {slot.day}
+                        </div>
+                        <div className="text-sm text-text-secondary">
+                          {slot.time}
+                        </div>
                       </div>
                     </div>
                     <div className="text-sm">
@@ -230,10 +248,13 @@ const ConsultationCTA = () => {
               <div className="mt-6 p-4 bg-primary rounded-lg">
                 <div className="flex items-center space-x-2 mb-2">
                   <Icon name="Info" size={16} className="text-secondary" />
-                  <span className="text-sm font-medium text-secondary">Note</span>
+                  <span className="text-sm font-medium text-secondary">
+                    Note
+                  </span>
                 </div>
                 <p className="text-sm text-text-secondary">
-                  All times are in EST. I'll send a calendar invite with video call details after confirmation.
+                  All times are in EST. We'll send a calendar invite with video
+                  call details after confirmation.
                 </p>
               </div>
             </div>
@@ -241,9 +262,9 @@ const ConsultationCTA = () => {
             {/* Commitments */}
             <div className="card p-8">
               <h3 className="text-xl font-bold text-text-primary mb-6">
-                My Commitment to You
+                Our Commitment to You
               </h3>
-              
+
               <div className="space-y-4">
                 {commitments.map((commitment, index) => (
                   <div key={index} className="flex items-start space-x-3">
@@ -271,19 +292,41 @@ const ConsultationCTA = () => {
               <p className="text-text-secondary mb-6">
                 Feel free to reach out through any of these channels:
               </p>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Icon name="Mail" className="text-secondary" />
-                  <span className="text-text-primary">chandu@clykur.com</span>
+
+              <div className="flex justify-between gap-2">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Mail" className="text-secondary" />
+                    <span className="text-text-primary"><a href="mailto:buildwithchandu@hotmail.com">buildwithchandu</a></span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Phone" className="text-secondary" />
+                    <span className="text-text-primary"><a href="tel:+918179299096">+91 8179299096</a></span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Linkedin" className="text-secondary" />
+                    <span className="text-text-primary">
+                    <a href="https://www.linkedin.com/in/chandu-kalluru/" target="_blank" rel="noopener noreferrer">Chandu Kalluru</a>
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Icon name="Phone" className="text-secondary" />
-                  <span className="text-text-primary">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Icon name="MessageCircle" className="text-secondary" />
-                  <span className="text-text-primary">LinkedIn: /in/chandukalluru</span>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Mail" className="text-secondary" />
+                    <span className="text-text-primary">
+                      <a href="mailto:connectwithkarthik@hotmail.com">connectwithkarthik</a>
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Phone" className="text-secondary" />
+                    <span className="text-text-primary"><a href="tel:+919949740776">+91 9949740776</a></span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Icon name="Linkedin" className="text-secondary" />
+                    <span className="text-text-primary">
+                    <a href="https://www.linkedin.com/in/venkata-karthik-naramala/" target="_blank" rel="noopener noreferrer">Karthik Naramala</a>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

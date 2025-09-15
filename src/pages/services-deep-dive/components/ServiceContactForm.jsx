@@ -508,18 +508,18 @@ const ServiceContactForm = ({ selectedService }) => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="mailto:hello@clykur.com"
+                    href="mailto:clykur@outlook.com"
                     className="flex items-center justify-center gap-2 text-secondary hover:text-accent transition-colors"
                   >
                     <Icon name="Mail" size={16} />
-                    hello@clykur.com
+                    clykur@outlook.com
                   </a>
                   <a
-                    href="tel:+1234567890"
+                    href="tel:+91 81792 99096"
                     className="flex items-center justify-center gap-2 text-secondary hover:text-accent transition-colors"
                   >
                     <Icon name="Phone" size={16} />
-                    +1 (234) 567-8900
+                    +91 81792 99096
                   </a>
                 </div>
               </div>
