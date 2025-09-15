@@ -460,7 +460,7 @@ const PortfolioGallery = () => {
                 size="lg"
                 iconName="MessageCircle"
                 iconPosition="left"
-                className="border-white text-white hover:bg-white hover:text-secondary"
+                className="border-white text-black-200 hover:bg-white hover:text-secondary"
               >
                 Schedule Consultation
               </Button>

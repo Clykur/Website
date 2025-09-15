@@ -6,7 +6,7 @@ const WhyClykur = () => {
     {
       icon: "Target",
       title: "Bridging the Gap",
-      description: "Most development services treat projects as transactions. I saw the need for true technical partnership—someone who thinks about your business success, not just code delivery."
+      description: "Most development services treat projects as transactions. We saw the need for true technical partnership—people who think about your business success, not just code delivery."
     },
     {
       icon: "Lightbulb",
@@ -76,10 +76,10 @@ const WhyClykur = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-text-primary mb-4">
-            Why I Started Clykur
+            Why We Started Clykur
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            The gap between what businesses need and what typical development services provide inspired me to create something different—a true technical partnership.
+            The gap between what businesses need and what typical development services provide inspired us to create something different—a true technical partnership.
           </p>
         </div>
 

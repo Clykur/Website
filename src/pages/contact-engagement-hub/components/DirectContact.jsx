@@ -7,37 +7,37 @@ const DirectContact = () => {
     {
       type: 'email',
       label: 'Email',
-      value: 'hello@clykur.com',
+      value: 'clykur@outlook.com',
       description: 'For general inquiries and project discussions',
       icon: 'Mail',
-      action: 'mailto:hello@clykur.com',
+      action: 'mailto:clykur@outlook.com',
       responseTime: '24-48 hours'
     },
     {
       type: 'phone',
       label: 'Phone',
-      value: '+1 (555) 123-4567',
+      value: '+91 81792 99096',
       description: 'For urgent matters and direct conversations',
       icon: 'Phone',
-      action: 'tel:+15551234567',
+      action: 'tel:+918179299096',
       responseTime: 'Business hours'
     },
     {
       type: 'linkedin',
       label: 'LinkedIn',
-      value: 'Chandu Kalluru',
+      value: 'Clykur',
       description: 'Professional networking and industry discussions',
       icon: 'Linkedin',
-      action: 'https://linkedin.com/in/chandukalluru',
+      action: 'https://www.linkedin.com/company/clykur',
       responseTime: '1-2 days'
     },
     {
       type: 'whatsapp',
       label: 'WhatsApp',
-      value: '+1 (555) 123-4567',
+      value: '+91 8179299096',
       description: 'Quick questions and project updates',
       icon: 'MessageCircle',
-      action: 'https://wa.me/15551234567',
+      action: 'https://wa.me/918179299096',
       responseTime: 'Same day'
     }
   ];

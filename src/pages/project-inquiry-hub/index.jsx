@@ -294,7 +294,7 @@ const ProjectInquiryHub = () => {
               <Button
                 variant="outline"
                 onClick={() => window.location.href = '/contact-engagement-hub'}
-                className="border-white text-white hover:bg-white hover:text-secondary"
+                className="border-white text-black hover:bg-white hover:text-secondary"
               >
                 Contact Us Directly
               </Button>

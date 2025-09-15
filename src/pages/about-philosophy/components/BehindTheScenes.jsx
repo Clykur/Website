@@ -7,7 +7,7 @@ const BehindTheScenes = () => {
     {
       src: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop",
       alt: "Modern development workspace with multiple monitors",
-      caption: "My development setup - optimized for productivity and creativity"
+      caption: "Our development setup - optimized for productivity and creativity"
     },
     {
       src: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop",
@@ -40,7 +40,7 @@ const BehindTheScenes = () => {
     {
       icon: "Coffee",
       title: "Early Morning Focus",
-      description: "My most productive hours are 6-10 AM when I tackle complex architecture challenges with a clear mind."
+      description: "Our most productive hours are 6-10 AM when we tackle complex architecture challenges with a clear mind."
     },
     {
       icon: "Users",
@@ -50,7 +50,7 @@ const BehindTheScenes = () => {
     {
       icon: "BookOpen",
       title: "Continuous Learning",
-      description: "I dedicate 2 hours daily to learning new technologies, reading industry insights, and experimenting with tools."
+      description: "We dedicate time daily to learning new technologies, reading industry insights, and experimenting with tools."
     },
     {
       icon: "TestTube",
@@ -85,7 +85,7 @@ const BehindTheScenes = () => {
             Behind the Scenes
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            A glimpse into my development process, workspace, and the daily routine that drives exceptional results.
+            A glimpse into our development process, workspace, and the daily routines that drive exceptional results.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ const BehindTheScenes = () => {
               Development Philosophy in Action
             </h3>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              The principles and practices that guide my daily work and ensure consistent quality.
+              The principles and practices that guide our daily work and ensure consistent quality.
             </p>
           </div>
 
@@ -146,7 +146,7 @@ const BehindTheScenes = () => {
               A Day in the Life
             </h3>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              My structured approach to maximizing productivity and maintaining work-life balance.
+              Our structured approach to maximizing productivity and maintaining work-life balance.
             </p>
           </div>
 
@@ -172,7 +172,7 @@ const BehindTheScenes = () => {
               Tools & Technology Stack
             </h3>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              The carefully selected tools that power my development workflow and client collaboration.
+              The carefully selected tools that power our development workflow and client collaboration.
             </p>
           </div>
 
@@ -203,7 +203,7 @@ const BehindTheScenes = () => {
               The Human Side of Development
             </h3>
             <p className="text-lg text-text-secondary max-w-3xl mx-auto mb-6">
-              Behind every line of code is a passion for solving real problems and creating meaningful impact. I believe that great software comes from understanding not just the technical requirements, but the human needs they serve.
+              Behind every line of code is a passion for solving real problems and creating meaningful impact. We believe that great software comes from understanding not just the technical requirements, but the human needs they serve.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-text-secondary">
               <span className="flex items-center space-x-1">

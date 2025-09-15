@@ -7,7 +7,7 @@ const ClientPhilosophy = () => {
     {
       icon: "Handshake",
       title: "Partnership Over Vendor Relationship",
-      description: "I don't just execute your requirements—I help shape them. Your success is my success, and I'm invested in your long-term growth."
+      description: "We don't just execute your requirements—we help shape them. Your success is our success, and we're invested in your long-term growth."
     },
     {
       icon: "MessageCircle",
@@ -17,12 +17,12 @@ const ClientPhilosophy = () => {
     {
       icon: "Users",
       title: "Collaborative Development",
-      description: "Your team becomes my team. I work alongside your stakeholders to ensure everyone is aligned and contributing to the vision."
+      description: "Your team becomes our team. We work alongside your stakeholders to ensure everyone is aligned and contributing to the vision."
     },
     {
       icon: "TrendingUp",
       title: "Growth-Oriented Thinking",
-      description: "Every technical decision considers your future needs. I build solutions that scale with your ambitions, not against them."
+      description: "Every technical decision considers your future needs. We build solutions that scale with your ambitions, not against them."
     }
   ];
 
@@ -84,7 +84,7 @@ const ClientPhilosophy = () => {
             Client Partnership Philosophy
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Building lasting relationships through trust, transparency, and shared success. Your growth is my priority.
+            Building lasting relationships through trust, transparency, and shared success. Your growth is our priority.
           </p>
         </div>
 
@@ -176,10 +176,10 @@ const ClientPhilosophy = () => {
         <div className="bg-background rounded-2xl p-8 lg:p-12">
           <div className="text-center mb-12">
             <h3 className="text-2xl lg:text-3xl font-bold text-text-primary mb-4">
-              How I Support Your Business Growth
+              How We Support Your Business Growth
             </h3>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Beyond development, I provide strategic guidance across multiple areas of your business.
+              Beyond development, we provide strategic guidance across multiple areas of your business.
             </p>
           </div>
 
@@ -206,7 +206,7 @@ const ClientPhilosophy = () => {
                 <span className="text-xl font-semibold text-text-primary">Partnership Commitment</span>
               </div>
               <p className="text-text-secondary max-w-2xl mx-auto">
-                When you work with Clykur, you're not just hiring a developer—you're gaining a technical partner who is genuinely invested in your success. I measure my success by your growth, not just project completion.
+                When you work with Clykur, you're not just hiring developers—you’re gaining technical partners who are genuinely invested in your success. We measure our success by your growth, not just project completion.
               </p>
             </div>
           </div>
