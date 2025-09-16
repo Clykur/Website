@@ -73,14 +73,14 @@ const ClientLogoMarquee = () => {
 
         {/* Marquee Container */}
         <div className="relative overflow-hidden">
-          <div className="flex animate-marquee space-x-12">
+          <div className="flex animate-marquee space-x-8 sm:space-x-12">
             {duplicatedClients.map((client, index) => (
               <div
                 key={`${client.name}-${index}`}
                 className="flex-shrink-0 group"
               >
-                <div className="relative bg-background rounded-lg p-6 shadow-sm border border-border hover:shadow-md transition-all duration-300 group-hover:scale-105">
-                  <div className="flex items-center justify-center h-12 w-32">
+                <div className="relative bg-background rounded-lg p-4 sm:p-6 shadow-sm border border-border hover:shadow-md transition-all duration-300 group-hover:scale-105">
+                  <div className="flex items-center justify-center h-10 w-28 sm:h-12 sm:w-32">
                     <Image
                       src={client.logo}
                       alt={`${client.name} logo`}
@@ -88,10 +88,10 @@ const ClientLogoMarquee = () => {
                     />
                   </div>
                   <div className="mt-3 text-center">
-                    <div className="text-xs font-medium text-text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="text-[10px] sm:text-xs font-medium text-text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {client.name}
                     </div>
-                    <div className={`text-xs mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                    <div className={`text-[10px] sm:text-xs mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
                       client.category === 'Startup' ? 'text-success' :
                       client.category === 'Scale-up'? 'text-secondary' : 'text-accent'
                     }`}>
@@ -140,11 +140,17 @@ const ClientLogoMarquee = () => {
         }
         
         .animate-marquee {
-          animation: marquee 30s linear infinite;
+          animation: marquee 24s linear infinite;
         }
         
         .animate-marquee:hover {
           animation-play-state: paused;
+        }
+        
+        @media (min-width: 640px) {
+          .animate-marquee {
+            animation-duration: 30s;
+          }
         }
       `}</style>
     </section>
