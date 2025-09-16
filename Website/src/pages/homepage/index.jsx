@@ -10,7 +10,7 @@ import PerformanceMetricsCounter from './components/PerformanceMetricsCounter';
 const Homepage = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header showMobileStickyCta={false} />
       
       <main>
         <HeroSection />
@@ -21,15 +21,22 @@ const Homepage = () => {
         <PerformanceMetricsCounter />
       </main>
 
-      {/* Mobile Sticky CTA - Only visible on mobile */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40">
-        <div className="bg-gradient-to-r from-secondary to-accent rounded-full p-1 shadow-lg">
+      {/* Mobile Sticky Dual CTA - side by side */}
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 safe-bottom">
+        <div className="grid grid-cols-2 gap-3">
           <a
             href="/project-inquiry-hub"
-            className="flex items-center justify-center w-full py-3 px-6 bg-background rounded-full text-text-primary font-medium hover:bg-surface transition-colors duration-200"
+            className="inline-flex items-center justify-center w-full py-3 px-4 rounded-lg bg-secondary text-secondary-foreground font-medium shadow-lg hover:shadow-xl transition-shadow duration-200"
           >
             <span className="mr-2">🚀</span>
-            Start Your Project Today
+            Start Project
+          </a>
+          <a
+            href="/project-inquiry-hub"
+            className="inline-flex items-center justify-center w-full py-3 px-4 rounded-lg bg-background border border-border text-text-primary font-medium shadow-lg hover:bg-surface transition-colors duration-200"
+          >
+            <span className="mr-2">💬</span>
+            Get Started
           </a>
         </div>
       </div>

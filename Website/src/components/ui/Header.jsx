@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Icon from '../AppIcon';
 import Button from './Button';
 
-const Header = () => {
+const Header = ({ showMobileStickyCta = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -39,7 +39,7 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 safe-top ${
         isScrolled 
           ? 'bg-background/95 backdrop-blur-md shadow-md border-b border-border' 
           : 'bg-background/80 backdrop-blur-sm'
@@ -154,19 +154,21 @@ const Header = () => {
       </div>
 
       {/* Mobile Sticky CTA */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40">
-        <Link to="/project-inquiry-hub">
-          <Button 
-            variant="primary" 
-            fullWidth
-            iconName="MessageCircle" 
-            iconPosition="left"
-            className="justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
-          >
-            Get Started
-          </Button>
-        </Link>
-      </div>
+      {showMobileStickyCta && (
+        <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 safe-bottom">
+          <Link to="/project-inquiry-hub">
+            <Button 
+              variant="primary" 
+              fullWidth
+              iconName="MessageCircle" 
+              iconPosition="left"
+              className="justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
+            >
+              Get Started
+            </Button>
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
