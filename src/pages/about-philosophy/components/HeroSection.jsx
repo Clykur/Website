@@ -115,9 +115,11 @@ const HeroSection = () => {
                 />
               </div>
 
-              {/* Floating Cards */}
+              {/* Floating Cards - desktop/tablet */}
               <div
-                className="absolute -bottom-6 -left-6 bg-background border border-border rounded-xl p-6 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow"
+                className={`hidden md:block absolute -bottom-6 -left-6 bg-background border rounded-xl p-6 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow ${
+                  selected === "founder" ? "border-secondary ring-2 ring-secondary/40" : "border-border"
+                }`}
                 onMouseEnter={() => setSelected("founder")}
                 onFocus={() => setSelected("founder")}
                 onClick={() => setSelected("founder")}
@@ -140,7 +142,9 @@ const HeroSection = () => {
                 </div>
               </div>
               <div
-                className="absolute -bottom-6 -right-6 bg-background border border-border rounded-xl p-6 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow"
+                className={`hidden md:block absolute -bottom-6 -right-6 bg-background border rounded-xl p-6 shadow-xl cursor-pointer hover:shadow-2xl transition-shadow ${
+                  selected === "cofounder" ? "border-secondary ring-2 ring-secondary/40" : "border-border"
+                }`}
                 onMouseEnter={() => setSelected("cofounder")}
                 onFocus={() => setSelected("cofounder")}
                 onClick={() => setSelected("cofounder")}
@@ -161,6 +165,44 @@ const HeroSection = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              
+              {/* Mobile Cards - avoid overlap */}
+              <div className="md:hidden mt-4 grid grid-cols-1 xs:grid-cols-2 gap-3">
+                <button
+                  className={`bg-background border rounded-xl p-4 shadow-md text-left ${
+                    selected === "founder" ? "border-secondary ring-2 ring-secondary/40" : "border-border"
+                  }`}
+                  onClick={() => setSelected("founder")}
+                  aria-label="Show founder details"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-success to-accent rounded-lg flex items-center justify-center">
+                      <Icon name="Code" size={20} color="white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-text-primary">Chandu Kalluru</div>
+                      <div className="text-xs text-text-secondary">Founder & Lead Developer</div>
+                    </div>
+                  </div>
+                </button>
+                <button
+                  className={`bg-background border rounded-xl p-4 shadow-md text-left ${
+                    selected === "cofounder" ? "border-secondary ring-2 ring-secondary/40" : "border-border"
+                  }`}
+                  onClick={() => setSelected("cofounder")}
+                  aria-label="Show co-founder details"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-success to-accent rounded-lg flex items-center justify-center">
+                      <Icon name="Code" size={20} color="white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-text-primary">Karthik Naramala</div>
+                      <div className="text-xs text-text-secondary">Co-Founder & Developer</div>
+                    </div>
+                  </div>
+                </button>
               </div>
             </div>
 
