@@ -181,7 +181,7 @@ const PerformanceMetricsCounter = () => {
             "These aren't just numbers—they represent real businesses transformed, real problems solved, and real value created for our partners."
           </blockquote>
           <div className="mt-4 text-sm text-text-secondary">
-            — Chandu Kalluru, Founder & Lead Developer
+            — Chandu Kalluru, Founder & Karthik Naramala, Co-Founder
           </div>
         </div>
       </div>
