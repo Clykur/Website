@@ -14,15 +14,6 @@ const DirectContact = () => {
       responseTime: '24-48 hours'
     },
     {
-      type: 'phone',
-      label: 'Phone',
-      value: '+91 81792 99096',
-      description: 'For urgent matters and direct conversations',
-      icon: 'Phone',
-      action: 'tel:+918179299096',
-      responseTime: 'Business hours'
-    },
-    {
       type: 'linkedin',
       label: 'LinkedIn',
       value: 'Clykur',
@@ -30,23 +21,10 @@ const DirectContact = () => {
       icon: 'Linkedin',
       action: 'https://www.linkedin.com/company/clykur',
       responseTime: '1-2 days'
-    },
-    {
-      type: 'whatsapp',
-      label: 'WhatsApp',
-      value: '+91 8179299096',
-      description: 'Quick questions and project updates',
-      icon: 'MessageCircle',
-      action: 'https://wa.me/918179299096',
-      responseTime: 'Same day'
     }
   ];
 
-  const officeHours = [
-    { day: 'Monday - Friday', hours: '9:00 AM - 6:00 PM EST' },
-    { day: 'Saturday', hours: '10:00 AM - 2:00 PM EST' },
-    { day: 'Sunday', hours: 'Emergency only' }
-  ];
+  const officeHours = [];
 
   const handleContactClick = (action) => {
     if (action.startsWith('http')) {
@@ -103,63 +81,6 @@ const DirectContact = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Office Hours & Response Times */}
-          <div className="space-y-6">
-            <div className="card p-6">
-              <h3 className="text-lg font-semibold text-text-primary mb-4 flex items-center space-x-2">
-                <Icon name="Clock" size={20} className="text-secondary" />
-                <span>Office Hours</span>
-              </h3>
-              <div className="space-y-3">
-                {officeHours.map((schedule, index) => (
-                  <div key={index} className="flex justify-between items-center">
-                    <span className="text-text-secondary text-sm">{schedule.day}</span>
-                    <span className="text-text-primary text-sm font-medium">{schedule.hours}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="card p-6 bg-primary">
-              <h3 className="text-lg font-semibold text-text-primary mb-4 flex items-center space-x-2">
-                <Icon name="Shield" size={20} className="text-success" />
-                <span>Response Guarantee</span>
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">Urgent: 24 hours</span>
-                </li>
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">Projects: 48 hours</span>
-                </li>
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">General: 72 hours</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="card p-6">
-              <h3 className="text-lg font-semibold text-text-primary mb-4">
-                Emergency Contact
-              </h3>
-              <p className="text-text-secondary text-sm mb-4">
-                For critical issues with existing projects or time-sensitive opportunities.
-              </p>
-              <Button
-                variant="outline"
-                fullWidth
-                iconName="Phone"
-                iconPosition="left"
-                onClick={() => handleContactClick('tel:+15551234567')}
-              >
-                Call Emergency Line
-              </Button>
             </div>
           </div>
         </div>

@@ -105,7 +105,7 @@ const ConsultationBooking = () => {
               Consultation Booked Successfully!
             </h3>
             <p className="text-text-secondary mb-6">
-              Your 30-minute technical consultation with Chandu Kalluru has been scheduled. You'll receive a calendar invitation and meeting details shortly.
+              Your 30-minute technical consultation with Chandu Kalluru (Lead Developer) has been scheduled. You'll receive a calendar invitation and meeting details shortly.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
               <div className="flex items-center justify-center space-x-2 text-success">
@@ -135,7 +135,7 @@ const ConsultationBooking = () => {
             Book Your Free Consultation
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Schedule a 30-minute technical consultation with Chandu Kalluru to discuss your project vision, get expert recommendations, and create a strategic roadmap.
+            Schedule a 30-minute technical consultation with Chandu Kalluru (Lead Developer) to discuss your project vision, get expert recommendations, and create a strategic roadmap.
           </p>
         </div>
 
@@ -170,10 +170,10 @@ const ConsultationBooking = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-text-primary mb-2">
-                    Direct Access to Chandu Kalluru
+                    Direct Access to Chandu Kalluru (Lead Developer)
                   </h4>
                   <p className="text-text-secondary text-sm">
-                    Founder & Lead Developer with 8+ years of experience building scalable applications for startups and enterprises. Get insights directly from the person who will be leading your project.
+                    Lead Developer with 8+ years of experience building scalable applications for startups and enterprises.
                   </p>
                 </div>
               </div>

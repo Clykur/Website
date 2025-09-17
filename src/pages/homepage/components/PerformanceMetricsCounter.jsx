@@ -117,34 +117,34 @@ const PerformanceMetricsCounter = () => {
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {metrics.map((metric) => (
             <div
               key={metric.key}
               className="text-center group"
             >
               {/* Icon Container */}
-              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${metric.bgColor} ${metric.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <Icon name={metric.icon} size={32} />
+              <div className={`inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ${metric.bgColor} ${metric.color} mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <Icon name={metric.icon} size={24} className="sm:w-8 sm:h-8" />
               </div>
 
               {/* Counter Value */}
               <div className="mb-2">
-                <span className="text-4xl lg:text-5xl font-bold text-text-primary">
+                <span className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-text-primary">
                   {formatValue(counters[metric.key], metric)}
                 </span>
-                <span className={`text-2xl lg:text-3xl font-bold ${metric.color}`}>
+                <span className={`text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold ${metric.color}`}>
                   {metric.suffix}
                 </span>
               </div>
 
               {/* Label */}
-              <div className="text-text-secondary font-medium">
+              <div className="text-sm sm:text-base text-text-secondary font-medium px-2">
                 {metric.label}
               </div>
 
               {/* Progress Bar */}
-              <div className="mt-4 w-full bg-border rounded-full h-2 overflow-hidden">
+              <div className="mt-3 sm:mt-4 w-full bg-border rounded-full h-1.5 sm:h-2 overflow-hidden">
                 <div
                   className={`h-full ${metric.color.replace('text-', 'bg-')} transition-all duration-2000 ease-out`}
                   style={{
@@ -157,21 +157,21 @@ const PerformanceMetricsCounter = () => {
         </div>
 
         {/* Additional Context */}
-        <div className="mt-16 grid md:grid-cols-3 gap-8 text-center">
-          <div className="space-y-2">
-            <div className="text-2xl font-bold text-text-primary">100%</div>
-            <div className="text-sm text-text-secondary">Project Success Rate</div>
-            <div className="text-xs text-text-secondary opacity-75">Every project delivered on time and within scope</div>
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
+          <div className="space-y-1 sm:space-y-2 p-4 sm:p-0">
+            <div className="text-xl sm:text-2xl font-bold text-text-primary">100%</div>
+            <div className="text-sm sm:text-base text-text-secondary font-medium">Project Success Rate</div>
+            <div className="text-xs sm:text-sm text-text-secondary opacity-75 px-2">Every project delivered on time and within scope</div>
           </div>
-          <div className="space-y-2">
-            <div className="text-2xl font-bold text-text-primary">24/7</div>
-            <div className="text-sm text-text-secondary">Support Availability</div>
-            <div className="text-xs text-text-secondary opacity-75">Round-the-clock technical support and monitoring</div>
+          <div className="space-y-1 sm:space-y-2 p-4 sm:p-0">
+            <div className="text-xl sm:text-2xl font-bold text-text-primary">24/7</div>
+            <div className="text-sm sm:text-base text-text-secondary font-medium">Support Availability</div>
+            <div className="text-xs sm:text-sm text-text-secondary opacity-75 px-2">Round-the-clock technical support and monitoring</div>
           </div>
-          <div className="space-y-2">
-            <div className="text-2xl font-bold text-text-primary">4.9/5</div>
-            <div className="text-sm text-text-secondary">Client Satisfaction</div>
-            <div className="text-xs text-text-secondary opacity-75">Based on post-project surveys and reviews</div>
+          <div className="space-y-1 sm:space-y-2 p-4 sm:p-0">
+            <div className="text-xl sm:text-2xl font-bold text-text-primary">4.9/5</div>
+            <div className="text-sm sm:text-base text-text-secondary font-medium">Client Satisfaction</div>
+            <div className="text-xs sm:text-sm text-text-secondary opacity-75 px-2">Based on post-project surveys and reviews</div>
           </div>
         </div>
 
@@ -181,7 +181,7 @@ const PerformanceMetricsCounter = () => {
             "These aren't just numbers—they represent real businesses transformed, real problems solved, and real value created for our partners."
           </blockquote>
           <div className="mt-4 text-sm text-text-secondary">
-            — Chandu Kalluru, Founder & Karthik Naramala, Co-Founder
+            — Chandu Kalluru & Karthik Naramala
           </div>
         </div>
       </div>

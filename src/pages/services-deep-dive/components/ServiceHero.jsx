@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
@@ -94,23 +95,28 @@ const ServiceHero = ({ selectedService, onServiceChange }) => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="primary" 
-              size="lg"
-              iconName="MessageCircle" 
-              iconPosition="left"
-              className="shadow-lg hover:shadow-xl"
-            >
-              Start Your Project
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              iconName="Calendar" 
-              iconPosition="left"
-            >
-              Schedule Consultation
-            </Button>
+            <Link to="/project-inquiry-hub">
+              <Button 
+                variant="primary" 
+                size="lg"
+                iconName="MessageCircle" 
+                iconPosition="left"
+                className="shadow-lg hover:shadow-xl border border-border"
+              >
+                Start Your Project
+              </Button>
+            </Link>
+            <Link to="/contact-engagement-hub#consultation-booking">
+              <Button 
+                variant="outline" 
+                size="lg"
+                iconName="Calendar" 
+                iconPosition="left"
+                className="border border-border"
+              >
+                Schedule Consultation
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

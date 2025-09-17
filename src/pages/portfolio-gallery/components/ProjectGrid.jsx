@@ -5,24 +5,24 @@ import Icon from '../../../components/AppIcon';
 const ProjectGrid = ({ projects, onViewDemo, onViewCase, isLoading }) => {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {[...Array(6)].map((_, index) => (
           <div key={index} className="card bg-background border border-border rounded-xl overflow-hidden animate-pulse">
-            <div className="h-48 bg-surface"></div>
-            <div className="p-6 space-y-4">
+            <div className="h-40 sm:h-48 bg-surface"></div>
+            <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               <div className="h-4 bg-surface rounded w-3/4"></div>
               <div className="h-3 bg-surface rounded w-1/2"></div>
-              <div className="h-16 bg-surface rounded"></div>
-              <div className="flex space-x-2">
-                <div className="h-6 bg-surface rounded w-16"></div>
-                <div className="h-6 bg-surface rounded w-16"></div>
-                <div className="h-6 bg-surface rounded w-16"></div>
+              <div className="h-12 sm:h-16 bg-surface rounded"></div>
+              <div className="flex flex-wrap gap-2">
+                <div className="h-5 sm:h-6 bg-surface rounded w-12 sm:w-16"></div>
+                <div className="h-5 sm:h-6 bg-surface rounded w-12 sm:w-16"></div>
+                <div className="h-5 sm:h-6 bg-surface rounded w-12 sm:w-16"></div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="h-12 bg-surface rounded"></div>
-                <div className="h-12 bg-surface rounded"></div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="h-10 sm:h-12 bg-surface rounded"></div>
+                <div className="h-10 sm:h-12 bg-surface rounded"></div>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex flex-col xs:flex-row gap-2">
                 <div className="h-8 bg-surface rounded flex-1"></div>
                 <div className="h-8 bg-surface rounded flex-1"></div>
               </div>
@@ -58,7 +58,7 @@ const ProjectGrid = ({ projects, onViewDemo, onViewCase, isLoading }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
       {projects.map((project) => (
         <ProjectCard
           key={project.id}
