@@ -63,8 +63,8 @@ const FounderStory = () => {
                   <blockquote className="text-text-primary font-medium italic">
                     "We don’t just build applications—we craft digital foundations that help businesses thrive. Every line of code is written with your success in mind."
                   </blockquote>
-                  <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru, Founder</cite>
-                  <cite className="text-text-secondary text-sm mt-2 block">— Karthik Naramala, Co-Founder</cite>
+                  <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru, Lead Developer</cite>
+                  <cite className="text-text-secondary text-sm mt-2 block">— Karthik Naramala, Software Developer</cite>
                 </div>
               </div>
             </div>

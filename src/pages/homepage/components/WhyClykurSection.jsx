@@ -36,7 +36,7 @@ const WhyClykurSection = () => {
     {
       id: 3,
       title: "Partnership Approach",
-      description: "We become your technical co-founder, providing strategic guidance beyond just development services.",
+      description: "We become your technical partner, providing strategic guidance beyond just development services.",
       icon: "Users",
       color: "accent",
       caseStudy: {
@@ -152,24 +152,6 @@ const WhyClykurSection = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center">
-          <div className="inline-flex flex-col sm:flex-row gap-4">
-            <Link to="/portfolio-gallery">
-              <button className="px-8 py-3 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-blue-800 transition-colors duration-200 flex items-center">
-                <Icon name="Eye" size={20} className="mr-2" />
-                Explore Our Portfolio
-              </button>
-            </Link>
-            <Link to="/services-deep-dive">
-              <button className="px-8 py-3 border border-border text-text-primary rounded-lg font-medium hover:bg-surface transition-colors duration-200 flex items-center">
-                <Icon name="Settings" size={20} className="mr-2" />
-                View Our Services
-              </button>
-            </Link>
-          </div>
         </div>
       </div>
     </section>

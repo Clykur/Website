@@ -433,38 +433,40 @@ const PortfolioGallery = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-secondary to-accent">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-xl text-white/90 mb-8">
-            Let's discuss how we can transform your ideas into exceptional digital products
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link to="/project-inquiry-hub">
-              <Button
-                variant="primary"
-                size="lg"
-                iconName="ArrowRight"
-                iconPosition="right"
-                className="bg-white text-secondary hover:bg-gray-50"
-              >
-                Start Your Project
-              </Button>
-            </Link>
-            <Link to="/contact-engagement-hub">
-              <Button
-                variant="outline"
-                size="lg"
-                iconName="MessageCircle"
-                iconPosition="left"
-                className="border-white text-black-200 hover:bg-white hover:text-secondary"
-              >
-                Schedule Consultation
-              </Button>
-            </Link>
+      {/* CTA Section - minimal boxed container */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="border border-border rounded-xl p-8 text-center bg-background">
+            <h2 className="text-3xl font-bold text-text-primary mb-4">
+              Ready to Start Your Project?
+            </h2>
+            <p className="text-lg text-text-secondary mb-8">
+              Let's discuss how we can transform your ideas into exceptional digital products.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/project-inquiry-hub">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  iconName="ArrowRight"
+                  iconPosition="right"
+                  className="border border-border"
+                >
+                  Start Your Project
+                </Button>
+              </Link>
+              <Link to="/contact-engagement-hub#consultation-booking">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  iconName="MessageCircle"
+                  iconPosition="left"
+                  className="border border-border"
+                >
+                  Schedule Consultation
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

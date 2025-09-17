@@ -358,23 +358,28 @@ const PricingCalculator = ({ selectedService }) => {
               )}
 
               <div className="space-y-4">
-                <Button 
-                  variant="primary" 
-                  fullWidth
-                  iconName="MessageCircle" 
-                  iconPosition="left"
-                  className="shadow-lg"
-                >
-                  Get Detailed Quote
-                </Button>
-                <Button 
-                  variant="outline" 
-                  fullWidth
-                  iconName="Calendar" 
-                  iconPosition="left"
-                >
-                  Schedule Consultation
-                </Button>
+                <a href="/project-inquiry-hub">
+                  <Button 
+                    variant="primary" 
+                    fullWidth
+                    iconName="MessageCircle" 
+                    iconPosition="left"
+                    className="shadow-lg border border-border"
+                  >
+                    Get Detailed Quote
+                  </Button>
+                </a>
+                <a href="/contact-engagement-hub#consultation-booking">
+                  <Button 
+                    variant="outline" 
+                    fullWidth
+                    iconName="Calendar" 
+                    iconPosition="left"
+                    className="border border-border"
+                  >
+                    Schedule Consultation
+                  </Button>
+                </a>
               </div>
 
               <div className="mt-6 p-4 bg-success/10 rounded-lg">

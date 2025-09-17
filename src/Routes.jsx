@@ -10,6 +10,7 @@ import ProjectInquiryHub from "pages/project-inquiry-hub";
 import ContactEngagementHub from "pages/contact-engagement-hub";
 import ServicesDeepDive from "pages/services-deep-dive";
 import NotFound from "pages/NotFound";
+import Footer from "components/ui/Footer";
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
         <Route path="/services-deep-dive" element={<ServicesDeepDive />} />
         <Route path="*" element={<NotFound />} />
       </RouterRoutes>
+      <Footer />
       </ErrorBoundary>
     </BrowserRouter>
   );
