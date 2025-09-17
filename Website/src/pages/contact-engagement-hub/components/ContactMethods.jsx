@@ -11,7 +11,7 @@ const ContactMethods = () => {
       icon: 'Zap',
       color: 'from-red-500 to-orange-500',
       responseTime: '24 hours',
-      features: ['Priority handling', 'Direct founder contact', 'Expedited proposal'],
+      features: ['Priority handling', 'Direct team contact', 'Expedited proposal'],
       action: 'Get Urgent Help',
       href: 'mailto:urgent@clykur.com?subject=Urgent Project Inquiry'
     },

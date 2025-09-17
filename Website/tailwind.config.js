@@ -19,38 +19,25 @@ module.exports = {
         'mono': ['JetBrains Mono', 'monospace'],
       },
       colors: {
-        // Primary Colors
-        'primary': '#E3F2FD', // light-blue-50
-        'primary-foreground': '#212121', // gray-800
-        
-        // Secondary Colors
-        'secondary': '#1976D2', // blue-700
-        'secondary-foreground': '#FFFFFF', // white
-        
-        // Accent Colors
-        'accent': '#FF9800', // orange-500
-        'accent-foreground': '#FFFFFF', // white
-        
-        // Background Colors
-        'background': '#FFFFFF', // white
-        'surface': '#F8F9FA', // gray-50
-        'canvas': '#FAFAFA', // gray-50
-        
-        // Text Colors
-        'text-primary': '#212121', // gray-800
-        'text-secondary': '#757575', // gray-600
-        
-        // State Colors
-        'success': '#4CAF50', // green-500
-        'success-foreground': '#FFFFFF', // white
-        'warning': '#FF9800', // orange-500
-        'warning-foreground': '#FFFFFF', // white
-        'error': '#F44336', // red-500
-        'error-foreground': '#FFFFFF', // white
-        
-        // Border Colors
-        'border': '#E5E7EB', // gray-200
-        'border-subtle': '#F3F4F6', // gray-100
+        'primary': '#F5F5F5',
+        'primary-foreground': '#0A0A0A',
+        'secondary': '#00338D',
+        'secondary-foreground': '#FFFFFF',
+        'accent': '#00338D',
+        'accent-foreground': '#FFFFFF',
+        'background': '#FFFFFF',
+        'surface': '#F5F5F5',
+        'canvas': '#FFFFFF',
+        'text-primary': '#0A0A0A',
+        'text-secondary': '#4B5563',
+        'success': '#4CAF50',
+        'success-foreground': '#FFFFFF',
+        'warning': '#FF9800',
+        'warning-foreground': '#FFFFFF',
+        'error': '#F44336',
+        'error-foreground': '#FFFFFF',
+        'border': '#E5E7EB',
+        'border-subtle': '#F3F4F6',
       },
       boxShadow: {
         'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',

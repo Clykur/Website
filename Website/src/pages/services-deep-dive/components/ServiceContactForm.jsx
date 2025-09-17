@@ -8,7 +8,6 @@ const ServiceContactForm = ({ selectedService }) => {
     name: '',
     email: '',
     company: '',
-    phone: '',
     projectType: selectedService,
     budget: '',
     timeline: '',
@@ -233,7 +232,6 @@ const ServiceContactForm = ({ selectedService }) => {
           name: '',
           email: '',
           company: '',
-          phone: '',
           projectType: selectedService,
           budget: '',
           timeline: '',
@@ -329,19 +327,7 @@ const ServiceContactForm = ({ selectedService }) => {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-text-primary mb-2">
-                    Phone Number
-                  </label>
-                  <Input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+1 (555) 123-4567"
-                    className="w-full"
-                  />
-                </div>
+                
               </div>
 
               {/* Service-Specific Questions */}
@@ -513,13 +499,6 @@ const ServiceContactForm = ({ selectedService }) => {
                   >
                     <Icon name="Mail" size={16} />
                     clykur@outlook.com
-                  </a>
-                  <a
-                    href="tel:+91 81792 99096"
-                    className="flex items-center justify-center gap-2 text-secondary hover:text-accent transition-colors"
-                  >
-                    <Icon name="Phone" size={16} />
-                    +91 81792 99096
                   </a>
                 </div>
               </div>

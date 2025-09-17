@@ -53,14 +53,7 @@ const HeroSection = () => {
   const project = featuredProjects[currentProject];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-primary via-background to-surface overflow-hidden">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-32 h-32 border border-secondary rounded-lg transform rotate-12 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 border border-accent rounded-full animate-bounce"></div>
-        <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-success rounded-lg transform -rotate-45 animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 border border-secondary rounded-full animate-bounce"></div>
-      </div>
+    <section className="relative min-h-screen bg-background overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -179,19 +172,14 @@ const HeroSection = () => {
               ))}
             </div>
 
-            {/* Floating Elements */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent/20 rounded-full blur-xl animate-pulse"></div>
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-success/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+            {/* Minimal style: remove floating elements */}
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <Icon name="ChevronDown" size={24} className="text-text-secondary" />
-      </div>
+      {/* Removed scroll indicator for minimal style */}
     </section>
   );
 };
 
 export default HeroSection;
+

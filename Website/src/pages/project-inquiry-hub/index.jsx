@@ -282,29 +282,28 @@ const ProjectInquiryHub = () => {
         {/* Trust Signals */}
         <TrustSignals />
 
-        {/* Footer CTA */}
-        <div className="bg-secondary text-white py-12">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h3 className="text-2xl font-bold mb-4">Questions About the Process?</h3>
-            <p className="text-blue-100 mb-6">
-              Our project inquiry system is designed to provide immediate value while helping us understand your needs. 
-              No pressure, no spam - just honest expertise to help you make informed decisions.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                variant="outline"
-                onClick={() => window.location.href = '/contact-engagement-hub'}
-                className="border-white text-black hover:bg-white hover:text-secondary"
-              >
-                Contact Us Directly
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => window.location.href = '/portfolio-gallery'}
-                className="text-white hover:bg-white/10"
-              >
-                View Our Portfolio
-              </Button>
+        {/* Footer CTA - minimal boxed container */}
+        <div className="py-12">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="border border-border rounded-xl p-6 bg-background">
+              <h3 className="text-2xl font-bold text-text-primary mb-3 text-center">Questions About the Process?</h3>
+              <p className="text-text-secondary mb-6 text-center">
+                Our project inquiry system provides immediate value and clarity. No pressure—just helpful guidance to inform your decision.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  variant="secondary"
+                  onClick={() => window.location.href = '/contact-engagement-hub'}
+                >
+                  Contact Us Directly
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => window.location.href = '/portfolio-gallery'}
+                >
+                  View Our Portfolio
+                </Button>
+              </div>
             </div>
           </div>
         </div>

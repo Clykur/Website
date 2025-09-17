@@ -67,7 +67,7 @@ const WhyClykur = () => {
     {
       icon: "Users",
       title: "Team Extension",
-      description: "Acting as your technical co-founder, providing strategic guidance beyond just development."
+      description: "Acting as your technical partner, providing strategic guidance beyond just development."
     }
   ];
 
