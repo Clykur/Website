@@ -73,11 +73,11 @@ const ContactMethods = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-stretch">
           {contactMethods.map((method) => (
             <div
               key={method.id}
-              className="card p-4 sm:p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              className="card p-4 sm:p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer h-full flex flex-col"
               onClick={() => handleContactClick(method.href)}
             >
               <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${method.color} rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
@@ -108,16 +108,18 @@ const ContactMethods = () => {
                 ))}
               </ul>
               
-              <Button
-                variant="outline"
-                fullWidth
-                size="sm"
-                iconName="ArrowRight"
-                iconPosition="right"
-                className="group-hover:bg-primary group-hover:text-secondary transition-colors duration-300 text-sm sm:text-base"
-              >
-                {method.action}
-              </Button>
+              <div className="mt-auto">
+                <Button
+                  variant="outline"
+                  fullWidth
+                  size="sm"
+                  iconName="ArrowRight"
+                  iconPosition="right"
+                  className="group-hover:bg-primary group-hover:text-secondary transition-colors duration-300 text-sm sm:text-base"
+                >
+                  {method.action}
+                </Button>
+              </div>
             </div>
           ))}
         </div>

@@ -15,7 +15,6 @@ const AboutPhilosophy = () => {
       <Header />
       
       <main>
-        <HeroSection />
         <FounderStory />
         <TechnicalPhilosophy />
         <CredentialsSection />
@@ -23,6 +22,7 @@ const AboutPhilosophy = () => {
         <ClientPhilosophy />
         <BehindTheScenes />
         <ConsultationCTA />
+        <HeroSection />
       </main>
     </div>
   );

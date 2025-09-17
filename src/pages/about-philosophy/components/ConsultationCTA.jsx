@@ -93,12 +93,12 @@ const ConsultationCTA = () => {
 
         <div className="grid lg:grid-cols-1 gap-12">
           {/* Consultation Form */}
-          <div className="card p-8">
+          <div className="card p-8 lg:p-12 bg-white shadow-lg">
             <div className="mb-8">
-              <h3 className="text-2xl font-bold text-text-primary mb-4">
+              <h3 className="text-2xl font-bold text-text-primary mb-4 justify-center text-center">
                 Schedule Your Free Consultation
               </h3>
-              <p className="text-text-secondary">
+              <p className="text-text-secondary justify-center text-center">
                 Tell us about your project and let's find the perfect time to
                 discuss your needs in detail.
               </p>
@@ -190,7 +190,7 @@ const ConsultationCTA = () => {
                 fullWidth
                 iconName="Calendar"
                 iconPosition="left"
-                className="text-lg py-4"
+                className="text-lg py-4 border-4 border-solid border-primary/50 hover:border-primary shadow-sm"
               >
                 Request Consultation
               </Button>

@@ -6,17 +6,17 @@ const HeroSection = () => {
   const team = [
     {
       name: "Chandu Kalluru",
-      role: "Lead Developer",
+      role: "Founder & CEO",
       image: "https://i.ibb.co/SDt5YNfW/Chat-GPT-Image-Sep-15-2025-01-50-11-PM.png",
     },
     {
       name: "Karthik Naramala",
-      role: "Software Developer",
+      role: "Co-Founder & CTO",
       image: "https://i.ibb.co/svTSnLYn/Chat-GPT-Image-Sep-15-2025-01-37-44-PM.png",
     },
   ];
   return (
-    <section className="relative bg-background py-20">
+    <section className="relative bg-background py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl lg:text-4xl font-semibold text-text-primary">Founding Team</h1>

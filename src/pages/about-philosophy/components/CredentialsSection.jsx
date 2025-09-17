@@ -77,7 +77,7 @@ const CredentialsSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid lg:grid-cols-3 gap-12 items-stretch">
           {/* Certifications */}
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-text-primary mb-6">
@@ -146,9 +146,9 @@ const CredentialsSection = () => {
               Achievements
             </h3>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 items-stretch">
               {achievements.map((achievement, index) => (
-                <div key={index} className="card p-6 text-center card-hover">
+                <div key={index} className="card p-6 text-center card-hover h-full flex flex-col">
                   <div className="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center mx-auto mb-3">
                     <Icon name={achievement.icon} size={20} color="white" />
                   </div>
@@ -158,9 +158,10 @@ const CredentialsSection = () => {
                   <div className="font-medium text-text-primary text-sm mb-1">
                     {achievement.title}
                   </div>
-                  <div className="text-text-secondary text-xs">
+                  <div className="text-text-secondary text-xs mb-2">
                     {achievement.description}
                   </div>
+                  <div className="mt-auto" />
                 </div>
               ))}
             </div>

@@ -168,7 +168,52 @@ const TechnologyStack = ({ selectedService }) => {
               className="bg-background rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-border"
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="text-3xl">{tech.icon}</div>
+                <div className="text-3xl">
+                  <Icon
+                    name={
+                      tech.name === 'React' ? 'Atom' :
+                      tech.name === 'Next.js' ? 'Triangle' :
+                      tech.name === 'TypeScript' ? 'FileCode2' :
+                      tech.name === 'Tailwind CSS' ? 'Wind' :
+                      tech.name === 'Framer Motion' ? 'Clapperboard' :
+                      tech.name === 'Node.js' ? 'Server' :
+                      tech.name === 'Express.js' ? 'Route' :
+                      tech.name === 'Python/Django' ? 'Code2' :
+                      tech.name === 'PostgreSQL' ? 'Database' :
+                      tech.name === 'Redis' ? 'DatabaseZap' :
+                      tech.name === 'AWS' ? 'Cloud' :
+                      tech.name === 'Vercel' ? 'Rocket' :
+                      tech.name === 'Docker' ? 'Boxes' :
+                      tech.name === 'GitHub Actions' ? 'GitBranch' :
+                      tech.name === 'Stripe' ? 'CreditCard' :
+                      tech.name === 'CDN' ? 'Globe' :
+                      tech.name === 'Service Workers' ? 'Zap' :
+                      tech.name === 'Web Vitals' ? 'BarChart3' :
+                      tech.name === 'Microservices' ? 'Sitemap' :
+                      tech.name === 'Load Balancers' ? 'Scale' :
+                      tech.name === 'Auto Scaling' ? 'TrendingUp' :
+                      tech.name === 'Database Sharding' ? 'SplitSquareHorizontal' :
+                      tech.name === 'Caching Layers' ? 'Layers' :
+                      tech.name === 'AWS ECS/EKS' ? 'Boxes' :
+                      tech.name === 'CloudFront' ? 'Globe2' :
+                      tech.name === 'ElastiCache' ? 'HardDrive' :
+                      tech.name === 'RDS Multi-AZ' ? 'Database' :
+                      tech.name === 'CloudWatch' ? 'Eye' :
+                      tech.name === 'React/Angular' ? 'Atom' :
+                      tech.name === 'Micro Frontends' ? 'LayoutGrid' :
+                      tech.name === 'Design Systems' ? 'Palette' :
+                      tech.name === 'PWA' ? 'Smartphone' :
+                      tech.name === 'Accessibility' ? 'Accessibility' :
+                      tech.name === 'Enterprise APIs' ? 'Link2' :
+                      tech.name === 'Message Queues' ? 'Inbox' :
+                      tech.name === 'Event Sourcing' ? 'ScrollText' :
+                      tech.name === 'Data Pipelines' ? 'GitMerge' :
+                      tech.name === 'Security' ? 'Shield' :
+                      'Box'
+                    }
+                    size={28}
+                  />
+                </div>
                 <div className="flex-1">
                   <h3 className="font-bold text-text-primary mb-1">{tech.name}</h3>
                   <p className="text-sm text-text-secondary leading-relaxed">
