@@ -10,9 +10,9 @@ const Header = ({ showMobileStickyCta = false }) => {
 
   const navigationItems = [
     { name: 'Home', path: '/homepage', icon: 'Home' },
-    { name: 'Portfolio', path: '/portfolio-gallery', icon: 'Briefcase' },
-    { name: 'Services', path: '/services-deep-dive', icon: 'Settings' },
     { name: 'About', path: '/about-philosophy', icon: 'User' },
+    { name: 'Services', path: '/services-deep-dive', icon: 'Settings' },
+    { name: 'Portfolio', path: '/portfolio-gallery', icon: 'Briefcase' },
     { name: 'Contact', path: '/contact-engagement-hub', icon: 'Mail' },
   ];
 
@@ -54,10 +54,9 @@ const Header = ({ showMobileStickyCta = false }) => {
             onClick={closeMenu}
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center transform transition-transform duration-200 group-hover:scale-105">
+              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">C</span>
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-success rounded-full animate-pulse-glow"></div>
             </div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-text-primary">Clykur</span>

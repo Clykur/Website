@@ -11,7 +11,7 @@ const ContactMethods = () => {
       icon: 'Zap',
       color: 'from-red-500 to-orange-500',
       responseTime: '24 hours',
-      features: ['Priority handling', 'Direct founder contact', 'Expedited proposal'],
+      features: ['Priority handling', 'Direct team contact', 'Expedited proposal'],
       action: 'Get Urgent Help',
       href: 'mailto:urgent@clykur.com?subject=Urgent Project Inquiry'
     },
@@ -73,37 +73,37 @@ const ContactMethods = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {contactMethods.map((method) => (
             <div
               key={method.id}
-              className="card p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              className="card p-4 sm:p-6 hover:shadow-xl transition-all duration-300 group cursor-pointer"
               onClick={() => handleContactClick(method.href)}
             >
-              <div className={`w-12 h-12 bg-gradient-to-br ${method.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <Icon name={method.icon} size={24} color="white" />
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${method.color} rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <Icon name={method.icon} size={20} color="white" className="sm:w-6 sm:h-6" />
               </div>
               
-              <h3 className="text-xl font-semibold text-text-primary mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-text-primary mb-2">
                 {method.title}
               </h3>
               
-              <p className="text-text-secondary mb-4 text-sm">
+              <p className="text-text-secondary mb-3 sm:mb-4 text-sm leading-relaxed">
                 {method.description}
               </p>
               
-              <div className="flex items-center space-x-2 mb-4">
-                <Icon name="Clock" size={16} className="text-success" />
-                <span className="text-sm font-medium text-success">
+              <div className="flex items-center space-x-2 mb-3 sm:mb-4">
+                <Icon name="Clock" size={14} className="text-success sm:w-4 sm:h-4" />
+                <span className="text-xs sm:text-sm font-medium text-success">
                   Response: {method.responseTime}
                 </span>
               </div>
               
-              <ul className="space-y-2 mb-6">
+              <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
                 {method.features.map((feature, index) => (
-                  <li key={index} className="flex items-center space-x-2 text-sm text-text-secondary">
-                    <Icon name="Check" size={14} className="text-success" />
-                    <span>{feature}</span>
+                  <li key={index} className="flex items-start space-x-2 text-xs sm:text-sm text-text-secondary">
+                    <Icon name="Check" size={12} className="text-success mt-0.5 flex-shrink-0 sm:w-3.5 sm:h-3.5" />
+                    <span className="leading-relaxed">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -111,9 +111,10 @@ const ContactMethods = () => {
               <Button
                 variant="outline"
                 fullWidth
+                size="sm"
                 iconName="ArrowRight"
                 iconPosition="right"
-                className="group-hover:bg-primary group-hover:text-secondary transition-colors duration-300"
+                className="group-hover:bg-primary group-hover:text-secondary transition-colors duration-300 text-sm sm:text-base"
               >
                 {method.action}
               </Button>

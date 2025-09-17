@@ -16,10 +16,10 @@ const TrustSignals = () => {
   ];
 
   // const clientLogos = [
-  //   { name: 'TechFlow', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' },
-  //   { name: 'DataSync', logo: 'https://www.svgrepo.com/download/494187/twitter.svg' },
-  //   { name: 'CloudBase', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg' },
-  //   { name: 'InnovateLab', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' }
+  //   { name: 'TechFlow', logo: 'https://via.placeholder.com/120x40/E3F2FD/1976D2?text=TechFlow' },
+  //   { name: 'DataSync', logo: 'https://via.placeholder.com/120x40/E3F2FD/1976D2?text=DataSync' },
+  //   { name: 'CloudBase', logo: 'https://via.placeholder.com/120x40/E3F2FD/1976D2?text=CloudBase' },
+  //   { name: 'InnovateLab', logo: 'https://via.placeholder.com/120x40/E3F2FD/1976D2?text=InnovateLab' }
   // ];
 
   return (

@@ -53,56 +53,49 @@ const HeroSection = () => {
   const project = featuredProjects[currentProject];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-primary via-background to-surface overflow-hidden">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-32 h-32 border border-secondary rounded-lg transform rotate-12 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 border border-accent rounded-full animate-bounce"></div>
-        <div className="absolute bottom-40 left-1/4 w-16 h-16 border border-success rounded-lg transform -rotate-45 animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 border border-secondary rounded-full animate-bounce"></div>
-      </div>
+    <section className="relative min-h-screen bg-background overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-8 fade-in">
-            <div className="space-y-6">
-              <div className="inline-flex items-center px-4 py-2 bg-success/10 text-success rounded-full text-sm font-medium">
-                <Icon name="Zap" size={16} className="mr-2" />
+            <div className="space-y-4 sm:space-y-6">
+              <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 bg-success/10 text-success rounded-full text-xs sm:text-sm font-medium">
+                <Icon name="Zap" size={14} className="mr-1.5 sm:mr-2 sm:size-4" />
                 50+ Applications Delivered
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-text-primary leading-tight">
                 We build{' '}
                 <span className="text-gradient">digital products</span>{' '}
                 that work beautifully
               </h1>
               
-              <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed max-w-2xl">
                 Transform your vision into scalable reality with a technical partner who understands that great software isn't just functional—it's transformational.
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/project-inquiry-hub">
+            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
+              <Link to="/project-inquiry-hub" className="flex-1 xs:flex-none">
                 <Button 
                   variant="primary" 
                   size="lg"
                   iconName="ArrowRight" 
                   iconPosition="right"
-                  className="w-full sm:w-auto shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="w-full xs:w-auto shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   Start Your Project
                 </Button>
               </Link>
-              <Link to="/portfolio-gallery">
+              <Link to="/portfolio-gallery" className="flex-1 xs:flex-none">
                 <Button 
                   variant="outline" 
                   size="lg"
                   iconName="Eye" 
                   iconPosition="left"
-                  className="w-full sm:w-auto"
+                  className="w-full xs:w-auto"
                 >
                   View Our Work
                 </Button>
@@ -110,18 +103,18 @@ const HeroSection = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="flex flex-wrap gap-6 pt-4">
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-4 sm:flex sm:flex-wrap">
               <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">95%</div>
-                <div className="text-sm text-text-secondary">Client Retention</div>
+                <div className="text-xl sm:text-2xl font-bold text-text-primary">95%</div>
+                <div className="text-xs sm:text-sm text-text-secondary">Client Retention</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">2.3x</div>
-                <div className="text-sm text-text-secondary">Average ROI</div>
+                <div className="text-xl sm:text-2xl font-bold text-text-primary">2.3x</div>
+                <div className="text-xs sm:text-sm text-text-secondary">Average ROI</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-text-primary">48h</div>
-                <div className="text-sm text-text-secondary">Response Time</div>
+                <div className="text-xl sm:text-2xl font-bold text-text-primary">48h</div>
+                <div className="text-xs sm:text-sm text-text-secondary">Response Time</div>
               </div>
             </div>
           </div>
@@ -179,17 +172,11 @@ const HeroSection = () => {
               ))}
             </div>
 
-            {/* Floating Elements */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent/20 rounded-full blur-xl animate-pulse"></div>
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-success/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+            {/* Minimal style: remove floating elements */}
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <Icon name="ChevronDown" size={24} className="text-text-secondary" />
-      </div>
+      {/* Removed scroll indicator for minimal style */}
     </section>
   );
 };

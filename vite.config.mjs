@@ -5,8 +5,6 @@ import tagger from "@dhiwise/component-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // This changes the output dir from dist to build
-  // comment this out if that isn't relevant for your project
   build: {
     outDir: "dist",
     chunkSizeWarningLimit: 1000,
@@ -16,6 +14,7 @@ export default defineConfig({
     port: "4028",
     host: "0.0.0.0",
     strictPort: true,
-    allowedHosts: ['.amazonaws.com', '.builtwithrocket.new']
-  }
+    allowedHosts: ['.amazonaws.com', '.builtwithrocket.new'],
+    historyApiFallback: true, // This is important for single page applications
+  },
 });
