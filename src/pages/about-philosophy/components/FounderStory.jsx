@@ -29,7 +29,7 @@ const FounderStory = () => {
     <section className="py-20 bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-bold text-text-primary mb-4">
+          <h2 className="pt-8 text-3xl lg:text-4xl font-bold text-text-primary mb-4">
             The Journey to Clykur
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
@@ -63,9 +63,7 @@ const FounderStory = () => {
                   <blockquote className="text-text-primary font-medium italic">
                     "We don’t just build applications—we craft digital foundations that help businesses thrive. Every line of code is written with your success in mind."
                   </blockquote>
-                  <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru, Lead Developer</cite>
-                  <cite className="text-text-secondary text-sm mt-2 block">— Karthik Naramala, Software Developer</cite>
-                </div>
+                  <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru & Karthik Naramala</cite>                </div>
               </div>
             </div>
           </div>

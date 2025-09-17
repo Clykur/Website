@@ -107,7 +107,7 @@ const TechnicalPhilosophy = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-4 gap-8">
+          <div className="grid lg:grid-cols-4 gap-8 items-stretch">
             {technicalApproach.map((phase, index) => (
               <div key={index} className="relative">
                 {/* Connection Line */}
@@ -115,7 +115,7 @@ const TechnicalPhilosophy = () => {
                   <div className="hidden lg:block absolute top-6 left-full w-full h-0.5 bg-gradient-to-r from-secondary to-accent transform translate-x-4 z-0"></div>
                 )}
                 
-                <div className="relative z-10 bg-background border border-border rounded-xl p-6 card-hover">
+                <div className="relative z-10 bg-background border border-border rounded-xl p-6 card-hover h-full flex flex-col">
                   <div className="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center mb-4">
                     <span className="text-white font-bold">{index + 1}</span>
                   </div>
@@ -128,7 +128,7 @@ const TechnicalPhilosophy = () => {
                     {phase.description}
                   </p>
                   
-                  <div className="space-y-2">
+                  <div className="space-y-2 mb-4">
                     {phase.tools.map((tool, toolIndex) => (
                       <div key={toolIndex} className="flex items-center space-x-2">
                         <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
@@ -136,6 +136,7 @@ const TechnicalPhilosophy = () => {
                       </div>
                     ))}
                   </div>
+                  <div className="mt-auto" />
                 </div>
               </div>
             ))}
