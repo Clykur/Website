@@ -8,7 +8,7 @@ const DirectContact = () => {
       type: 'email',
       label: 'Email',
       value: 'clykur@outlook.com',
-      description: 'For general inquiries and project discussions',
+      description: 'For product inquiries and partnership discussions',
       icon: 'Mail',
       action: 'mailto:clykur@outlook.com',
       responseTime: '24-48 hours'
@@ -17,7 +17,7 @@ const DirectContact = () => {
       type: 'linkedin',
       label: 'LinkedIn',
       value: 'Clykur',
-      description: 'Professional networking and industry discussions',
+      description: 'Follow our journey and product development updates',
       icon: 'Linkedin',
       action: 'https://www.linkedin.com/company/clykur',
       responseTime: '1-2 days'
@@ -39,10 +39,10 @@ const DirectContact = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-text-primary mb-4">
-            Direct Contact Options
+            Connect With Clykur
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Choose your preferred communication channel. I'm committed to responsive communication and will get back to you within the specified timeframes.
+            Choose your preferred way to connect with us. We're committed to keeping you updated on our revolutionary AI-powered products and launch timeline.
           </p>
         </div>
 

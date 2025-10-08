@@ -25,18 +25,18 @@ const Homepage = () => {
       <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 safe-bottom">
         <div className="grid grid-cols-2 gap-3">
           <a
-            href="/project-inquiry-hub"
+            href="/contact-engagement-hub"
             className="inline-flex items-center justify-center w-full py-3 px-4 rounded-lg bg-secondary text-secondary-foreground font-medium shadow-lg hover:shadow-xl transition-shadow duration-200"
           >
-            <span className="mr-2">🚀</span>
-            Start Project
+            <span className="mr-2">📧</span>
+            Join Waitlist
           </a>
           <a
-            href="/project-inquiry-hub"
+            href="/about-philosophy"
             className="inline-flex items-center justify-center w-full py-3 px-4 rounded-lg bg-background border border-border text-text-primary font-medium shadow-lg hover:bg-surface transition-colors duration-200"
           >
-            <span className="mr-2">💬</span>
-            Get Started
+            <span className="mr-2">👁️</span>
+            Our Vision
           </a>
         </div>
       </div>
