@@ -5,23 +5,23 @@ const FounderStory = () => {
   const storyPoints = [
     {
       icon: "GraduationCap",
-      title: "Our Foundation",
-      description: "Grounded in Computer Science and system design, we apply strong architectural principles to build scalable, reliable solutions."
+      title: "R&D Foundation",
+      description: "Deep roots in Computer Science research and development, with extensive experience in building scalable web technologies and AI-powered systems."
     },
     {
       icon: "Building2",
-      title: "Industry Experience",
-      description: "Years at leading tech companies working on enterprise-scale applications taught us the value of maintainable, production-ready code."
+      title: "Product Innovation",
+      description: "Years of experience in product development taught us that the future belongs to companies that build intelligent, self-evolving digital products."
     },
     {
       icon: "Lightbulb",
-      title: "The Realization",
-      description: "We saw the gap between typical development services and what ambitious businesses need—a technical partner, not just a vendor."
+      title: "The Vision",
+      description: "We recognized that the digital economy needs revolutionary products—AI-powered platforms that understand the intersection of technology, automation, and human potential."
     },
     {
       icon: "Rocket",
-      title: "Clykur’s Mission",
-      description: "We built Clykur to bridge this gap—combining technical excellence with business understanding to help startups and enterprises thrive digitally."
+      title: "Clykur's Mission",
+      description: "We're building the world's first AI-powered product platform that creates intelligent, self-evolving digital ecosystems for the future of work."
     }
   ];
 
@@ -30,10 +30,10 @@ const FounderStory = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="pt-8 text-3xl lg:text-4xl font-bold text-text-primary mb-4">
-            The Journey to Clykur
+            From R&D to Product Innovation
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            From corporate developers to technical co-founders—the story of how we built Clykur to transform how businesses approach digital development.
+            Our journey from research backgrounds to building Clykur—a product-driven technology company creating revolutionary AI-powered products that transform the digital economy.
           </p>
         </div>
 
@@ -42,15 +42,15 @@ const FounderStory = () => {
           <div className="space-y-8">
             <div className="prose prose-lg max-w-none">
               <p className="text-text-secondary leading-relaxed">
-                Our journey began in the corporate world, where we spent years building enterprise applications for Fortune 500 companies. While the technical challenges were exciting, we noticed a recurring pattern: businesses struggling to find development partners who truly understood their vision.
+                Our journey began in research and development, where we spent years building cutting-edge web technologies and AI systems. While the technical challenges were fascinating, we noticed a fundamental opportunity in the digital economy: the potential to create intelligent products that could revolutionize how work gets done.
               </p>
               
               <p className="text-text-secondary leading-relaxed">
-                Too often, we saw brilliant business ideas get lost in translation between stakeholders and development teams. The missing piece wasn’t just technical skill—it was the ability to think like product owners while engineering like architects.
+                We envisioned a world where AI-powered products could understand business needs, predict market demands, and automatically connect the right people at the right time. The opportunity wasn't just better matching—it was building intelligent products that could scale globally and learn continuously.
               </p>
               
               <p className="text-text-secondary leading-relaxed">
-                That’s when we found our calling: to be the technical partners that ambitious businesses deserve—teams who don’t just build what’s asked, but help uncover what’s truly needed.
+                That's when we realized our calling: to build Clykur—the world's first AI-powered product platform that creates intelligent, self-evolving digital ecosystems that transform the future of work through technology innovation.
               </p>
             </div>
 
@@ -61,7 +61,7 @@ const FounderStory = () => {
                 </div>
                 <div>
                   <blockquote className="text-text-primary font-medium italic">
-                    "We don’t just build applications—we craft digital foundations that help businesses thrive. Every line of code is written with your success in mind."
+                    "We're building revolutionary AI-powered products that understand business needs, predict market demands, and automatically orchestrate the future of work through intelligent technology."
                   </blockquote>
                   <cite className="text-text-secondary text-sm mt-2 block">— Chandu Kalluru & Karthik Naramala</cite>                </div>
               </div>

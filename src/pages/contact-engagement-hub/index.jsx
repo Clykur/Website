@@ -2,11 +2,11 @@ import React from 'react';
 import Header from '../../components/ui/Header';
 import ContactHero from './components/ContactHero';
 import ContactMethods from './components/ContactMethods';
-import ProjectInquiryForm from './components/ProjectInquiryForm';
-import ConsultationBooking from './components/ConsultationBooking';
+import WaitlistForm from './components/ProjectInquiryForm';
+import ProductVisionSession from './components/ConsultationBooking';
 import DirectContact from './components/DirectContact';
 import FAQSection from './components/FAQSection';
-import ClientPortal from './components/ClientPortal';
+import ProductDevelopmentHub from './components/ClientPortal';
 import TrustSignals from './components/TrustSignals';
 
 const ContactEngagementHub = () => {
@@ -17,11 +17,11 @@ const ContactEngagementHub = () => {
       <main className="pt-16 lg:pt-20">
         <ContactHero />
         <ContactMethods />
-        <ProjectInquiryForm />
-        <ConsultationBooking />
+        <WaitlistForm />
+        <ProductVisionSession />
         <DirectContact />
         <FAQSection />
-        <ClientPortal />
+        <ProductDevelopmentHub />
         <TrustSignals />
       </main>
 

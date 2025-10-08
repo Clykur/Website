@@ -3,245 +3,210 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 
-const ClientPortal = () => {
-  const [loginData, setLoginData] = useState({
-    email: '',
-    password: ''
-  });
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [loginError, setLoginError] = useState('');
+const ProductDevelopmentHub = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
-  // Mock client credentials for demo
-  const mockCredentials = {
-    email: 'client@example.com',
-    password: 'demo123'
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    setLoginError('');
-  };
-
-  const handleLogin = async (e) => {
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
-    setIsLoggingIn(true);
-    setLoginError('');
-
-    // Simulate login process
+    setIsSubmitting(true);
+    
+    // Simulate API call
     setTimeout(() => {
-      if (loginData.email === mockCredentials.email && loginData.password === mockCredentials.password) {
-        // Successful login - in real app, would redirect to portal
-        alert('Login successful! Redirecting to client portal...');
-        setLoginData({ email: '', password: '' });
-      } else {
-        setLoginError('Invalid credentials. Use client@example.com / demo123 for demo.');
-      }
-      setIsLoggingIn(false);
-    }, 1500);
+      setIsSubmitting(false);
+      setSubmitStatus('success');
+      setEmail('');
+      
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 3000);
+    }, 2000);
   };
 
-  const portalFeatures = [
+  const productFeatures = [
     {
-      icon: 'BarChart3',
-      title: 'Project Progress',
-      description: 'Real-time updates on development milestones and completion status'
+      icon: 'Rocket',
+      title: 'Product Roadmap',
+      description: 'Real-time updates on our AI-powered product development and launch timeline'
     },
     {
-      icon: 'FileText',
-      title: 'Deliverables',
-      description: 'Access completed features, documentation, and project assets'
+      icon: 'Brain',
+      title: 'AI Innovation',
+      description: 'Deep insights into our revolutionary AI technology and automation capabilities'
     },
     {
-      icon: 'MessageSquare',
-      title: 'Direct Communication',
-      description: 'Secure messaging with your development team and project updates'
+      icon: 'Users',
+      title: 'Community Access',
+      description: 'Connect with other early adopters and provide feedback on product development'
     },
     {
       icon: 'Calendar',
-      title: 'Meeting Scheduler',
-      description: 'Book review sessions, demos, and planning meetings'
+      title: 'Launch Updates',
+      description: 'Exclusive notifications about beta testing, demos, and product launches'
     },
     {
       icon: 'Download',
-      title: 'File Downloads',
-      description: 'Download source code, designs, and project documentation'
+      title: 'Early Access',
+      description: 'Priority access to beta versions and exclusive features before public launch'
     },
     {
-      icon: 'CreditCard',
-      title: 'Billing & Invoices',
-      description: 'View payment history, upcoming invoices, and billing details'
+      icon: 'MessageCircle',
+      title: 'Direct Communication',
+      description: 'Direct line to our development team for feedback and feature requests'
     }
   ];
+
+  const securityFeatures = [
+    { title: 'SSL Encrypted Communication', icon: 'Shield' },
+    { title: 'Two-Factor Authentication', icon: 'Key' },
+    { title: 'Regular Security Audits', icon: 'Search' },
+    { title: 'GDPR Compliant Data Handling', icon: 'Lock' }
+  ];
+
+  if (submitStatus === 'success') {
+    return (
+      <section className="py-16 lg:py-24 bg-surface">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-success rounded-full mb-6">
+              <Icon name="Check" size={32} color="white" />
+            </div>
+            <h3 className="text-2xl font-bold text-text-primary mb-4">
+              Welcome to Clykur's Development Hub!
+            </h3>
+            <p className="text-text-secondary mb-6">
+              You've been added to our exclusive development updates list. You'll receive regular updates about our AI-powered products and early access opportunities.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex items-center space-x-2 text-success">
+                <Icon name="Mail" size={20} />
+                <span>Updates sent to your email</span>
+              </div>
+              <div className="flex items-center space-x-2 text-success">
+                <Icon name="Rocket" size={20} />
+                <span>Early access coming soon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 lg:py-24 bg-surface">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-text-primary mb-4">
-            Client Portal Access
+            Clykur Development Hub
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Existing clients can access their dedicated project portal to track progress, communicate with the team, and access deliverables.
+            Get exclusive access to our product development journey, early beta testing opportunities, and direct communication with our AI innovation team.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Portal Features */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-semibold text-text-primary mb-6">
-                What's Inside Your Portal
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {portalFeatures.map((feature, index) => (
-                  <div key={index} className="card p-4 hover:shadow-md transition-shadow duration-200">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Icon name={feature.icon} size={20} color="white" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-text-primary mb-1">
-                          {feature.title}
-                        </h4>
-                        <p className="text-text-secondary text-sm">
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* What's Inside */}
+          <div>
+            <h3 className="text-2xl font-bold text-text-primary mb-6">What's Inside Our Hub</h3>
+            <div className="space-y-6">
+              {productFeatures.map((feature, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Icon name={feature.icon} size={24} color="white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-primary mb-2">{feature.title}</h4>
+                    <p className="text-text-secondary text-sm">{feature.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 p-6 bg-primary rounded-xl">
+              <h4 className="font-bold text-text-primary mb-4">Secure & Private</h4>
+              <div className="grid grid-cols-2 gap-3">
+                {securityFeatures.map((feature, index) => (
+                  <div key={index} className="flex items-center space-x-2 text-sm">
+                    <Icon name={feature.icon} size={16} className="text-success" />
+                    <span className="text-text-secondary">{feature.title}</span>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="card p-6 bg-primary">
-              <h4 className="text-lg font-semibold text-text-primary mb-4 flex items-center space-x-2">
-                <Icon name="Shield" size={20} className="text-success" />
-                <span>Secure & Private</span>
-              </h4>
-              <ul className="space-y-2">
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">SSL encrypted communication</span>
-                </li>
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">Two-factor authentication</span>
-                </li>
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">Regular security audits</span>
-                </li>
-                <li className="flex items-center space-x-2 text-sm">
-                  <Icon name="Check" size={14} className="text-success" />
-                  <span className="text-text-secondary">GDPR compliant data handling</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="card p-6">
-              <h4 className="text-lg font-semibold text-text-primary mb-4">
-                Need Portal Access?
-              </h4>
-              <p className="text-text-secondary mb-4">
-                If you're a new client or haven't received your portal credentials, I'll set up your access as soon as your project begins.
-              </p>
-              <Button
-                variant="outline"
-                fullWidth
-                iconName="Mail"
-                iconPosition="left"
-                onClick={() => window.location.href = 'mailto:hello@clykur.com?subject=Portal Access Request'}
-              >
-                Request Portal Access
-              </Button>
-            </div>
           </div>
 
-          {/* Login Form */}
+          {/* Access Form */}
           <div className="card p-8">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Icon name="Lock" size={32} color="white" />
-              </div>
-              <h3 className="text-2xl font-semibold text-text-primary mb-2">
-                Client Portal Login
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-text-primary mb-2">
+                Get Development Hub Access
               </h3>
-              <p className="text-text-secondary">
-                Access your project dashboard and communication center
+              <p className="text-text-secondary text-sm">
+                Join our exclusive development community and be among the first to experience our revolutionary AI-powered products.
               </p>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-6">
+            <form onSubmit={handleEmailSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-2">
-                  Email Address
+                  Email Address *
                 </label>
                 <Input
                   type="email"
-                  name="email"
-                  value={loginData.email}
-                  onChange={handleInputChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-text-primary mb-2">
-                  Password
-                </label>
-                <Input
-                  type="password"
-                  name="password"
-                  value={loginData.password}
-                  onChange={handleInputChange}
-                  placeholder="Enter your password"
-                  required
-                />
-              </div>
-
-              {loginError && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <div className="flex items-center space-x-2">
-                    <Icon name="AlertCircle" size={16} className="text-red-500" />
-                    <span className="text-red-700 text-sm">{loginError}</span>
-                  </div>
-                </div>
-              )}
-
               <Button
                 type="submit"
                 variant="primary"
-                fullWidth
-                loading={isLoggingIn}
-                iconName="LogIn"
+                loading={isSubmitting}
+                iconName="Rocket"
                 iconPosition="right"
+                className="w-full"
               >
-                {isLoggingIn ? 'Signing In...' : 'Access Portal'}
+                {isSubmitting ? 'Joining...' : 'Join Development Hub'}
               </Button>
             </form>
 
-            <div className="mt-6 pt-6 border-t border-border">
-              <div className="text-center space-y-4">
-                <button
-                  onClick={() => alert('Password reset email sent! (Demo only)')}
-                  className="text-secondary hover:text-blue-800 text-sm font-medium transition-colors duration-200"
-                >
-                  Forgot your password?
-                </button>
-                
-                <div className="bg-surface p-4 rounded-lg">
-                  <p className="text-xs text-text-secondary mb-2">Demo Credentials:</p>
-                  <p className="text-xs font-mono text-text-primary">
-                    Email: client@example.com<br />
-                    Password: demo123
-                  </p>
-                </div>
+            <div className="mt-6 p-4 bg-primary rounded-lg">
+              <div className="flex items-center space-x-2 text-sm text-text-secondary">
+                <Icon name="Info" size={16} />
+                <span>Access will be granted as soon as our products enter beta testing phase</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="bg-background border border-border rounded-xl p-8 max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-text-primary mb-4">
+              Ready to Experience the Future?
+            </h3>
+            <p className="text-text-secondary mb-6">
+              Join our development hub and be part of the AI revolution. Get early access to products that will transform how businesses work.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#waitlist-form"
+                className="inline-flex items-center justify-center px-6 py-3 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors duration-200"
+              >
+                <Icon name="Rocket" size={20} className="mr-2" />
+                Join Waitlist
+              </a>
+              <a
+                href="#vision-session"
+                className="inline-flex items-center justify-center px-6 py-3 border border-border text-text-primary rounded-lg hover:bg-surface transition-colors duration-200"
+              >
+                <Icon name="Eye" size={20} className="mr-2" />
+                Learn About Our Vision
+              </a>
             </div>
           </div>
         </div>
@@ -250,4 +215,4 @@ const ClientPortal = () => {
   );
 };
 
-export default ClientPortal;
+export default ProductDevelopmentHub;

@@ -1,102 +1,109 @@
 import React from 'react';
-import Image from '../../../components/AppImage';
+import Icon from '../../../components/AppIcon';
 
 const ClientLogoMarquee = () => {
-  const clients = [
+  const technologies = [
     {
-      name: "TechFlow Innovations",
-      logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&h=60&fit=crop",
-      category: "Startup"
+      name: "AI & Machine Learning",
+      icon: "Brain",
+      description: "GPT-4, Neural Networks, Predictive Analytics"
     },
     {
-      name: "DataSync Solutions",
-      logo: "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?w=120&h=60&fit=crop",
-      category: "Enterprise"
+      name: "Cloud Infrastructure",
+      icon: "Cloud",
+      description: "AWS, Azure, Global CDN, Microservices"
     },
     {
-      name: "CloudVision Corp",
-      logo: "https://images.pixabay.com/photo/2016/12/27/21/03/lone-tree-1934897_1280.jpg?w=120&h=60&fit=crop",
-      category: "Scale-up"
+      name: "Real-time Communication",
+      icon: "MessageCircle",
+      description: "WebRTC, WebSockets, Live Collaboration"
     },
     {
-      name: "NextGen Analytics",
-      logo: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=120&h=60&fit=crop",
-      category: "Startup"
+      name: "Data Intelligence",
+      icon: "BarChart",
+      description: "Big Data, Analytics, Business Intelligence"
     },
     {
-      name: "InnovateLab",
-      logo: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?w=120&h=60&fit=crop",
-      category: "Enterprise"
+      name: "Security & Compliance",
+      icon: "Shield",
+      description: "End-to-end Encryption, GDPR, SOC2"
     },
     {
-      name: "FutureScope Systems",
-      logo: "https://images.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg?w=120&h=60&fit=crop",
-      category: "Scale-up"
+      name: "Mobile & Web",
+      icon: "Smartphone",
+      description: "React Native, Progressive Web Apps"
     },
     {
-      name: "AgileCore Technologies",
-      logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=120&h=60&fit=crop",
-      category: "Startup"
+      name: "API Integration",
+      icon: "Zap",
+      description: "RESTful APIs, GraphQL, Third-party Integrations"
     },
     {
-      name: "QuantumLeap Ventures",
-      logo: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?w=120&h=60&fit=crop",
-      category: "Enterprise"
+      name: "Automation",
+      icon: "Bot",
+      description: "Workflow Automation, Smart Triggers"
     }
   ];
 
   // Duplicate for seamless loop
-  const duplicatedClients = [...clients, ...clients];
+  const duplicatedTechnologies = [...technologies, ...technologies];
 
   return (
     <section className="py-16 bg-surface border-y border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">
-            Trusted by ambitious startups and established businesses
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium mb-6">
+            <Icon name="Zap" size={16} className="mr-2" />
+            🚀 Technology Stack
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-4">
+            Built with <span className="text-gradient">Cutting-Edge</span> Technology
           </h2>
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto mb-8">
+            Our platform leverages the latest AI, cloud, and automation technologies to deliver unprecedented business intelligence and global scalability.
+          </p>
           <div className="flex justify-center items-center space-x-8 text-sm text-text-secondary">
-            <div className="flex items-center">
+            <div className="flex items-center px-3 py-1.5 bg-success/10 text-success rounded-full">
               <div className="w-2 h-2 bg-success rounded-full mr-2"></div>
-              Startups
+              AI-Powered
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-3 py-1.5 bg-secondary/10 text-secondary rounded-full">
               <div className="w-2 h-2 bg-secondary rounded-full mr-2"></div>
-              Scale-ups
+              Cloud-Native
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-3 py-1.5 bg-accent/10 text-accent rounded-full">
               <div className="w-2 h-2 bg-accent rounded-full mr-2"></div>
-              Enterprise
+              Global Scale
             </div>
           </div>
         </div>
 
-        {/* Marquee Container */}
+        {/* Technology Marquee Container */}
         <div className="relative overflow-hidden">
-          <div className="flex animate-marquee space-x-8 sm:space-x-12">
-            {duplicatedClients.map((client, index) => (
+          <div className="flex animate-marquee space-x-6 sm:space-x-8">
+            {duplicatedTechnologies.map((tech, index) => (
               <div
-                key={`${client.name}-${index}`}
+                key={`${tech.name}-${index}`}
                 className="flex-shrink-0 group"
               >
-                <div className="relative bg-background rounded-lg p-4 sm:p-6 shadow-sm border border-border hover:shadow-md transition-all duration-300 group-hover:scale-105">
-                  <div className="flex items-center justify-center h-10 w-28 sm:h-12 sm:w-32">
-                    <Image
-                      src={client.logo}
-                      alt={`${client.name} logo`}
-                      className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                <div className="relative bg-background rounded-xl p-6 shadow-sm border border-border hover:shadow-lg hover:border-accent/20 transition-all duration-300 group-hover:scale-105 group-hover:-translate-y-1">
+                  {/* Icon Container */}
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br from-secondary/10 to-accent/10 group-hover:from-secondary/20 group-hover:to-accent/20 transition-all duration-300">
+                    <Icon 
+                      name={tech.icon} 
+                      size={28} 
+                      className="text-secondary group-hover:text-accent transition-colors duration-300" 
                     />
                   </div>
-                  <div className="mt-3 text-center">
-                    <div className="text-[10px] sm:text-xs font-medium text-text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {client.name}
-                    </div>
-                    <div className={`text-[10px] sm:text-xs mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      client.category === 'Startup' ? 'text-success' :
-                      client.category === 'Scale-up'? 'text-secondary' : 'text-accent'
-                    }`}>
-                      {client.category}
-                    </div>
+                  
+                  {/* Content */}
+                  <div className="text-center">
+                    <h3 className="text-sm font-semibold text-text-primary mb-2 group-hover:text-accent transition-colors duration-300">
+                      {tech.name}
+                    </h3>
+                    <p className="text-xs text-text-secondary leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {tech.description}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -108,23 +115,46 @@ const ClientLogoMarquee = () => {
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-surface to-transparent pointer-events-none"></div>
         </div>
 
-        {/* Stats Row */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <div className="text-2xl font-bold text-text-primary">50+</div>
-            <div className="text-sm text-text-secondary">Applications Delivered</div>
+        {/* Technology Stats Row */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="bg-background rounded-xl p-6 border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 group">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-success/10 text-success mb-3 group-hover:scale-110 transition-transform duration-300">
+                <Icon name="Layers" size={20} />
+              </div>
+              <div className="text-2xl font-bold text-text-primary mb-1">8+</div>
+              <div className="text-sm text-text-secondary font-medium">Core Technologies</div>
+            </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-text-primary">95%</div>
-            <div className="text-sm text-text-secondary">Client Retention</div>
+          
+          <div className="bg-background rounded-xl p-6 border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 group">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/10 text-secondary mb-3 group-hover:scale-110 transition-transform duration-300">
+                <Icon name="Brain" size={20} />
+              </div>
+              <div className="text-2xl font-bold text-text-primary mb-1">100%</div>
+              <div className="text-sm text-text-secondary font-medium">AI-Powered</div>
+            </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-text-primary">2.3x</div>
-            <div className="text-sm text-text-secondary">Average ROI Increase</div>
+          
+          <div className="bg-background rounded-xl p-6 border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 group">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-accent/10 text-accent mb-3 group-hover:scale-110 transition-transform duration-300">
+                <Icon name="Globe" size={20} />
+              </div>
+              <div className="text-2xl font-bold text-text-primary mb-1">50+</div>
+              <div className="text-sm text-text-secondary font-medium">Target Countries</div>
+            </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-text-primary">24/7</div>
-            <div className="text-sm text-text-secondary">Support Available</div>
+          
+          <div className="bg-background rounded-xl p-6 border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 group">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-success/10 text-success mb-3 group-hover:scale-110 transition-transform duration-300">
+                <Icon name="Zap" size={20} />
+              </div>
+              <div className="text-2xl font-bold text-text-primary mb-1">90%</div>
+              <div className="text-sm text-text-secondary font-medium">Automation Rate</div>
+            </div>
           </div>
         </div>
       </div>

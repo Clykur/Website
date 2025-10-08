@@ -5,48 +5,48 @@ import Button from '../../../components/ui/Button';
 const ContactMethods = () => {
   const contactMethods = [
     {
-      id: 'urgent',
-      title: 'Urgent Project',
-      description: 'Time-sensitive opportunities with immediate needs',
-      icon: 'Zap',
+      id: 'waitlist',
+      title: 'Join Waitlist',
+      description: 'Be among the first to access our AI-powered products',
+      icon: 'Rocket',
       color: 'from-red-500 to-orange-500',
-      responseTime: '24 hours',
-      features: ['Priority handling', 'Direct team contact', 'Expedited proposal'],
-      action: 'Get Urgent Help',
-      href: 'mailto:urgent@clykur.com?subject=Urgent Project Inquiry'
+      responseTime: 'Immediate',
+      features: ['Early access', 'Product updates', 'Launch notifications'],
+      action: 'Join Now',
+      href: '#waitlist-form'
     },
     {
-      id: 'consultation',
-      title: 'Technical Consultation',
-      description: '30-minute strategy session with Chandu Kalluru',
-      icon: 'Calendar',
+      id: 'vision',
+      title: 'Our Vision',
+      description: 'Learn about our revolutionary AI-powered products',
+      icon: 'Eye',
       color: 'from-secondary to-blue-600',
-      responseTime: 'Same day',
-      features: ['Free consultation', 'Project roadmap', 'Technology recommendations'],
-      action: 'Book Consultation',
-      href: '#consultation-booking'
+      responseTime: 'Instant',
+      features: ['Product roadmap', 'AI features', 'Technology insights'],
+      action: 'Learn More',
+      href: '/about-philosophy'
     },
     {
-      id: 'project',
-      title: 'Project Inquiry',
-      description: 'Detailed project discussion and proposal request',
-      icon: 'Briefcase',
+      id: 'partnership',
+      title: 'Partnership',
+      description: 'Explore collaboration opportunities with Clykur',
+      icon: 'Handshake',
       color: 'from-success to-green-600',
       responseTime: '48 hours',
-      features: ['Detailed proposal', 'Timeline estimation', 'Budget discussion'],
-      action: 'Start Project',
-      href: '#project-form'
+      features: ['Partnership discussion', 'Integration opportunities', 'Strategic collaboration'],
+      action: 'Partner With Us',
+      href: 'mailto:partnerships@clykur.com'
     },
     {
       id: 'general',
       title: 'General Inquiry',
-      description: 'Questions about services, process, or collaboration',
+      description: 'Questions about our products, technology, or vision',
       icon: 'Mail',
       color: 'from-accent to-yellow-500',
-      responseTime: '72 hours',
-      features: ['Service information', 'Process overview', 'Partnership discussion'],
+      responseTime: '24 hours',
+      features: ['Product information', 'Technology details', 'Company vision'],
       action: 'Send Message',
-      href: '#general-contact'
+      href: 'mailto:clykur@outlook.com'
     }
   ];
 
@@ -69,11 +69,11 @@ const ContactMethods = () => {
             Choose Your Engagement Path
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Different projects have different needs. Select the communication channel that best matches your timeline and requirements.
+            Choose how you'd like to connect with Clykur and be part of the AI revolution. Select the option that best matches your interest and engagement level.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 items-stretch">
           {contactMethods.map((method) => (
             <div
               key={method.id}

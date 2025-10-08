@@ -4,53 +4,31 @@ import Icon from '../../../components/AppIcon';
 const TechnicalPhilosophy = () => {
   const philosophyPrinciples = [
     {
-      icon: "Users",
-      title: "User-First Design",
-      description: "Every technical decision starts with the end user. Beautiful code means nothing if it doesn't solve real problems elegantly.",
-      example: "Implementing progressive loading for better perceived performance, even when the backend is lightning fast."
+      icon: "Brain",
+      title: "AI-First Innovation",
+      description: "Every product decision is driven by artificial intelligence. We build systems that learn, adapt, and evolve with user needs.",
+      example: "Neural networks that continuously learn from user behavior to optimize product features and predict user needs before they're expressed."
     },
     {
-      icon: "Layers",
-      title: "Scalable Architecture",
-      description: "Building systems that grow with your business, not against it. Today's solution should enable tomorrow's opportunities.",
-      example: "Microservices architecture that allows individual components to scale independently as user demand grows."
+      icon: "Globe",
+      title: "Global Digital Ecosystems",
+      description: "Building products that transcend geographical boundaries, creating intelligent digital environments that adapt to local markets worldwide.",
+      example: "AI-powered localization engines that automatically adapt product interfaces and functionality based on cultural and regional preferences."
     },
     {
       icon: "Shield",
-      title: "Maintainable Code",
-      description: "Code is read more often than it's written. Clean, documented, and tested code is an investment in your future.",
-      example: "Comprehensive test coverage and clear documentation that allows any developer to contribute confidently."
+      title: "Transparent Automation",
+      description: "Every automated process is transparent and auditable. Users understand exactly how AI decisions are made.",
+      example: "Open-source AI decision trees that show users exactly how our products make recommendations, building trust through complete transparency."
     },
     {
       icon: "Zap",
-      title: "Performance Obsession",
-      description: "Speed is a feature. Every millisecond matters when it comes to user experience and business conversion.",
-      example: "Optimizing bundle sizes and implementing smart caching strategies for sub-second load times."
+      title: "Intelligent Efficiency",
+      description: "Our AI doesn't just automate tasks—it optimizes entire workflows, making businesses 10x more productive.",
+      example: "Self-optimizing product algorithms that automatically improve performance, reduce resource usage, and enhance user experience without manual intervention."
     }
   ];
 
-  const technicalApproach = [
-    {
-      phase: "Discovery & Planning",
-      description: "Deep dive into business requirements, user needs, and technical constraints",
-      tools: ["User Story Mapping", "Technical Architecture Review", "Risk Assessment"]
-    },
-    {
-      phase: "Architecture Design",
-      description: "Creating scalable, maintainable system architecture with future growth in mind",
-      tools: ["System Design", "Database Modeling", "API Specification"]
-    },
-    {
-      phase: "Iterative Development",
-      description: "Agile development with continuous feedback and rapid iteration cycles",
-      tools: ["Sprint Planning", "Code Reviews", "Automated Testing"]
-    },
-    {
-      phase: "Quality Assurance",
-      description: "Comprehensive testing and optimization before deployment",
-      tools: ["Unit Testing", "Integration Testing", "Performance Optimization"]
-    }
-  ];
 
   return (
     <section className="py-20 bg-background">
@@ -58,10 +36,10 @@ const TechnicalPhilosophy = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-text-primary mb-4">
-            Technical Philosophy
+            Product Innovation Philosophy
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Our approach to development is rooted in core principles that ensure every project delivers exceptional value and long-term success.
+            Our approach to product development is rooted in AI-first principles that create intelligent, efficient, and transparent digital ecosystems.
           </p>
         </div>
 
@@ -96,52 +74,6 @@ const TechnicalPhilosophy = () => {
           ))}
         </div>
 
-        {/* Technical Approach */}
-        <div className="bg-surface rounded-2xl p-8 lg:p-12">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl lg:text-3xl font-bold text-text-primary mb-4">
-              Development Approach
-            </h3>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              A proven methodology that ensures project success from concept to deployment and beyond.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-4 gap-8 items-stretch">
-            {technicalApproach.map((phase, index) => (
-              <div key={index} className="relative">
-                {/* Connection Line */}
-                {index < technicalApproach.length - 1 && (
-                  <div className="hidden lg:block absolute top-6 left-full w-full h-0.5 bg-gradient-to-r from-secondary to-accent transform translate-x-4 z-0"></div>
-                )}
-                
-                <div className="relative z-10 bg-background border border-border rounded-xl p-6 card-hover h-full flex flex-col">
-                  <div className="w-12 h-12 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center mb-4">
-                    <span className="text-white font-bold">{index + 1}</span>
-                  </div>
-                  
-                  <h4 className="text-lg font-semibold text-text-primary mb-3">
-                    {phase.phase}
-                  </h4>
-                  
-                  <p className="text-text-secondary text-sm mb-4 leading-relaxed">
-                    {phase.description}
-                  </p>
-                  
-                  <div className="space-y-2 mb-4">
-                    {phase.tools.map((tool, toolIndex) => (
-                      <div key={toolIndex} className="flex items-center space-x-2">
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                        <span className="text-xs text-text-secondary">{tool}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-auto" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

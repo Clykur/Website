@@ -11,8 +11,6 @@ const Header = ({ showMobileStickyCta = false }) => {
   const navigationItems = [
     { name: 'Home', path: '/homepage', icon: 'Home' },
     { name: 'About', path: '/about-philosophy', icon: 'User' },
-    { name: 'Services', path: '/services-deep-dive', icon: 'Settings' },
-    { name: 'Portfolio', path: '/portfolio-gallery', icon: 'Briefcase' },
     { name: 'Contact', path: '/contact-engagement-hub', icon: 'Mail' },
   ];
 
@@ -60,7 +58,7 @@ const Header = ({ showMobileStickyCta = false }) => {
             </div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold text-text-primary">Clykur</span>
-              <span className="block text-xs text-text-secondary font-medium">Portfolio</span>
+              <span className="block text-xs text-text-secondary font-medium">AI Products</span>
             </div>
           </Link>
 
@@ -84,14 +82,14 @@ const Header = ({ showMobileStickyCta = false }) => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link to="/project-inquiry-hub">
+            <Link to="/contact-engagement-hub">
               <Button 
                 variant="primary" 
-                iconName="ArrowRight" 
+                iconName="Rocket" 
                 iconPosition="right"
                 className="shadow-sm hover:shadow-md transition-shadow duration-200"
               >
-                Start Project
+                Join Waitlist
               </Button>
             </Link>
           </div>
@@ -136,15 +134,15 @@ const Header = ({ showMobileStickyCta = false }) => {
             
             {/* Mobile CTA */}
             <div className="mt-6 pt-4 border-t border-border">
-              <Link to="/project-inquiry-hub" onClick={closeMenu}>
+              <Link to="/contact-engagement-hub" onClick={closeMenu}>
                 <Button 
                   variant="primary" 
                   fullWidth
-                  iconName="ArrowRight" 
+                  iconName="Rocket" 
                   iconPosition="right"
                   className="justify-center"
                 >
-                  Start Your Project
+                  Join Waitlist
                 </Button>
               </Link>
             </div>
@@ -155,15 +153,15 @@ const Header = ({ showMobileStickyCta = false }) => {
       {/* Mobile Sticky CTA */}
       {showMobileStickyCta && (
         <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 safe-bottom">
-          <Link to="/project-inquiry-hub">
+          <Link to="/contact-engagement-hub">
             <Button 
               variant="primary" 
               fullWidth
-              iconName="MessageCircle" 
+              iconName="Rocket" 
               iconPosition="left"
               className="justify-center shadow-lg hover:shadow-xl transition-shadow duration-200"
             >
-              Get Started
+              Join Waitlist
             </Button>
           </Link>
         </div>

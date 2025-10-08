@@ -3,11 +3,6 @@ import Header from '../../components/ui/Header';
 import HeroSection from './components/HeroSection';
 import FounderStory from './components/FounderStory';
 import TechnicalPhilosophy from './components/TechnicalPhilosophy';
-import CredentialsSection from './components/CredentialsSection';
-import WhyClykur from './components/WhyClykur';
-import ClientPhilosophy from './components/ClientPhilosophy';
-import BehindTheScenes from './components/BehindTheScenes';
-import ConsultationCTA from './components/ConsultationCTA';
 
 const AboutPhilosophy = () => {
   return (
@@ -17,11 +12,6 @@ const AboutPhilosophy = () => {
       <main>
         <FounderStory />
         <TechnicalPhilosophy />
-        <CredentialsSection />
-        <WhyClykur />
-        <ClientPhilosophy />
-        <BehindTheScenes />
-        <ConsultationCTA />
         <HeroSection />
       </main>
     </div>

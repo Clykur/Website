@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="text-xl font-semibold">Clykur</span>
             </div>
             <p className="opacity-90 text-sm max-w-md">
-              Transforming ambitious visions into scalable digital realities. Your trusted partner for exceptional web and mobile applications.
+              Building revolutionary AI-powered products that transform the digital economy. Join us on our journey to create intelligent, self-evolving digital ecosystems.
             </p>
             <div className="flex items-center gap-4 mt-4">
               <a href="https://www.linkedin.com/company/clykur" aria-label="LinkedIn" className="hover:opacity-100 opacity-90">
@@ -30,24 +30,23 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm opacity-90">
               <li><a href="/" className="hover:opacity-100">Home</a></li>
-              <li><a href="/portfolio-gallery" className="hover:opacity-100">Portfolio</a></li>
-              <li><a href="/services-deep-dive" className="hover:opacity-100">Services</a></li>
               <li><a href="/about-philosophy" className="hover:opacity-100">About</a></li>
               <li><a href="/contact-engagement-hub" className="hover:opacity-100">Contact</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Contact</h3>
+            <h3 className="font-semibold mb-4">Launch Timeline</h3>
             <ul className="space-y-2 text-sm opacity-90">
               <li><a href="mailto:clykur@outlook.com" className="hover:opacity-100">clykur@outlook.com</a></li>
-              <li>Available Time : 9:00 AM - 6:00 PM IST</li>
+              <li>Q2 2026 Launch Date</li>
+              <li>Early Access Available</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-secondary-foreground/20 mt-8 pt-6 text-sm opacity-90 text-center">
-          © {new Date().getFullYear()} Clykur — Empowering digital innovation. All rights reserved.
+          © {new Date().getFullYear()} Clykur — Building the future of AI-powered business automation. All rights reserved.
         </div>
       </div>
     </footer>
