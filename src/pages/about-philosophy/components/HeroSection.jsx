@@ -13,7 +13,7 @@ const HeroSection = () => {
       name: "Karthik Naramala",
       role: "Co-Founder & CTO",
       image:
-        "https://i.ibb.co/svTSnLYn/Chat-GPT-Image-Sep-15-2025-01-37-44-PM.png",
+        "https://i.ibb.co/gbj8P9Vc/Profile-Company.jpg",
     },
   ];
   return (
