@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @font-face {
+      font-family: 'Calegar';
+      src: url('./public/fonts/Calegar.otf') format('opentype');
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    .preview {
+      width: 32px;
+      height: 32px;
+      background: #0A0A0A;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .preview-text {
+      font-family: 'Calegar', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .instructions {
+      max-width: 600px;
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Favicon Preview</h1>
+  <div class="preview">
+    <div class="preview-text">C</div>
+  </div>
+  
+  <div class="instructions">
+    <h2>To generate favicon with Calegar font:</h2>
+    <ol>
+      <li>Take a screenshot of the "C" above (32x32px)</li>
+      <li>Or use an online tool like <a href="https://favicon.io/favicon-converter/" target="_blank">favicon.io</a> to convert</li>
+      <li>Or use this canvas to export:</li>
+    </ol>
+    
+    <canvas id="faviconCanvas" width="32" height="32" style="border: 1px solid #ccc; background: #0A0A0A; border-radius: 6px;"></canvas>
+    
+    <br><br>
+    <button onclick="downloadFavicon()">Download as PNG</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('faviconCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set background
+    ctx.fillStyle = '#0A0A0A';
+    ctx.fillRect(0, 0, 32, 32);
+    
+    // Draw rounded corners (simplified)
+    ctx.fillStyle = '#0A0A0A';
+    ctx.beginPath();
+    ctx.roundRect(0, 0, 32, 32, 6);
+    ctx.fill();
+    
+    // Draw text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 22px Calegar, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('C', 16, 18);
+    
+    function downloadFavicon() {
+      canvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'favicon.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+  </script>
+</body>
+</html>
+
