@@ -24,7 +24,7 @@ Best regards`;
             Get in Touch
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-            Ready to start your project? Let's discuss how we can work together
+            Ready to start your project? Let&apos;s discuss how we can work together
             to bring your vision to life.
           </p>
           

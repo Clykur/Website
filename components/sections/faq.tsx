@@ -81,7 +81,7 @@ export function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Common questions about my process, timeline, and how we'll work together.
+            Common questions about my process, timeline, and how we&apos;ll work together.
           </p>
         </div>
 

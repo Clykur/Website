@@ -19,12 +19,12 @@ export function About() {
             
             <div className="border-l-2 border-border pl-6 md:pl-8 my-8">
               <p className="text-justify">
-                I work as a <span className="text-foreground font-semibold">long-term frontend partner</span>, not a short-term executor. This means aligning closely with your design system, ensuring consistency across all screens, and making informed frontend decisions that support your product's user experience over time.
+                I work as a <span className="text-foreground font-semibold">long-term frontend partner</span>, not a short-term executor. This means aligning closely with your design system, ensuring consistency across all screens, and making informed frontend decisions that support your product&apos;s user experience over time.
               </p>
             </div>
 
             <p className="text-justify">
-              <span className="text-foreground font-semibold">Code quality</span>, <span className="text-foreground font-semibold">pixel-perfect accuracy</span>, and <span className="text-foreground font-semibold">clear communication</span> are non-negotiable. I follow proven frontend development practices, pay close attention to design details, and treat every project with the same level of <span className="text-foreground font-semibold">technical rigor</span> whether it's a single page or a complex application. I leverage <span className="text-foreground font-semibold">AI tools</span> strategically to accelerate development while maintaining the highest standards of <span className="text-foreground font-semibold">quality and precision</span>.
+              <span className="text-foreground font-semibold">Code quality</span>, <span className="text-foreground font-semibold">pixel-perfect accuracy</span>, and <span className="text-foreground font-semibold">clear communication</span> are non-negotiable. I follow proven frontend development practices, pay close attention to design details, and treat every project with the same level of <span className="text-foreground font-semibold">technical rigor</span> whether it&apos;s a single page or a complex application. I leverage <span className="text-foreground font-semibold">AI tools</span> strategically to accelerate development while maintaining the highest standards of <span className="text-foreground font-semibold">quality and precision</span>.
             </p>
           </div>
         </div>
