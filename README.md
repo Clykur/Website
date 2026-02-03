@@ -93,7 +93,18 @@ The website features a clean, minimal design with a neutral color palette and su
 5. **Process**: Our development workflow
 6. **Case Studies**: Detailed project examples
 7. **FAQ**: Frequently asked questions
-8. **Contact**: Contact form and direct contact information
+8. **Trust & Verification**: MSME / UDYAM registration QR (links to Government of India portal)
+9. **Contact**: Contact form and direct contact information
+
+### Trust & Verification (MSME / UDYAM)
+
+The Trust section shows a static QR code that links directly to the official UDYAM verification URL (`udyamregistration.gov.in`). The QR center displays "CLYKUR" in Calegar font (rendered programmatically; no image file). High error correction keeps the code scannable. Placement: between FAQ and Contact. To regenerate the QR (e.g. after changing the URL), run:
+
+```bash
+npm run generate-udyam-qr
+```
+
+Output: `public/udyam-verification-qr.png`. The section lives in `components/sections/trust-verification.tsx` and is linked from the footer.
 
 ---
 

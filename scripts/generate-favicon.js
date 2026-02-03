@@ -19,15 +19,15 @@ async function generateFavicon() {
       const canvas = createCanvas(size, size);
       const ctx = canvas.getContext('2d');
       
-      // Draw background with rounded corners
-      ctx.fillStyle = '#0A0A0A';
+      // Draw background with rounded corners (white)
+      ctx.fillStyle = '#FFFFFF';
       ctx.beginPath();
       const radius = size * 0.1875; // 6px for 32px, scales proportionally
       ctx.roundRect(0, 0, size, size, radius);
       ctx.fill();
       
-      // Draw the "C" with Calegar font
-      ctx.fillStyle = '#FFFFFF';
+      // Draw the "C" with Calegar font (black)
+      ctx.fillStyle = '#000000';
       ctx.font = `bold ${Math.floor(size * 0.6875)}px Calegar`; // 22px for 32px
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -43,11 +43,11 @@ async function generateFavicon() {
     // Generate ICO file (simplified - using 32x32)
     const ico32 = createCanvas(32, 32);
     const icoCtx = ico32.getContext('2d');
-    icoCtx.fillStyle = '#0A0A0A';
+    icoCtx.fillStyle = '#FFFFFF';
     icoCtx.beginPath();
     icoCtx.roundRect(0, 0, 32, 32, 6);
     icoCtx.fill();
-    icoCtx.fillStyle = '#FFFFFF';
+    icoCtx.fillStyle = '#000000';
     icoCtx.font = 'bold 22px Calegar';
     icoCtx.textAlign = 'center';
     icoCtx.textBaseline = 'middle';
@@ -60,11 +60,11 @@ async function generateFavicon() {
     // Also create icon.png for Next.js
     const icon128 = createCanvas(128, 128);
     const iconCtx = icon128.getContext('2d');
-    iconCtx.fillStyle = '#0A0A0A';
+    iconCtx.fillStyle = '#FFFFFF';
     iconCtx.beginPath();
     iconCtx.roundRect(0, 0, 128, 128, 24);
     iconCtx.fill();
-    iconCtx.fillStyle = '#FFFFFF';
+    iconCtx.fillStyle = '#000000';
     iconCtx.font = 'bold 88px Calegar';
     iconCtx.textAlign = 'center';
     iconCtx.textBaseline = 'middle';

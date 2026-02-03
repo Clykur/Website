@@ -60,6 +60,14 @@ Best regards`;
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="#trust"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Trust & Verification
+                </Link>
+              </li>
             </ul>
           </div>
 
