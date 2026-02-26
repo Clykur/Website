@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
+  const pathname = usePathname();
+  const isCareersPage = pathname === "/careers";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -73,10 +76,11 @@ export function Navigation() {
   }, []);
 
   const navItems = [
-    { href: "#about", label: "About", id: "about" },
-    { href: "#services", label: "Services", id: "services" },
-    { href: "#portfolio", label: "Portfolio", id: "portfolio" },
-    { href: "#contact", label: "Contact", id: "contact" },
+    { href: "/#about", label: "About", id: "about" },
+    { href: "/#services", label: "Services", id: "services" },
+    { href: "/#portfolio", label: "Portfolio", id: "portfolio" },
+    { href: "/careers", label: "Careers", id: "careers" },
+    { href: "/#contact", label: "Contact", id: "contact" },
   ];
 
   return (
@@ -99,22 +103,25 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-sm font-medium transition-colors",
-                  activeSection === item.id
-                    ? "text-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = item.id === "careers"
+                ? isCareersPage
+                : !isCareersPage && activeSection === item.id;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "text-sm font-medium transition-colors",
+                    isActive ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Button asChild size="sm">
-              <Link href="#contact">Get in Touch</Link>
+              <Link href={isCareersPage ? "/#contact" : "#contact"}>Get in Touch</Link>
             </Button>
           </div>
 
@@ -137,23 +144,26 @@ export function Navigation() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-background">
           <div className="px-4 py-4 space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "block text-base font-medium transition-colors",
-                  activeSection === item.id
-                    ? "text-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = item.id === "careers"
+                ? isCareersPage
+                : !isCareersPage && activeSection === item.id;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "block text-base font-medium transition-colors",
+                    isActive ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+                  )}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Button asChild className="w-full">
-              <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href={isCareersPage ? "/#contact" : "#contact"} onClick={() => setIsMobileMenuOpen(false)}>
                 Get in Touch
               </Link>
             </Button>
