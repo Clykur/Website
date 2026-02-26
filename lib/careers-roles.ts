@@ -3,8 +3,10 @@ export const CAREERS_EMAIL = "info@clykur.com";
 export type EmploymentType = "Full-time" | "Part-time" | "Contract";
 export type LocationType = "Remote" | "Hybrid" | "On-site";
 
+/**
+ * A single job role. The public URL slug is derived from role title + a short hash (e.g. /careers/software-engineer-x7k2m9).
+ */
 export interface CareerRole {
-  id: string;
   title: string;
   team: string;
   employmentType: EmploymentType;
@@ -42,13 +44,47 @@ export function getMailtoUrl(role: CareerRole): string {
   return `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function shortHash(str: string): string {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (h << 5) - h + str.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h).toString(36).slice(0, 6);
+}
+
+/** Public URL slug for a role: slugified title + short hash (e.g. software-engineer-x7k2m9). */
+export function getSlugForRole(role: CareerRole): string {
+  const base = slugify(role.title);
+  const hash = shortHash(
+    [role.team, role.title, role.employmentType, role.location].join("-")
+  );
+  return `${base}-${hash}`;
+}
+
+export function getRoleBySlug(slug: string): CareerRole | undefined {
+  return ROLES.find((r) => getSlugForRole(r) === slug);
+}
+
+export function getRolePaths(): string[] {
+  return ROLES.map((r) => getSlugForRole(r));
+}
+
 export const TEAMS = ["All", "Engineering", "Product", "Design", "Operations"] as const;
 export const EMPLOYMENT_TYPES = ["All", "Full-time", "Part-time", "Contract"] as const;
 export const LOCATIONS = ["All", "Remote", "Hybrid", "On-site"] as const;
 
 export const ROLES: CareerRole[] = [
   {
-    id: "software-engineer",
     title: "Software Engineer",
     team: "Engineering",
     employmentType: "Full-time",

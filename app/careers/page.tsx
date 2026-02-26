@@ -4,18 +4,12 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  Mail,
   ArrowLeft,
   Briefcase,
   MapPin,
   Building2,
-  CheckCircle2,
-  FileText,
-  ListChecks,
-  Sparkles,
   Search,
   ChevronDown,
-  ChevronUp,
   Users,
 } from "lucide-react";
 import {
@@ -23,7 +17,7 @@ import {
   TEAMS,
   EMPLOYMENT_TYPES,
   LOCATIONS,
-  getMailtoUrl,
+  getSlugForRole,
   type CareerRole,
 } from "@/lib/careers-roles";
 
@@ -37,24 +31,13 @@ const CAREERS_INTRO = {
     "Clykur delivers smart, scalable software — from web and mobile apps to cloud and AI. We focus on reliability and clear communication so our clients can move fast. Recognized as an MSME under the Government of India, we turn ambitious ideas into shipped products. If you like ownership, clarity, and a no-drama culture, you'll fit right in.",
 };
 
-function RoleCard({
-  role,
-  isExpanded,
-  onToggle,
-}: {
-  role: CareerRole;
-  isExpanded: boolean;
-  onToggle: () => void;
-}) {
-  const mailtoUrl = getMailtoUrl(role);
+function RoleCard({ role }: { role: CareerRole }) {
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
-      <button
-        type="button"
-        onClick={onToggle}
-        className="w-full p-5 md:p-6 text-left hover:bg-muted/30 transition-colors flex items-center justify-between gap-4"
-        aria-expanded={isExpanded}
-      >
+    <Link
+      href={`/careers/${getSlugForRole(role)}`}
+      className="block rounded-xl border border-border bg-card p-5 md:p-6 hover:bg-muted/30 hover:border-foreground/20 transition-colors"
+    >
+      <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <h2 className="text-lg font-semibold tracking-tight truncate">
             {role.title}
@@ -74,75 +57,10 @@ function RoleCard({
           </div>
         </div>
         <span className="shrink-0 text-muted-foreground" aria-hidden>
-          {isExpanded ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
-          )}
+          <ChevronDown className="h-5 w-5 rotate-[-90deg]" />
         </span>
-      </button>
-      {isExpanded && (
-        <div className="border-t border-border bg-muted/10">
-          <div className="p-5 md:p-6 space-y-6">
-            <p className="text-sm text-muted-foreground">{role.industry}</p>
-            <div>
-              <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-muted-foreground" />
-                Job description
-              </h3>
-              <div className="space-y-2 text-foreground">
-                {role.description.map((p, i) => (
-                  <p key={i} className="leading-relaxed">
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
-                <ListChecks className="h-4 w-4 text-muted-foreground" />
-                Requirements
-              </h3>
-              <ul className="space-y-2">
-                {role.requirements.map((r, i) => (
-                  <li key={i} className="flex gap-2 items-start text-sm">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-foreground" aria-hidden />
-                    <span>{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-muted-foreground" />
-                Qualifications we look for
-              </h3>
-              <ul className="space-y-1.5 text-sm text-muted-foreground">
-                {role.qualifications.map((q, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="text-foreground">·</span>
-                    <span>{q}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="pt-2">
-              <Button asChild size="default" className="w-full sm:w-auto">
-                <a
-                  href={mailtoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  <Mail className="h-4 w-4" />
-                  Apply for this role
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      </div>
+    </Link>
   );
 }
 
@@ -151,7 +69,6 @@ export default function CareersPage() {
   const [team, setTeam] = useState<string>("All");
   const [employmentType, setEmploymentType] = useState<string>("All");
   const [location, setLocation] = useState<string>("All");
-  const [expandedId, setExpandedId] = useState<string | null>(ROLES[0]?.id ?? null);
 
   const filteredRoles = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -267,14 +184,7 @@ export default function CareersPage() {
             </p>
           ) : (
             filteredRoles.map((role) => (
-              <RoleCard
-                key={role.id}
-                role={role}
-                isExpanded={expandedId === role.id}
-                onToggle={() =>
-                  setExpandedId((prev) => (prev === role.id ? null : role.id))
-                }
-              />
+              <RoleCard key={getSlugForRole(role)} role={role} />
             ))
           )}
         </div>
