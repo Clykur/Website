@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
 import {
   ArrowLeft,
   Briefcase,
@@ -11,6 +12,7 @@ import {
   Search,
   ChevronDown,
   Users,
+  MoreVertical, ChevronUp,
 } from "lucide-react";
 import {
   ROLES,
@@ -23,12 +25,12 @@ import {
 
 const CAREERS_INTRO = {
   eyebrow: "Careers at Clykur",
-  headline: "Build what matters, with us",
+  headline: "Build what matters with us",
   supporting:
-    "We're a small team building software that helps businesses grow. Join us to work on real products, with real impact — remote-first and outcome-focused.",
+    "We're a small team building software that helps businesses grow. Join us to work on real products, with real impact remote-first and outcome-focused.",
   aboutTitle: "Why Clykur",
   aboutBody:
-    "Clykur delivers smart, scalable software — from web and mobile apps to cloud and AI. We focus on reliability and clear communication so our clients can move fast. Recognized as an MSME under the Government of India, we turn ambitious ideas into shipped products. If you like ownership, clarity, and a no-drama culture, you'll fit right in.",
+    "Clykur delivers smart, scalable software from web and mobile apps to cloud and AI. We focus on reliability and clear communication so our clients can move fast. Recognized as an MSME under the Government of India, we turn ambitious ideas into shipped products. If you like ownership, clarity, and a no-drama culture, you'll fit right in.",
 };
 
 function RoleCard({ role }: { role: CareerRole }) {
@@ -69,6 +71,28 @@ export default function CareersPage() {
   const [team, setTeam] = useState<string>("All");
   const [employmentType, setEmploymentType] = useState<string>("All");
   const [location, setLocation] = useState<string>("All");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpen(false);
+        setOpenSection(null);
+      }
+    }
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   const filteredRoles = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -117,31 +141,98 @@ export default function CareersPage() {
         <h2 className="text-xl font-semibold tracking-tight mb-4">Open roles</h2>
         <div className="rounded-xl border border-border bg-muted/20 p-4 md:p-5 mb-8">
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-            <div className="relative flex-1 min-w-0">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-              <input
-                type="search"
-                placeholder="Search by role title..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-10 pl-9 pr-3 rounded-lg border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground/30"
-                aria-label="Search roles"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <select
-                value={team}
-                onChange={(e) => setTeam(e.target.value)}
-                className="h-10 px-3 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
-                aria-label="Filter by team"
+
+            <div className="relative flex-1 min-w-0 flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <input
+                  type="search"
+                  placeholder="Search by role title..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full h-10 pl-9 pr-3 rounded-lg border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20 focus:border-foreground/30"
+                  aria-label="Search roles"
+                />
+              </div>
+
+              {/* Mobile 3 dots */}
+              <div ref={menuRef} className="sm:hidden relative">                <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="h-10 w-10 flex items-center justify-center rounded-lg border border-border bg-background"
               >
-                <option value="All">All teams</option>
-                {TEAMS.filter((t) => t !== "All").map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
+                <MoreVertical className="h-5 w-5" />
+              </button>
+
+                {menuOpen && (
+                  <div className="absolute right-0 mt-2 w-72 rounded-xl border bg-background shadow-lg z-50">
+                    {[
+                      { key: "team", label: "Team", options: TEAMS, setter: setTeam },
+                      {
+                        key: "employmentType",
+                        label: "Employment Type",
+                        options: EMPLOYMENT_TYPES,
+                        setter: setEmploymentType,
+                      },
+                      {
+                        key: "location",
+                        label: "Location",
+                        options: LOCATIONS,
+                        setter: setLocation,
+                      },
+                    ].map((filter) => (
+                      <div key={filter.key} className="border-b last:border-none">
+                        <button
+                          onClick={() =>
+                            setOpenSection(
+                              openSection === filter.key ? null : filter.key
+                            )
+                          }
+                          className="flex items-center justify-between w-full px-4 py-3 text-sm hover:bg-muted transition"
+                        >
+                          <span>{filter.label}</span>
+                          {openSection === filter.key ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
+                        </button>
+
+                        {openSection === filter.key && (
+                          <div className="px-4 pb-4 space-y-2">
+                            {filter.options.map((option) => (
+                              <button
+                                key={option}
+                                onClick={() => {
+                                  filter.setter(option);
+                                  setMenuOpen(false);
+                                }}
+                                className="block w-full text-left text-sm hover:text-foreground text-muted-foreground"
+                              >
+                                {option}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Desktop Filters */}
+            <div className="hidden sm:flex flex-wrap gap-2">              <select
+              value={team}
+              onChange={(e) => setTeam(e.target.value)}
+              className="h-10 px-3 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+              aria-label="Filter by team"
+            >
+              <option value="All">All teams</option>
+              {TEAMS.filter((t) => t !== "All").map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
               <select
                 value={employmentType}
                 onChange={(e) => setEmploymentType(e.target.value)}
