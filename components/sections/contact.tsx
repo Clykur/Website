@@ -7,7 +7,7 @@ export function Contact() {
   const whatsappMessage = `Hello Team Clykur,
 I'm interested in engaging your services and would like to connect to discuss my project requirements. Looking forward to your response.`;
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-  const emailAddress = "clykur@outlook.com";
+  const emailAddress = "info@clykur.com";
   const emailSubject = "Inquiry About Your Services";
   const emailBody = `Hello Team Clykur,
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, ExternalLink, Github, Linkedin } from "lucide-react";
 
 export function Footer() {
-  const emailAddress = "clykur@outlook.com";
+  const emailAddress = "info@clykur.com";
   const emailSubject = "Inquiry About Your Services";
   const emailBody = `Hello Team Clykur,
 
@@ -26,11 +26,11 @@ Best regards`;
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-sm font-semibold mb-4">Navigation</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="#about"
+                  href="/#about"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   About
@@ -38,7 +38,7 @@ Best regards`;
               </li>
               <li>
                 <Link
-                  href="#services"
+                  href="/#services"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Services
@@ -46,7 +46,7 @@ Best regards`;
               </li>
               <li>
                 <Link
-                  href="#portfolio"
+                  href="/#portfolio"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Portfolio
@@ -54,7 +54,15 @@ Best regards`;
               </li>
               <li>
                 <Link
-                  href="#contact"
+                  href="/careers"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#contact"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Contact
@@ -62,7 +70,7 @@ Best regards`;
               </li>
               <li>
                 <Link
-                  href="#trust"
+                  href="/#trust"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Trust & Verification
