@@ -17,26 +17,35 @@ Best regards`;
   const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4">
-            Get in Touch
+    <section
+      id="contact"
+      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      aria-labelledby="contact-heading"
+    >
+      <div className="max-w-6xl mx-auto w-full">
+        <header className="text-center mb-16 md:mb-20">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Let&apos;s talk
+          </p>
+          <h2
+            id="contact-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
+          >
+            Get in touch
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-            Ready to start your project? Let&apos;s discuss how we can work together
-            to bring your vision to life.
+            Building a product or need an engineering partner? We&apos;d like to
+            hear from you.
           </p>
-          
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full">
             <span className="text-sm font-medium text-foreground">
-              Remote Work Only • Available Across All Time Zones
+              Remote-first · Global · Responsive
             </span>
           </div>
-        </div>
+        </header>
 
-        <div className="max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
             {/* WhatsApp Card */}
             <div className="border border-border rounded-lg p-8 hover:border-foreground/20 transition-colors">
               <div className="flex flex-col items-center text-center">
@@ -53,11 +62,7 @@ Best regards`;
                 <p className="text-sm text-muted-foreground mb-6">
                   Quick response, instant communication
                 </p>
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full group"
-                >
+                <Button asChild size="lg" className="w-full group">
                   <a
                     href={whatsappUrl}
                     target="_blank"
@@ -110,4 +115,3 @@ Best regards`;
     </section>
   );
 }
-

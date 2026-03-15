@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Lock } from "lucide-react";
 
 const portfolioItems = [
@@ -44,15 +50,20 @@ export function Portfolio() {
   return (
     <section
       id="portfolio"
-      className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-muted/30"
+      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12 bg-muted/30"
+      aria-labelledby="portfolio-heading"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4">
+      <div className="max-w-6xl mx-auto w-full">
+        <header className="text-center mb-16 md:mb-20">
+          <h2
+            id="portfolio-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
+          >
             Portfolio
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
-            A selection of frontend projects showcasing design-to-code transformations across websites, mobile apps, and web applications.
+            A selection of frontend projects showcasing design-to-code
+            transformations across websites, mobile apps, and web applications.
           </p>
           <div className="inline-flex items-center gap-2 text-sm text-muted-foreground bg-muted px-4 py-2 rounded-md">
             <Lock className="h-4 w-4" />
@@ -61,7 +72,7 @@ export function Portfolio() {
               NDAs
             </span>
           </div>
-        </div>
+        </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {portfolioItems.map((item) => (
@@ -87,4 +98,3 @@ export function Portfolio() {
     </section>
   );
 }
-

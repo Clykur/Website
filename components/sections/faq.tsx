@@ -5,59 +5,41 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const faqs = [
+  // Product-related
+  {
+    question: "What is Cusown?",
+    answer:
+      "Cusown is our smart appointment and slot booking platform for service businesses. It helps manage bookings, reduce no-shows, and scale scheduling with automation and analytics.",
+  },
+  {
+    question: "What is FreeTrust?",
+    answer:
+      "FreeTrust is a trust layer for freelancers and clients. It provides credibility validation, transparent profiles, trust scoring, and a future blockchain verification layer so both sides can work with confidence.",
+  },
+  {
+    question: "Who is Cusown for?",
+    answer:
+      "Cusown is for service businesses that take appointments salons, clinics, consultants, agencies. Anyone who needs reliable booking, fewer no-shows, and scalable scheduling.",
+  },
+  // Service-related
   {
     question: "How long does a typical project take?",
     answer:
-      "Project timelines vary based on complexity and scope. A simple website frontend typically takes 3-5 days, while more complex web applications may take 1-3 weeks. I provide a detailed timeline estimate after reviewing your design files and requirements.",
+      "It depends on the size and scope of your project. We’ll give you a clear timeline once we understand what you need so you’re never left guessing.",
   },
   {
-    question: "What design file formats do you accept?",
+    question: "What design formats do you accept?",
     answer:
-      "I work with all major design tools including Figma, Sketch, Adobe XD, and even PDF mockups. Figma is preferred as it allows for better collaboration and design handoff, but I'm flexible with whatever format you have.",
+      "We work with Figma, Sketch, Adobe XD, and PDF. Figma is preferred for handoff; we adapt to your format.",
   },
   {
-    question: "Do you provide revisions?",
+    question: "Do you provide revisions and what tech do you use?",
     answer:
-      "Yes, I include 2 rounds of revisions in my standard process to ensure the final result matches your vision. Additional revisions can be discussed based on project scope.",
-  },
-  {
-    question: "What technologies do you use?",
-    answer:
-      "I work with modern frontend frameworks including React, Next.js, Vue.js, and vanilla JavaScript. I also use TypeScript, Tailwind CSS, and other modern tools based on project requirements. The technology stack is always discussed and agreed upon before starting.",
-  },
-  {
-    question: "How do you handle responsive design?",
-    answer:
-      "All projects are built mobile-first and tested across multiple devices and screen sizes. I ensure pixel-perfect accuracy on desktop, tablet, and mobile devices, with smooth interactions and optimal performance on all platforms.",
-  },
-  {
-    question: "What's included in the final delivery?",
-    answer:
-      "You'll receive clean, well-documented code, organized file structure, responsive design implementation, and basic browser testing. I also provide guidance on deployment and can assist with setup if needed.",
-  },
-  {
-    question: "Do you work with existing codebases?",
-    answer:
-      "Yes, I can work with existing codebases. Whether you need to add new features, refactor existing code, or integrate new designs into your current project, I can help maintain consistency with your existing codebase.",
-  },
-  {
-    question: "What's your communication style?",
-    answer:
-      "I believe in clear, regular communication throughout the project. I provide progress updates, ask questions when needed, and keep you informed at every step. I typically respond to messages within 2-4 hours during business hours.",
-  },
-  {
-    question: "How do you handle project payments?",
-    answer:
-      "Payment terms are discussed during the initial consultation. Typically, I work with a 50% upfront payment and 50% upon completion, though I'm flexible and can work with your preferred payment structure.",
-  },
-  {
-    question: "Can you help with deployment?",
-    answer:
-      "While my primary focus is frontend development, I can provide guidance on deployment and help with basic setup. For complex deployment needs, I can recommend reliable hosting solutions or work with your DevOps team.",
+      "Yes, we include 2 rounds of revisions so the result matches your vision. On tech: we’re fluent in React, Next.js, TypeScript, and Tailwind, but we can stick to your stack if you prefer. You’re never locked in; we adapt to what you need.",
   },
 ];
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -74,16 +56,26 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4">
-            Frequently Asked Questions
+    <section
+      id="faq"
+      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      aria-labelledby="faq-heading"
+    >
+      <div className="max-w-6xl mx-auto w-full">
+        <header className="text-center mb-16 md:mb-20">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            FAQ
+          </p>
+          <h2
+            id="faq-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
+          >
+            Frequently asked questions
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Common questions about my process, timeline, and how we&apos;ll work together.
+            Our products, services, process, and how we work together.
           </p>
-        </div>
+        </header>
 
         <div className="space-y-4 mb-8">
           {currentFaqs.map((faq, index) => {
@@ -111,7 +103,7 @@ export function FAQ() {
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300",
-                    isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
                   )}
                 >
                   <div className="px-6 py-4 text-muted-foreground leading-relaxed border-t border-border">
@@ -137,7 +129,9 @@ export function FAQ() {
               Page {currentPage} of {totalPages}
             </span>
             <button
-              onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+              }
               disabled={currentPage === totalPages}
               className="px-4 py-2 border border-border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
             >
@@ -149,4 +143,3 @@ export function FAQ() {
     </section>
   );
 }
-

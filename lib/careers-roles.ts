@@ -17,7 +17,10 @@ export interface CareerRole {
   qualifications: string[];
 }
 
-export function getApplicationEmail(role: CareerRole): { subject: string; body: string } {
+export function getApplicationEmail(role: CareerRole): {
+  subject: string;
+  body: string;
+} {
   const subject = `Application: ${role.title} - Clykur`;
   const requirementLines =
     role.requirements.length > 0
@@ -66,7 +69,7 @@ function shortHash(str: string): string {
 export function getSlugForRole(role: CareerRole): string {
   const base = slugify(role.title);
   const hash = shortHash(
-    [role.team, role.title, role.employmentType, role.location].join("-")
+    [role.team, role.title, role.employmentType, role.location].join("-"),
   );
   return `${base}-${hash}`;
 }
@@ -79,8 +82,19 @@ export function getRolePaths(): string[] {
   return ROLES.map((r) => getSlugForRole(r));
 }
 
-export const TEAMS = ["All", "Engineering", "Product", "Design", "Operations"] as const;
-export const EMPLOYMENT_TYPES = ["All", "Full-time", "Part-time", "Contract"] as const;
+export const TEAMS = [
+  "All",
+  "Engineering",
+  "Product",
+  "Design",
+  "Operations",
+] as const;
+export const EMPLOYMENT_TYPES = [
+  "All",
+  "Full-time",
+  "Part-time",
+  "Contract",
+] as const;
 export const LOCATIONS = ["All", "Remote", "Hybrid", "On-site"] as const;
 
 export const ROLES: CareerRole[] = [
@@ -96,7 +110,7 @@ export const ROLES: CareerRole[] = [
       "You will work independently in a remote environment while staying aligned with the team and delivery timelines.",
     ],
     requirements: [
-      "Bachelor\u2019s degree in Computer Science, Software Engineering, or a related field",
+      "Bachelor's degree in Computer Science, Software Engineering, or a related field",
       "1+ year hands-on experience with Next.js",
       "1+ year hands-on experience with React.js",
       "1+ year hands-on experience with Python",

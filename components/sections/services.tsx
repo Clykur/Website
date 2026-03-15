@@ -1,56 +1,74 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const services = [
   {
-    title: "Website Frontend",
+    title: "Frontend engineering",
     description:
-      "Converting design files into responsive, pixel-perfect websites with clean, semantic code and optimal performance.",
+      "Production-ready interfaces from design to deployment. Clean code, modern frameworks, and performance that scales.",
   },
   {
-    title: "Mobile App Frontend",
+    title: "Design-to-code implementation",
     description:
-      "Building native and cross-platform mobile app interfaces from design mockups, ensuring smooth animations and interactions.",
+      "Figma, Sketch, or Adobe XD turned into pixel-perfect, accessible frontend code. We match your design system and ship on time.",
   },
   {
-    title: "Web App Frontend",
+    title: "Web applications",
     description:
-      "Developing interactive web application interfaces with modern frameworks, translating designs into functional components.",
+      "Interactive web app interfaces built with the right stack. We translate complex product requirements into functional, maintainable UI.",
   },
   {
-    title: "Design-to-Code",
+    title: "Mobile UI systems",
     description:
-      "Transforming Figma, Sketch, or Adobe XD designs into production-ready frontend code with attention to detail.",
+      "Native and cross-platform mobile interfaces from design mockups. Smooth animations, gestures, and consistent experiences across devices.",
   },
   {
-    title: "Component Development",
+    title: "Performance optimization",
     description:
-      "Creating reusable, maintainable UI components that match your design system and follow best practices.",
+      "Frontend code tuned for speed and responsiveness. We fix bottlenecks and set up the right metrics so your product stays fast.",
   },
   {
-    title: "Performance Optimization",
+    title: "Component systems",
     description:
-      "Optimizing frontend code for speed, responsiveness, and smooth user experiences across all devices.",
+      "Reusable, documented component libraries that scale with your product. Built for design consistency and developer velocity.",
   },
 ];
 
 export function Services() {
   return (
-    <section id="services" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4">
-            Services
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Frontend development services for design-ready projects across websites, mobile apps, and web applications.
+    <section
+      id="services"
+      className="bg-muted/30 py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      aria-labelledby="services-heading"
+    >
+      <div className="mx-auto max-w-6xl w-full">
+        <header className="mb-16 md:mb-20 text-center">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Engineering partnerships
           </p>
-        </div>
+          <h2
+            id="services-heading"
+            className="mb-4 text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
+          >
+            Engineering services
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
+            We also work with companies to build high-quality software.
+            Engineering partnerships with product teams, not freelance gigs. We
+            align with your roadmap and ship with you.
+          </p>
+        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
           {services.map((service) => (
             <Card
               key={service.title}
-              className="border-border hover:border-foreground/20 transition-colors"
+              className="border-border transition-colors hover:border-foreground/20"
             >
               <CardHeader>
                 <CardTitle className="text-xl">{service.title}</CardTitle>
@@ -67,4 +85,3 @@ export function Services() {
     </section>
   );
 }
-
