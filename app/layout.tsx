@@ -20,6 +20,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: "/clykur_favicon.png",
+  },
   title: {
     default: DEFAULT_META.title,
     template: `%s | ${SITE_NAME}`,
