@@ -1,6 +1,6 @@
 /**
- * Generates a static QR code for UDYAM verification with "C" (Calegar) at center.
- * Center is a rounded white badge (transparent elsewhere) so it integrates cleanly.
+ * Generates a static QR code for UDYAM verification with Clykur favicon at center.
+ * Center uses public/clykur_favicon.svg (transparent background, no white).
  * Output: public/udyam-verification-qr.png
  * Run: node scripts/generate-udyam-qr.js
  */
@@ -9,7 +9,6 @@ const QRCode = require("qrcode");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
-const { createCanvas } = require("canvas");
 
 const UDYAM_VERIFICATION_URL =
   "https://udyamregistration.gov.in/verifyudyambarcode.aspx?verifyudrn=cXBF0XeDBvCFZgbrC1WRSpCzCIRijDesXxYCgheNPLs=";
@@ -20,11 +19,10 @@ const MARGIN = 2;
 const ERROR_CORRECTION = "H";
 
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const CALEGAR_FONT_PATH = path.join(
+const FAVICON_SVG_PATH = path.join(
   PROJECT_ROOT,
   "public",
-  "fonts",
-  "Calegar.otf",
+  "clykur_favicon.svg",
 );
 const OUTPUT_PATH = path.join(
   PROJECT_ROOT,
@@ -32,53 +30,14 @@ const OUTPUT_PATH = path.join(
   "udyam-verification-qr.png",
 );
 
-const CENTER_TEXT = "C";
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
-}
-
-function drawCenterWithCalegar(compositeSize) {
-  const canvas = createCanvas(compositeSize, compositeSize);
-  const ctx = canvas.getContext("2d");
-
-  if (!fs.existsSync(CALEGAR_FONT_PATH)) {
-    throw new Error("Calegar font not found at " + CALEGAR_FONT_PATH);
+async function getCenterImage(compositeSize) {
+  if (!fs.existsSync(FAVICON_SVG_PATH)) {
+    throw new Error("Favicon SVG not found at " + FAVICON_SVG_PATH);
   }
-
-  const { registerFont } = require("canvas");
-  registerFont(CALEGAR_FONT_PATH, { family: "Calegar" });
-
-  const inset = Math.round(compositeSize * 0.08);
-  const w = compositeSize - inset * 2;
-  const h = w;
-  const x = inset;
-  const y = (compositeSize - h) / 2;
-  const radius = Math.round(compositeSize * 0.12);
-
-  ctx.clearRect(0, 0, compositeSize, compositeSize);
-  ctx.fillStyle = "#FFFFFF";
-  roundRect(ctx, x, y, w, h, radius);
-  ctx.fill();
-
-  ctx.fillStyle = "#000000";
-  const fontSize = Math.round(compositeSize * 0.75);
-  ctx.font = `${fontSize}px Calegar`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(CENTER_TEXT, compositeSize / 2, compositeSize / 2);
-
-  return canvas.toBuffer("image/png");
+  return sharp(FAVICON_SVG_PATH)
+    .resize(compositeSize, compositeSize)
+    .png()
+    .toBuffer();
 }
 
 async function generate() {
@@ -97,7 +56,7 @@ async function generate() {
     dataUrl.replace(/^data:image\/\w+;base64,/, ""),
     "base64",
   );
-  const centerBuffer = drawCenterWithCalegar(compositeSize);
+  const centerBuffer = await getCenterImage(compositeSize);
 
   await sharp(qrBuffer)
     .composite([

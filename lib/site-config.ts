@@ -7,7 +7,7 @@ export const SITE_NAME = "Clykur";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export const DEFAULT_META = {
-  title: "Clykur - Building software products that power modern businesses",
+  title: "Clykur - A Click Away",
   description:
     "Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.",
   keywords: [
