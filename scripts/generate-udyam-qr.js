@@ -15,13 +15,22 @@ const UDYAM_VERIFICATION_URL =
   "https://udyamregistration.gov.in/verifyudyambarcode.aspx?verifyudrn=cXBF0XeDBvCFZgbrC1WRSpCzCIRijDesXxYCgheNPLs=";
 
 const QR_SIZE = 512;
-const CENTER_SIZE_RATIO = 0.16; // ~16% of QR – keeps scanability, looks balanced
+const CENTER_SIZE_RATIO = 0.16; // ~16% of QR - keeps scanability, looks balanced
 const MARGIN = 2;
 const ERROR_CORRECTION = "H";
 
 const PROJECT_ROOT = path.resolve(__dirname, "..");
-const CALEGAR_FONT_PATH = path.join(PROJECT_ROOT, "public", "fonts", "Calegar.otf");
-const OUTPUT_PATH = path.join(PROJECT_ROOT, "public", "udyam-verification-qr.png");
+const CALEGAR_FONT_PATH = path.join(
+  PROJECT_ROOT,
+  "public",
+  "fonts",
+  "Calegar.otf",
+);
+const OUTPUT_PATH = path.join(
+  PROJECT_ROOT,
+  "public",
+  "udyam-verification-qr.png",
+);
 
 const CENTER_TEXT = "C";
 
@@ -84,7 +93,10 @@ async function generate() {
     color: { dark: "#0A0A0A", light: "#FFFFFF" },
   });
 
-  const qrBuffer = Buffer.from(dataUrl.replace(/^data:image\/\w+;base64,/, ""), "base64");
+  const qrBuffer = Buffer.from(
+    dataUrl.replace(/^data:image\/\w+;base64,/, ""),
+    "base64",
+  );
   const centerBuffer = drawCenterWithCalegar(compositeSize);
 
   await sharp(qrBuffer)

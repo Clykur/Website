@@ -12,7 +12,8 @@ import {
   Search,
   ChevronDown,
   Users,
-  MoreVertical, ChevronUp,
+  MoreVertical,
+  ChevronUp,
 } from "lucide-react";
 import {
   ROLES,
@@ -25,26 +26,26 @@ import {
 
 const CAREERS_INTRO = {
   eyebrow: "Careers at Clykur",
-  headline: "Build what matters with us",
+  headline: "Join us in building the next generation of software products",
   supporting:
-    "We're a small team building software that helps businesses grow. Join us to work on real products, with real impact remote-first and outcome-focused.",
+    "We're a fast-growing product company and engineering partner. Build with ownership, drive innovation, and shape product culture, remote-first, with teams that ship.",
   aboutTitle: "Why Clykur",
   aboutBody:
-    "Clykur delivers smart, scalable software from web and mobile apps to cloud and AI. We focus on reliability and clear communication so our clients can move fast. Recognized as an MSME under the Government of India, we turn ambitious ideas into shipped products. If you like ownership, clarity, and a no-drama culture, you'll fit right in.",
+    "Clykur builds software products that power modern businesses and partners with companies to ship exceptional technology. We care about product thinking, engineering excellence, and execution speed. Recognized as an MSME under the Government of India, we combine product innovation with real client impact. If you want ownership, innovation, and a no-drama culture, you'll fit right in.",
 };
 
 function RoleCard({ role }: { role: CareerRole }) {
   return (
     <Link
       href={`/careers/${getSlugForRole(role)}`}
-      className="block rounded-xl border border-border bg-card p-5 md:p-6 hover:bg-muted/30 hover:border-foreground/20 transition-colors"
+      className="group block rounded-2xl border border-border bg-card p-6 md:p-7 shadow-sm hover:shadow-md hover:border-foreground/15 hover:bg-muted/20 transition-all duration-200"
     >
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-lg font-semibold tracking-tight truncate">
+          <h2 className="text-lg font-semibold tracking-tight text-foreground truncate">
             {role.title}
           </h2>
-          <div className="flex flex-wrap items-center gap-2 mt-2 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-2 mt-3 text-sm text-muted-foreground">
             <span>{role.team}</span>
             <span aria-hidden>·</span>
             <span className="inline-flex items-center gap-1">
@@ -58,7 +59,10 @@ function RoleCard({ role }: { role: CareerRole }) {
             </span>
           </div>
         </div>
-        <span className="shrink-0 text-muted-foreground" aria-hidden>
+        <span
+          className="shrink-0 text-muted-foreground group-hover:text-foreground transition-colors"
+          aria-hidden
+        >
           <ChevronDown className="h-5 w-5 rotate-[-90deg]" />
         </span>
       </div>
@@ -76,10 +80,7 @@ export default function CareersPage() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
         setOpenSection(null);
       }
@@ -99,7 +100,8 @@ export default function CareersPage() {
     return ROLES.filter((role) => {
       const matchSearch = !q || role.title.toLowerCase().includes(q);
       const matchTeam = team === "All" || role.team === team;
-      const matchEmployment = employmentType === "All" || role.employmentType === employmentType;
+      const matchEmployment =
+        employmentType === "All" || role.employmentType === employmentType;
       const matchLocation = location === "All" || role.location === location;
       return matchSearch && matchTeam && matchEmployment && matchLocation;
     });
@@ -116,32 +118,33 @@ export default function CareersPage() {
           Back to home
         </Link>
 
-        <header className="mb-10 md:mb-12">
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-3">
+        <header className="mb-12 md:mb-14">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">
             {CAREERS_INTRO.eyebrow}
           </p>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-balance leading-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground text-balance leading-tight">
             {CAREERS_INTRO.headline}
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
+          <p className="mt-5 text-lg text-muted-foreground w-full leading-relaxed">
             {CAREERS_INTRO.supporting}
           </p>
         </header>
 
-        <section className="mb-10 rounded-xl border border-border bg-muted/20 p-6 md:p-8">
+        <section className="mb-12 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
             <Building2 className="h-4 w-4" aria-hidden />
             {CAREERS_INTRO.aboutTitle}
           </h2>
-          <p className="text-foreground leading-relaxed max-w-3xl">
+          <p className="text-foreground leading-relaxed max-w-3xl text-[15px]">
             {CAREERS_INTRO.aboutBody}
           </p>
         </section>
 
-        <h2 className="text-xl font-semibold tracking-tight mb-4">Open roles</h2>
-        <div className="rounded-xl border border-border bg-muted/20 p-4 md:p-5 mb-8">
+        <h2 className="text-xl font-semibold tracking-tight text-foreground mb-5">
+          Open roles
+        </h2>
+        <div className="rounded-2xl border border-border bg-muted/20 p-4 md:p-5 mb-8">
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-
             <div className="relative flex-1 min-w-0 flex items-center gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -156,17 +159,23 @@ export default function CareersPage() {
               </div>
 
               {/* Mobile 3 dots */}
-              <div ref={menuRef} className="sm:hidden relative">                <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="h-10 w-10 flex items-center justify-center rounded-lg border border-border bg-background"
-              >
-                <MoreVertical className="h-5 w-5" />
-              </button>
-
+              <div ref={menuRef} className="sm:hidden relative">
+                {" "}
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="h-10 w-10 flex items-center justify-center rounded-lg border border-border bg-background"
+                >
+                  <MoreVertical className="h-5 w-5" />
+                </button>
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-72 rounded-xl border bg-background shadow-lg z-50">
                     {[
-                      { key: "team", label: "Team", options: TEAMS, setter: setTeam },
+                      {
+                        key: "team",
+                        label: "Team",
+                        options: TEAMS,
+                        setter: setTeam,
+                      },
                       {
                         key: "employmentType",
                         label: "Employment Type",
@@ -180,11 +189,14 @@ export default function CareersPage() {
                         setter: setLocation,
                       },
                     ].map((filter) => (
-                      <div key={filter.key} className="border-b last:border-none">
+                      <div
+                        key={filter.key}
+                        className="border-b last:border-none"
+                      >
                         <button
                           onClick={() =>
                             setOpenSection(
-                              openSection === filter.key ? null : filter.key
+                              openSection === filter.key ? null : filter.key,
                             )
                           }
                           className="flex items-center justify-between w-full px-4 py-3 text-sm hover:bg-muted transition"
@@ -220,19 +232,21 @@ export default function CareersPage() {
               </div>
             </div>
             {/* Desktop Filters */}
-            <div className="hidden sm:flex flex-wrap gap-2">              <select
-              value={team}
-              onChange={(e) => setTeam(e.target.value)}
-              className="h-10 px-3 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
-              aria-label="Filter by team"
-            >
-              <option value="All">All teams</option>
-              {TEAMS.filter((t) => t !== "All").map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
+            <div className="hidden sm:flex flex-wrap gap-2">
+              {" "}
+              <select
+                value={team}
+                onChange={(e) => setTeam(e.target.value)}
+                className="h-10 px-3 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/20"
+                aria-label="Filter by team"
+              >
+                <option value="All">All teams</option>
+                {TEAMS.filter((t) => t !== "All").map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
               <select
                 value={employmentType}
                 onChange={(e) => setEmploymentType(e.target.value)}
@@ -264,7 +278,8 @@ export default function CareersPage() {
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
           <Users className="h-4 w-4" aria-hidden />
           <span>
-            {filteredRoles.length} open role{filteredRoles.length !== 1 ? "s" : ""}
+            {filteredRoles.length} open role
+            {filteredRoles.length !== 1 ? "s" : ""}
           </span>
         </div>
 

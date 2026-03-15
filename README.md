@@ -17,6 +17,7 @@ Visit us at: [www.clykur.com](https://www.clykur.com)
 We work as long-term frontend partners, not short-term executors. This means we align closely with your design system, ensure consistency across all screens, and make informed frontend decisions that support your product's user experience over time.
 
 **What sets us apart:**
+
 - Pixel-perfect accuracy in translating designs to code
 - Strong frontend engineering fundamentals combined with practical UI/UX understanding
 - Clean, maintainable, and performance-optimized code
@@ -117,6 +118,7 @@ Output: `public/udyam-verification-qr.png`. The section lives in `components/sec
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -126,6 +128,7 @@ pnpm install
 ```
 
 2. Run the development server:
+
 ```bash
 npm run dev
 # or
@@ -162,6 +165,7 @@ Edit the CSS variables in `app/globals.css` to customize the color scheme:
 ### Content
 
 Update the content in each section component:
+
 - `components/sections/hero.tsx`
 - `components/sections/about.tsx`
 - `components/sections/services.tsx`
@@ -173,4 +177,3 @@ Update the content in each section component:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-

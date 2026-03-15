@@ -7,17 +7,21 @@ export function TrustVerification() {
   return (
     <section
       id="trust"
-      className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-muted/30 border-t border-border"
+      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12 bg-muted/30 border-t border-border"
+      aria-labelledby="trust-heading"
     >
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4">
+      <div className="max-w-6xl mx-auto w-full">
+        <header className="text-center mb-12 md:mb-16">
+          <h2
+            id="trust-heading"
+            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
+          >
             Trust & Verification
           </h2>
           <p className="text-lg text-muted-foreground">
             Compliance and legal verification
           </p>
-        </div>
+        </header>
 
         <div className="flex flex-col items-center">
           <p className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
@@ -42,7 +46,8 @@ export function TrustVerification() {
             </span>
           </a>
           <p className="mt-4 text-sm text-muted-foreground text-center max-w-sm">
-            Scan to verify MSME (UDYAM) registration on Government of India portal
+            Scan to verify MSME (UDYAM) registration on Government of India
+            portal
           </p>
           <a
             href={UDYAM_VERIFICATION_URL}

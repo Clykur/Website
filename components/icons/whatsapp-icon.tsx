@@ -5,7 +5,10 @@ interface WhatsAppIconProps {
   invert?: boolean;
 }
 
-export function WhatsAppIcon({ className = "", invert = false }: WhatsAppIconProps) {
+export function WhatsAppIcon({
+  className = "",
+  invert = false,
+}: WhatsAppIconProps) {
   return (
     <div
       className={className}
@@ -21,4 +24,3 @@ export function WhatsAppIcon({ className = "", invert = false }: WhatsAppIconPro
     </div>
   );
 }
-

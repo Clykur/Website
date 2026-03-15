@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,27 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    const sections = ["about", "services", "process", "portfolio", "case-studies", "faq", "contact"];
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const sections = [
+      "products",
+      "about",
+      "services",
+      "process",
+      "portfolio",
+      "case-studies",
+      "faq",
+      "contact",
+    ];
     const observerOptions = {
       root: null,
       rootMargin: "-20% 0px -70% 0px",
@@ -41,7 +62,10 @@ export function Navigation() {
       });
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions,
+    );
 
     sections.forEach((section) => {
       const element = document.getElementById(section);
@@ -58,7 +82,10 @@ export function Navigation() {
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(section);
             break;
           }
@@ -76,6 +103,7 @@ export function Navigation() {
   }, []);
 
   const navItems = [
+    { href: "/#products", label: "Products", id: "products" },
     { href: "/#about", label: "About", id: "about" },
     { href: "/#services", label: "Services", id: "services" },
     { href: "/#portfolio", label: "Portfolio", id: "portfolio" },
@@ -86,34 +114,43 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+        "fixed top-0 left-0 right-0 z-[100] isolate transition-all duration-300",
+        "bg-background/90 backdrop-blur-md border-b border-border/80",
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="relative flex items-center justify-between h-16 md:h-20 gap-3">
           <Link
             href="/"
-            className="text-xl md:text-2xl font-calegar font-semibold tracking-tight hover:opacity-80 transition-opacity uppercase"
+            className="relative z-0 flex shrink-0 items-center hover:opacity-90 transition-opacity min-w-0"
+            aria-label="Clykur home"
           >
-            clykur
+            <Image
+              src="/Clykur Logo.svg"
+              alt="Clykur"
+              width={540}
+              height={144}
+              className="h-36 w-auto md:h-44"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 flex-shrink-0">
             {navItems.map((item) => {
-              const isActive = item.id === "careers"
-                ? isCareersPage
-                : !isCareersPage && activeSection === item.id;
+              const isActive =
+                item.id === "careers"
+                  ? isCareersPage
+                  : !isCareersPage && activeSection === item.id;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
                     "text-sm font-medium transition-colors",
-                    isActive ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+                    isActive
+                      ? "text-foreground font-semibold"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -121,40 +158,70 @@ export function Navigation() {
               );
             })}
             <Button asChild size="sm">
-              <Link href={isCareersPage ? "/#contact" : "#contact"}>Get in Touch</Link>
+              <Link href={isCareersPage ? "/#contact" : "#contact"}>
+                Get in Touch
+              </Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button — z-10 so it stays above logo and is tappable */}
           <button
-            className="md:hidden p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
+            type="button"
+            className={cn(
+              "md:hidden relative z-10 flex-shrink-0 min-w-[44px] min-h-[44px] p-2.5 -m-2.5 rounded-xl transition-all duration-300 ease-out [touch-action:manipulation]",
+              "hover:bg-muted/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              isMobileMenuOpen && "bg-muted/50",
             )}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsMobileMenuOpen((prev) => !prev);
+            }}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="relative flex h-6 w-6 items-center justify-center">
+              <Menu
+                className={cn(
+                  "h-6 w-6 absolute transition-all duration-300 ease-out",
+                  isMobileMenuOpen
+                    ? "rotate-90 scale-0 opacity-0"
+                    : "rotate-0 scale-100 opacity-100",
+                )}
+                aria-hidden
+              />
+              <X
+                className={cn(
+                  "h-6 w-6 absolute transition-all duration-300 ease-out",
+                  isMobileMenuOpen
+                    ? "rotate-0 scale-100 opacity-100"
+                    : "-rotate-90 scale-0 opacity-0",
+                )}
+                aria-hidden
+              />
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — conditional render so it reliably opens in production */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
-          <div className="px-4 py-4 space-y-4">
+        <div className="md:hidden border-t border-border/80 bg-gradient-to-b from-muted/40 to-background">
+          <div className="px-4 py-5 sm:py-6 space-y-1">
             {navItems.map((item) => {
-              const isActive = item.id === "careers"
-                ? isCareersPage
-                : !isCareersPage && activeSection === item.id;
+              const isActive =
+                item.id === "careers"
+                  ? isCareersPage
+                  : !isCareersPage && activeSection === item.id;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "block text-base font-medium transition-colors",
-                    isActive ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+                    "block rounded-xl py-3.5 px-4 text-base font-medium transition-colors duration-200",
+                    isActive
+                      ? "bg-foreground/10 text-foreground font-semibold"
+                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground active:bg-muted/70",
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -162,15 +229,23 @@ export function Navigation() {
                 </Link>
               );
             })}
-            <Button asChild className="w-full">
-              <Link href={isCareersPage ? "/#contact" : "#contact"} onClick={() => setIsMobileMenuOpen(false)}>
-                Get in Touch
-              </Link>
-            </Button>
+            <div className="pt-3">
+              <Button
+                asChild
+                className="w-full rounded-xl h-12 font-medium text-base shadow-sm"
+                size="lg"
+              >
+                <Link
+                  href={isCareersPage ? "/#contact" : "#contact"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Get in Touch
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       )}
     </nav>
   );
 }
-
