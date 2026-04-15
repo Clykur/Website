@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Image from "next/image";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 export function Contact() {
   const whatsappNumber = "8179299096";
@@ -19,18 +21,15 @@ Best regards`;
   return (
     <section
       id="contact"
-      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="clykur-story-section bg-white"
       aria-labelledby="contact-heading"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <header className="text-center mb-16 md:mb-20">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Let&apos;s talk
           </p>
-          <h2
-            id="contact-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
-          >
+          <h2 id="contact-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Get in touch
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
@@ -47,8 +46,9 @@ Best regards`;
         <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
             {/* WhatsApp Card */}
-            <div className="border border-border rounded-lg p-8 hover:border-foreground/20 transition-colors">
-              <div className="flex flex-col items-center text-center">
+            <div data-reveal-item>
+              <TiltCard className="clykur-card-shadow rounded-2xl border border-border bg-white p-8 transition-colors hover:border-border">
+                <div className="flex flex-col items-center text-center">
                 <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6">
                   <Image
                     src="/whatsapp.svg"
@@ -62,8 +62,12 @@ Best regards`;
                 <p className="text-sm text-muted-foreground mb-6">
                   Quick response, instant communication
                 </p>
-                <Button asChild size="lg" className="w-full group">
-                  <a
+<Button
+  asChild
+  size="lg"
+  className="w-full rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300"
+>
+                    <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -80,12 +84,14 @@ Best regards`;
                     Send a Message
                   </a>
                 </Button>
-              </div>
+                </div>
+              </TiltCard>
             </div>
 
             {/* Email Card */}
-            <div className="border border-border rounded-lg p-8 hover:border-foreground/20 transition-colors">
-              <div className="flex flex-col items-center text-center">
+            <div data-reveal-item>
+              <TiltCard className="clykur-card-shadow rounded-2xl border border-border bg-white p-8 transition-colors hover:border-border">
+                <div className="flex flex-col items-center text-center">
                 <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6">
                   <Mail className="h-8 w-8 text-foreground" />
                 </div>
@@ -93,12 +99,12 @@ Best regards`;
                 <p className="text-sm text-muted-foreground mb-6">
                   Detailed inquiries and project discussions
                 </p>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="w-full group"
-                >
+              <Button
+  asChild
+  variant="outline"
+  size="lg"
+  className="w-full rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300"
+>
                   <a
                     href={emailUrl}
                     className="inline-flex items-center justify-center gap-2"
@@ -107,11 +113,12 @@ Best regards`;
                     {emailAddress}
                   </a>
                 </Button>
-              </div>
+                </div>
+              </TiltCard>
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

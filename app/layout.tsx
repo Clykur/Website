@@ -5,6 +5,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SplashScreen } from "@/components/SplashScreen";
+import { SmoothScroll } from "@/components/landing/smooth-scroll";
 import {
   SITE_URL,
   SITE_NAME,
@@ -72,6 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
+        <SmoothScroll />
         <SplashScreen />
         <JsonLd />
         <Navigation />

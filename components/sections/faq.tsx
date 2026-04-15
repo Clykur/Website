@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
 const faqs = [
   // Product-related
@@ -58,18 +59,15 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="clykur-story-section bg-white"
       aria-labelledby="faq-heading"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <header className="text-center mb-16 md:mb-20">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             FAQ
           </p>
-          <h2
-            id="faq-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
-          >
+          <h2 id="faq-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Frequently asked questions
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -85,7 +83,8 @@ export function FAQ() {
             return (
               <div
                 key={actualIndex}
-                className="border border-border rounded-lg overflow-hidden transition-all"
+                data-reveal-item
+                className="overflow-hidden rounded-2xl border border-border bg-white transition-all"
               >
                 <button
                   onClick={() => toggleQuestion(index)}
@@ -121,25 +120,27 @@ export function FAQ() {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 border border-border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              className="px-6 py-3 rounded-[22px] shadow-sm hover:shadow-md border border-border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all duration-300 ease-out"
             >
               Previous
             </button>
+
             <span className="px-4 py-2 text-sm text-muted-foreground">
               Page {currentPage} of {totalPages}
             </span>
+
             <button
               onClick={() =>
                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))
               }
               disabled={currentPage === totalPages}
-              className="px-4 py-2 border border-border rounded-md text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              className="px-6 py-3 rounded-[22px] shadow-sm hover:shadow-md border border-border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-all duration-300 ease-out"
             >
               Next
             </button>
           </div>
         )}
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Lock } from "lucide-react";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 const portfolioItems = [
   {
@@ -50,15 +52,12 @@ export function Portfolio() {
   return (
     <section
       id="portfolio"
-      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12 bg-muted/30"
+      className="clykur-story-section bg-white"
       aria-labelledby="portfolio-heading"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <header className="text-center mb-16 md:mb-20">
-          <h2
-            id="portfolio-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
-          >
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
+          <h2 id="portfolio-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Portfolio
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
@@ -74,27 +73,28 @@ export function Portfolio() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {portfolioItems.map((item) => (
-            <Card
-              key={item.title}
-              className="border-border hover:border-foreground/20 transition-colors"
-            >
-              <CardHeader>
-                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
-                  {item.category}
-                </div>
-                <CardTitle className="text-xl">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {item.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div key={item.title} data-reveal-item>
+              <TiltCard>
+                <Card className="clykur-card-shadow rounded-2xl border border-border bg-white transition-colors hover:border-border">
+                  <CardHeader>
+                    <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                      {item.category}
+                    </div>
+                    <CardTitle className="text-xl">{item.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base leading-relaxed">
+                      {item.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </TiltCard>
+            </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

@@ -27,7 +27,7 @@ function SubmitButton() {
     <Button
       type="submit"
       size="lg"
-      className="h-12 w-full sm:w-auto min-w-[220px] rounded-xl font-semibold text-base"
+className="h-12 w-full sm:w-auto min-w-[220px] rounded-[22px] px-6 py-3 font-semibold text-base shadow-sm hover:shadow-md"
       disabled={pending}
     >
       {pending ? (
@@ -112,7 +112,7 @@ function ResumeUpload() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={`
-          flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-8 text-center transition-colors
+          flex w-full flex-col items-center justify-center rounded-[22px] shadow-sm border-2 border-dashed px-6 py-8 text-center transition-all duration-300 ease-out
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2
           ${selectedFile ? "border-primary/40 bg-primary/5" : isDragOver ? "border-primary/50 bg-muted/50" : "border-border bg-muted/30 hover:bg-muted/50"}
         `}
@@ -164,7 +164,7 @@ interface ApplicationFormProps {
 const INITIAL_STATE: ApplyFormState = {};
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-xl border border-border bg-background px-4 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-colors";
+  "mt-2 h-12 w-full rounded-[22px] shadow-sm border border-border bg-background px-6 py-3 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-all duration-300 ease-out";
 const labelClass = "text-sm font-medium text-foreground";
 const sectionLabelClass =
   "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4";
@@ -228,7 +228,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
             <Button
               variant="outline"
               size="lg"
-              className="rounded-xl font-medium h-12"
+              className="rounded-[22px] shadow-sm hover:shadow-md font-medium h-12 px-6 py-3"
             >
               View other roles
             </Button>
@@ -237,7 +237,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
             <Button
               variant="ghost"
               size="lg"
-              className="rounded-xl font-medium text-muted-foreground h-12"
+              className="rounded-[22px] shadow-sm hover:shadow-md font-medium text-muted-foreground h-12 px-6 py-3"
               onClick={handleSubmitAnother}
             >
               Submit another application for this role
@@ -374,7 +374,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
                 name="cover_note"
                 placeholder="Tell us why you're interested in this role or anything you'd like us to know."
                 rows={4}
-                className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-colors resize-y min-h-[120px]"
+className="mt-2 w-full rounded-[22px] shadow-sm border border-border bg-background px-6 py-3 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-all duration-300 ease-out resize-y min-h-[120px]"
               />
             </div>
           </section>

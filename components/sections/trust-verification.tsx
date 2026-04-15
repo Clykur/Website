@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
 const UDYAM_VERIFICATION_URL =
   "https://udyamregistration.gov.in/verifyudyambarcode.aspx?verifyudrn=cXBF0XeDBvCFZgbrC1WRSpCzCIRijDesXxYCgheNPLs=";
@@ -7,15 +8,12 @@ export function TrustVerification() {
   return (
     <section
       id="trust"
-      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12 bg-muted/30 border-t border-border"
+      className="clykur-story-section border-t border-border clykur-section-soft"
       aria-labelledby="trust-heading"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <header className="text-center mb-12 md:mb-16">
-          <h2
-            id="trust-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4"
-          >
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-12 text-center md:mb-16">
+          <h2 id="trust-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Trust & Verification
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -23,8 +21,8 @@ export function TrustVerification() {
           </p>
         </header>
 
-        <div className="flex flex-col items-center">
-          <p className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
+        <div data-reveal-item className="flex flex-col items-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground">
             MSME / UDYAM Registration
           </p>
           <a
@@ -58,7 +56,7 @@ export function TrustVerification() {
             udyamregistration.gov.in
           </a>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

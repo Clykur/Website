@@ -1,4 +1,6 @@
 import { Target, Code2, Zap, Layers, TrendingUp } from "lucide-react";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 const whyPillars = [
   {
@@ -37,44 +39,42 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="relative clykur-story-section bg-white"
       aria-labelledby="about-heading"
     >
-      <div className="absolute inset-0 -z-10 bg-muted/25" aria-hidden />
+      <div className="absolute inset-0 -z-10 bg-white" aria-hidden />
 
-      <div className="mx-auto max-w-6xl w-full">
-        <header className="mb-16 text-center md:mb-20">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Why work with us
           </p>
-          <h2
-            id="about-heading"
-            className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
-          >
+          <h2 id="about-heading" className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl lg:text-7xl">
             Why Clykur
           </h2>
         </header>
 
         <div className="mb-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {whyPillars.map(({ icon: Icon, title, description }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-border bg-card p-6 transition-colors hover:border-foreground/20"
-            >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
-                <Icon className="h-5 w-5 text-foreground" />
-              </div>
-              <h3 className="mb-2 text-lg font-semibold tracking-tight">
-                {title}
-              </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {description}
-              </p>
+            <div key={title} data-reveal-item>
+              <TiltCard>
+                <div className="clykur-card-shadow rounded-2xl border border-border bg-white p-6 transition-colors hover:border-border">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                    <Icon className="h-5 w-5 text-foreground" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold tracking-tight">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
+              </TiltCard>
             </div>
           ))}
         </div>
 
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+        <div data-reveal-item className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
           <div className="border-y border-border bg-card px-4 py-12 sm:px-6 md:px-8 md:py-16 lg:px-12 lg:py-20">
             <div className="mx-auto max-w-6xl w-full">
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -108,7 +108,7 @@ export function About() {
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
