@@ -1,4 +1,6 @@
 import { Zap, Shield, LayoutDashboard, Boxes } from "lucide-react";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 const pillars = [
   {
@@ -31,18 +33,15 @@ export function ProductEcosystem() {
   return (
     <section
       id="ecosystem"
-      className="py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="clykur-story-section bg-white"
       aria-labelledby="ecosystem-heading"
     >
-      <div className="mx-auto max-w-6xl w-full">
-        <header className="mb-16 md:mb-20 text-center">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Long-term vision
           </p>
-          <h2
-            id="ecosystem-heading"
-            className="mb-4 text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
-          >
+          <h2 id="ecosystem-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Product ecosystem
           </h2>
           <p className="mx-auto mb-4 max-w-2xl text-lg text-muted-foreground md:text-xl">
@@ -57,23 +56,24 @@ export function ProductEcosystem() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:gap-8">
           {pillars.map(({ icon: Icon, title, description }) => (
-            <div
-              key={title}
-              className="rounded-xl border border-border bg-card p-6 transition-colors hover:border-foreground/20"
-            >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
-                <Icon className="h-5 w-5 text-foreground" />
-              </div>
-              <h3 className="mb-2 text-lg font-semibold tracking-tight">
-                {title}
-              </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {description}
-              </p>
+            <div key={title} data-reveal-item>
+              <TiltCard>
+                <div className="clykur-card-shadow rounded-2xl border border-border bg-white p-6 transition-colors hover:border-border">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                    <Icon className="h-5 w-5 text-foreground" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold tracking-tight">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
+              </TiltCard>
             </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { Lock } from "lucide-react";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
 const caseStudies = [
   {
@@ -67,15 +68,12 @@ export function CaseStudies() {
   return (
     <section
       id="case-studies"
-      className="py-14 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12 bg-background"
+      className="clykur-story-section clykur-section-soft"
       aria-labelledby="case-studies-heading"
     >
-      <div className="mx-auto max-w-6xl w-full">
-        <header className="mb-10 md:mb-20">
-          <h2
-            id="case-studies-heading"
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-2 md:mb-3"
-          >
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-10 md:mb-20">
+          <h2 id="case-studies-heading" className="mb-2 text-5xl font-semibold tracking-tight text-foreground md:mb-3 md:text-6xl lg:text-7xl">
             Case Studies
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground mb-3 md:mb-4 w-full leading-relaxed">
@@ -94,7 +92,8 @@ export function CaseStudies() {
           {caseStudies.map((study, index) => (
             <article
               key={index}
-              className="py-8 sm:py-10 md:py-12 border-b border-border last:border-b-0"
+              data-reveal-item
+              className="border-b border-border py-8 sm:py-10 md:py-12 last:border-b-0"
             >
               <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5 sm:mb-1">
                 {study.category}
@@ -132,7 +131,7 @@ export function CaseStudies() {
             </article>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

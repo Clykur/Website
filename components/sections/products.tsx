@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 function ProductCard({
   name,
@@ -25,7 +27,8 @@ function ProductCard({
   benefits: string[];
 }) {
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:border-foreground/15 hover:shadow-md">
+    <TiltCard className="h-full perspective-[1000px]">
+      <Card className="group clykur-card-shadow relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white transition-all duration-300 hover:border-border">
       <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-muted/30">
         <Image
           src={image}
@@ -95,11 +98,11 @@ function ProductCard({
 
         <div className="mt-auto pt-2">
           <Button
-            asChild
-            variant="outline"
-            size="default"
-            className="w-full border-foreground/20 font-medium sm:w-auto group/btn text-sm sm:text-base"
-          >
+  asChild
+  variant="outline"
+  size="default"
+  className="w-full sm:w-auto rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300 border-foreground/20 group/btn"
+>
             <a
               href={url}
               target="_blank"
@@ -112,7 +115,8 @@ function ProductCard({
           </Button>
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </TiltCard>
   );
 }
 
@@ -120,20 +124,17 @@ export function Products() {
   return (
     <section
       id="products"
-      className="relative py-14 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="clykur-story-section clykur-section-soft"
       aria-labelledby="products-heading"
     >
-      <div className="absolute inset-0 -z-10 bg-muted/25" aria-hidden />
+      <div className="absolute inset-0 -z-10 clykur-section-soft" aria-hidden />
 
-      <div className="mx-auto max-w-6xl w-full">
-        <header className="mb-10 sm:mb-16 text-center md:mb-20">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-14 text-center md:mb-20">
           <p className="mb-2 sm:mb-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Flagship products
           </p>
-          <h2
-            id="products-heading"
-            className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
-          >
+          <h2 id="products-heading" className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl lg:text-7xl">
             Our Products
           </h2>
           <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg text-muted-foreground md:text-xl px-0 sm:px-2 leading-relaxed">
@@ -142,12 +143,14 @@ export function Products() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12">
           {PRODUCTS.map((product) => (
-            <ProductCard key={product.name} {...product} />
+            <div key={product.name} data-reveal-item>
+              <ProductCard {...product} />
+            </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

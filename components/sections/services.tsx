@@ -5,6 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { TiltCard } from "@/components/landing/tilt-card";
 
 const services = [
   {
@@ -43,18 +45,15 @@ export function Services() {
   return (
     <section
       id="services"
-      className="bg-muted/30 py-20 md:py-28 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="clykur-story-section clykur-section-soft"
       aria-labelledby="services-heading"
     >
-      <div className="mx-auto max-w-6xl w-full">
-        <header className="mb-16 md:mb-20 text-center">
+      <ScrollReveal className="clykur-story-shell">
+        <header data-reveal-item className="mb-16 text-center md:mb-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Engineering partnerships
           </p>
-          <h2
-            id="services-heading"
-            className="mb-4 text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl"
-          >
+          <h2 id="services-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
             Engineering services
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
@@ -64,24 +63,25 @@ export function Services() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+        <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 md:gap-9">
           {services.map((service) => (
-            <Card
-              key={service.title}
-              className="border-border transition-colors hover:border-foreground/20"
-            >
-              <CardHeader>
-                <CardTitle className="text-xl">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {service.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <div key={service.title} data-reveal-item>
+              <TiltCard>
+                <Card className="clykur-card-shadow rounded-2xl border border-border bg-white transition-colors hover:border-border">
+                  <CardHeader>
+                    <CardTitle className="text-xl">{service.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base leading-relaxed">
+                      {service.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </TiltCard>
+            </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
