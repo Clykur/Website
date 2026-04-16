@@ -36,35 +36,57 @@ export function Hero() {
       />
 
       <div className="clykur-story-shell relative z-[1] w-full max-w-6xl">
-        <ScrollReveal className="flex w-full flex-col items-stretch gap-14 lg:flex-row lg:items-start lg:justify-center lg:gap-14 xl:gap-16">
+        <ScrollReveal className="flex w-full flex-col items-stretch gap-14 lg:flex-row lg:items-center lg:justify-center lg:gap-14 xl:gap-16">
           <motion.div
             style={{ y: textY }}
-            className="will-change-transform w-full max-w-xl text-left lg:max-w-[min(100%,28rem)]"
+            className="will-change-transform w-full max-w-2xl text-left lg:max-w-[min(100%,40rem)]"
           >
             <div className="relative w-full">
-              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground/40 sm:tracking-[0.28em]">
-                Operating model
-              </p>
-              <h1
-                id="hero-heading"
-                className="mt-3.5 text-balance font-poppins text-[clamp(1.8125rem,5vw+0.65rem,3.1rem)] font-medium leading-[1.08] tracking-[-0.038em] text-foreground sm:mt-3 sm:leading-[1.1] sm:tracking-[-0.035em]"
-              >
-                Clykur operates as a{" "}
-                <span className="font-semibold text-foreground">dual system</span>
-                <span className="text-foreground/85">.</span>
-              </h1>
+              <div className="flex items-stretch gap-3.5 sm:gap-5">
+                <div
+                  className="mt-1 w-[2.5px] shrink-0 rounded-full bg-gradient-to-b from-[#ff3b1f] via-[#ff3b1f]/50 to-[#ff3b1f]/8 sm:mt-1.5 sm:w-[3px]"
+                  aria-hidden
+                />
+                <h1
+                  id="hero-heading"
+                  className="min-w-0 max-w-[min(100%,28rem)] font-poppins text-foreground"
+                >
+                  <span className="block text-balance text-[clamp(1.9375rem,5.5vw+0.5rem,3.35rem)] font-medium leading-[1.04] tracking-[-0.042em] sm:leading-[1.06] sm:tracking-[-0.04em]">
+                    We build products and engineer systems that{" "}
+                    <span className="bg-gradient-to-br from-[#ff6a4d] via-[#ff3b1f] to-[#e62e18] bg-clip-text font-semibold text-transparent">
+                      scale
+                    </span>
+                    <span className="text-foreground/90">.</span>
+                  </span>
+                  <span
+                    className="mt-5 block h-px max-w-[3.5rem] bg-gradient-to-r from-[#ff3b1f]/80 via-[#ff3b1f]/25 to-transparent sm:mt-6"
+                    aria-hidden
+                  />
+                  <span className="mt-5 block text-balance text-[clamp(1.0625rem,2.6vw+0.45rem,1.4375rem)] font-normal leading-[1.35] tracking-[-0.028em] text-foreground/58 sm:mt-6">
+                    Clykur operates as a{" "}
+                    <span className="relative inline-block font-semibold tracking-[-0.03em] text-foreground">
+                      dual system
+                      <span
+                        className="absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-[#ff3b1f]/0 via-[#ff3b1f]/45 to-[#ff3b1f]/0"
+                        aria-hidden
+                      />
+                    </span>
+                    <span className="text-foreground/35">.</span>
+                  </span>
+                </h1>
+              </div>
 
               <div
                 data-reveal-item
                 className="mt-8 border-t border-foreground/[0.08] pt-7 text-left max-md:mt-9 max-md:rounded-2xl max-md:border max-md:border-foreground/[0.07] max-md:bg-gradient-to-b max-md:from-white/85 max-md:to-[#fafaf9]/95 max-md:p-5 max-md:pt-6 max-md:shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_24px_80px_-48px_rgba(10,10,10,0.14)] max-md:backdrop-blur-[2px]"
               >
-                <div className="flex max-w-lg gap-3.5 sm:gap-5">
+                <div className="flex gap-3.5 sm:gap-5">
                   <div
                     className="w-px shrink-0 self-stretch rounded-full bg-gradient-to-b from-[#ff3b1f]/55 via-foreground/12 to-transparent"
                     aria-hidden
                   />
-                  <dl className="min-w-0 flex-1 space-y-0 text-left">
-                    <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 border-b border-foreground/[0.06] pb-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-8 sm:pb-6">
+                  <dl className="grid min-w-0 flex-1 grid-cols-1 gap-0 text-left md:grid-cols-2 md:items-start md:gap-6 lg:gap-8">
+                    <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 border-b border-foreground/[0.06] pb-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-6 md:border-b-0 md:pb-0 md:pr-4 lg:pr-5">
                       <dt className="pt-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ff3b1f]">
                         01
                       </dt>
@@ -77,7 +99,7 @@ export function Hero() {
                         </p>
                       </dd>
                     </div>
-                    <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 pt-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-8 sm:pt-6">
+                    <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 border-t border-foreground/[0.06] pt-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-6 md:border-l md:border-t-0 md:pl-6 md:pt-0 lg:pl-8">
                       <dt className="pt-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground/30">
                         02
                       </dt>
@@ -106,7 +128,10 @@ export function Hero() {
                 <span className="text-foreground/38">One studio · Global by default</span>
               </p>
 
-              <div className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-8 sm:max-w-none sm:flex-row sm:items-center sm:justify-start sm:gap-4">
+              <div
+                data-reveal-item
+                className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-start sm:gap-4"
+              >
                 <Link
                   href="#products"
                   className={cn(
@@ -128,7 +153,7 @@ export function Hero() {
 
           <motion.div
             style={{ y: visualY }}
-            className="will-change-transform w-full max-w-2xl lg:max-w-[min(100%,38rem)] max-lg:mx-auto max-lg:max-w-[min(100%,26rem)]"
+            className="will-change-transform w-full max-w-2xl lg:mt-6 lg:max-w-[min(100%,38rem)] max-lg:mx-auto max-lg:max-w-[min(100%,26rem)] xl:mt-8"
           >
             <HeroVisual />
           </motion.div>

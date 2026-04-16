@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
