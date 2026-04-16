@@ -1,13 +1,13 @@
-import { Target, Code2, Zap, Layers, TrendingUp } from "lucide-react";
+import { Code2, Layers, Target, TrendingUp, Zap } from "lucide-react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
-import { TiltCard } from "@/components/landing/tilt-card";
+import { cn } from "@/lib/utils";
 
 const whyPillars = [
   {
     icon: Target,
     title: "Product thinking",
     description:
-      "We build with the end user and the business outcome in mind. Every decision (architecture, UX, scope) serves the product.",
+      "We build with the end user and the business outcome in mind. Every decision architecture, UX, scope serves the product.",
   },
   {
     icon: Code2,
@@ -33,80 +33,105 @@ const whyPillars = [
     description:
       "From MVP to scale, we design for growth. Performance, maintainability, and the right abstractions from the start.",
   },
-];
+] as const;
 
 export function About() {
   return (
     <section
       id="about"
-      className="relative clykur-story-section bg-white"
+      className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="about-heading"
     >
-      <div className="absolute inset-0 -z-10 bg-white" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-white" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-20%,rgba(255,59,31,0.045),transparent_55%)]"
+        aria-hidden
+      />
 
-      <ScrollReveal className="clykur-story-shell">
-        <header data-reveal-item className="mb-16 text-center md:mb-20">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Why work with us
-          </p>
-          <h2 id="about-heading" className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+      <ScrollReveal className="clykur-story-shell relative z-10 max-w-6xl">
+        <header data-reveal-item className="mb-12 md:mb-16">
+          <div className="mb-4 flex items-center gap-4">
+            <span
+              className="h-px w-12 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent"
+              aria-hidden
+            />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              Why work with us
+            </p>
+          </div>
+          <h2
+            id="about-heading"
+            className="font-poppins text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.03em] text-foreground"
+          >
             Why Clykur
           </h2>
         </header>
 
-        <div className="mb-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          {whyPillars.map(({ icon: Icon, title, description }) => (
-            <div key={title} data-reveal-item>
-              <TiltCard>
-                <div className="clykur-card-shadow rounded-2xl border border-border bg-white p-6 transition-colors hover:border-border">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
-                    <Icon className="h-5 w-5 text-foreground" />
-                  </div>
-                  <h3 className="mb-2 text-lg font-semibold tracking-tight">
+        {/* Single panel — pillars read as one system */}
+        <div
+          data-reveal-item
+          className="mb-16 overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] md:mb-20"
+        >
+          <div className="grid grid-cols-1 divide-y divide-foreground/[0.07] md:grid-cols-2 md:divide-x md:divide-y-0">
+            {whyPillars.map(({ icon: Icon, title, description }, index) => (
+              <div
+                key={title}
+                className={cn(
+                  "flex gap-4 p-6 md:gap-5 md:p-8 lg:p-9",
+                  index === 4 && "md:col-span-2 lg:px-12",
+                )}
+              >
+                <Icon
+                  className="mt-0.5 h-5 w-5 shrink-0 text-[#ff3b1f]/80"
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
+                <div
+                  className={cn("min-w-0", index === 4 && "max-w-3xl md:mx-auto")}
+                >
+                  <h3 className="font-poppins text-base font-medium leading-snug tracking-[-0.02em] text-foreground md:text-[17px]">
                     {title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 text-[13px] leading-[1.75] text-foreground/52 md:text-[14px]">
                     {description}
                   </p>
                 </div>
-              </TiltCard>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div data-reveal-item className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
-          <div className="border-y border-border bg-card px-4 py-12 sm:px-6 md:px-8 md:py-16 lg:px-12 lg:py-20">
-            <div className="mx-auto max-w-6xl w-full">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Our story
-              </p>
-              <h3 className="mb-8 text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                Why we build
-              </h3>
-              <div className="space-y-6">
-                <p className="text-base leading-[1.7] text-muted-foreground md:text-lg">
-                  We believe the best technology comes from teams that care
-                  about craft, clarity, and impact. Clykur exists to build
-                  meaningful software: products that solve real problems and
-                  partnerships that ship.
-                </p>
-                <p className="text-base leading-[1.7] text-muted-foreground md:text-lg">
-                  We build our own products (Cusown, FreeTrust) to prove we can
-                  create category-defining tools. We partner with companies to
-                  build and ship high-quality software. In both cases, the
-                  mission is the same: strong engineering, product-led thinking,
-                  and execution that earns trust.
-                </p>
-                <div className="border-l-2 border-foreground/20 pl-6 pt-1">
-                  <p className="text-base font-medium leading-[1.7] text-foreground md:text-lg">
-                    Remote-first, global, and focused on the long term. If
-                    you&apos;re building something that matters, we&apos;d like
-                    to be part of it.
-                  </p>
-                </div>
-              </div>
-            </div>
+        {/* Story — calm band, no full-bleed break */}
+        <div
+          data-reveal-item
+          className="rounded-2xl border border-foreground/[0.06] bg-gradient-to-b from-[#fafaf9] to-[#f5f5f4]/80 px-6 py-10 md:px-10 md:py-12 lg:px-12"
+        >
+          <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground/40">
+            Our story
+          </p>
+          <h3 className="mt-3 font-poppins text-xl font-medium tracking-[-0.02em] text-foreground md:text-2xl">
+            Why we build
+          </h3>
+          <div className="mt-8 w-full space-y-6 text-justify text-[15px] leading-[1.75] text-foreground/55 md:text-base">
+            <p>
+              Clykur exists to ship software that matters products that solve real
+              problems and partnerships that hit dates, specs, and quality bars
+              without excuses. Craft, clarity, and measurable impact are the
+              standard, not talking points.
+            </p>
+            <p>
+              Cusown and FreeTrust are not demos on a slide: we build them to
+              compete in-market and to hold ourselves to the same rigor we bring
+              to client work. Alongside that, we partner with companies to deliver
+              production-grade systems one playbook: strong engineering,
+              product-led judgment, and execution you can build a roadmap on.
+            </p>
           </div>
+          <p className="mt-8 w-full border-l-2 border-[#ff3b1f]/45 pl-5 text-justify text-[15px] font-medium leading-[1.75] text-foreground md:text-base">
+            Remote-first and global, with a long-term view on every engagement.
+            If you are shipping something that matters, we are ready to build it
+            with you start to finish.
+          </p>
         </div>
       </ScrollReveal>
     </section>

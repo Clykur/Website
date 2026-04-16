@@ -1,122 +1,85 @@
 import Image from "next/image";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
-import { TiltCard } from "@/components/landing/tilt-card";
+
+/** One crisp sentence for the card body—no walls of copy. */
+function leadSentence(text: string) {
+  const dot = text.indexOf(". ");
+  if (dot === -1) return text;
+  return text.slice(0, dot + 1);
+}
 
 function ProductCard({
+  index,
   name,
   tagline,
   description,
-  problem,
-  whyItMatters,
   url,
   image,
-  benefits,
 }: {
+  index: number;
   name: string;
   tagline: string;
   description: string;
-  problem: string;
-  whyItMatters: string;
   url: string;
   image: string;
-  benefits: string[];
 }) {
+  const summary = leadSentence(description);
+
   return (
-    <TiltCard className="h-full perspective-[1000px]">
-      <Card className="group clykur-card-shadow relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white transition-all duration-300 hover:border-border">
-      <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-muted/30">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_22px_50px_-34px_rgba(10,10,10,0.1)] transition-shadow duration-300 hover:border-foreground/[0.11] hover:shadow-[0_28px_60px_-32px_rgba(255,59,31,0.1)]">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#faf6f3]">
         <Image
           src={image}
-          alt={`${name} - ${tagline}`}
+          alt={`${name} — ${tagline}`}
           fill
-          className={cn(
-            "object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]",
-            name === "FreeTrust" && "grayscale",
-          )}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
-          priority={false}
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          sizes="(max-width: 1024px) 100vw, 50vw"
         />
+        {/* Light warm wash — brand orange, not heavy */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-60"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(255,59,31,0.14)_0%,rgba(255,120,90,0.05)_38%,transparent_62%),linear-gradient(to_bottom,rgba(255,90,60,0.07)_0%,transparent_42%)]"
           aria-hidden
         />
+        <span className="absolute left-4 top-4 font-mono text-[10px] tabular-nums text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.35)]">
+          {(index + 1).toString().padStart(2, "0")}
+        </span>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/92 text-foreground/50 shadow-lg backdrop-blur-sm transition-colors hover:border-[#ff3b1f]/45 hover:text-[#ff3b1f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff3b1f]"
+          aria-label={`Open ${name} in a new tab`}
+        >
+          <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
+        </a>
       </div>
 
-      <CardHeader className="space-y-1 sm:space-y-1.5 px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
-        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight text-foreground">
+      <div className="flex flex-1 flex-col border-t border-foreground/[0.06] px-5 py-6 md:px-6 md:py-7">
+        <h3 className="font-poppins text-lg font-medium leading-snug tracking-[-0.02em] text-foreground md:text-xl">
           {name}
         </h3>
-        <p className="text-xs sm:text-sm font-medium text-muted-foreground leading-snug">
+        <p className="mt-2 text-[13px] leading-snug text-foreground/48 md:text-[14px]">
           {tagline}
         </p>
-      </CardHeader>
-
-      <CardContent className="flex flex-1 flex-col px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
-        <p className="mb-4 sm:mb-5 text-sm sm:text-[15px] leading-relaxed text-muted-foreground">
-          {description}
+        <p className="mt-4 text-[13px] leading-[1.75] text-foreground/52 md:text-[14px]">
+          {summary}
         </p>
 
-        <div className="mb-4 sm:mb-5 space-y-2 sm:space-y-3 border-l-2 border-foreground/15 pl-3 sm:pl-4">
-          <p className="text-xs sm:text-sm font-medium text-foreground">
-            The problem
-          </p>
-          <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-            {problem}
-          </p>
-          <p className="text-xs sm:text-sm font-medium text-foreground pt-0.5">
-            Why it matters
-          </p>
-          <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-            {whyItMatters}
-          </p>
+        <div className="mt-6 border-t border-foreground/[0.06] pt-5">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/45 transition-colors hover:text-[#ff3b1f]"
+          >
+            Visit live product
+            <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
+          </a>
         </div>
-
-        <p className="mb-2 sm:mb-3 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Key value
-        </p>
-        <ul className="mb-4 sm:mb-6 grid gap-1.5 sm:gap-2 sm:grid-cols-1">
-          {benefits.map((benefit) => (
-            <li
-              key={benefit}
-              className="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-foreground"
-            >
-              <span className="mt-0.5 flex h-4 w-4 sm:h-5 sm:w-5 shrink-0 items-center justify-center rounded-full bg-foreground/10">
-                <Check
-                  className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-foreground"
-                  strokeWidth={2.5}
-                />
-              </span>
-              <span className="leading-snug">{benefit}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-auto pt-2">
-          <Button
-  asChild
-  variant="outline"
-  size="default"
-  className="w-full sm:w-auto rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300 border-foreground/20 group/btn"
->
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2"
-            >
-              Visit {name}
-              <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 shrink-0" />
-            </a>
-          </Button>
-        </div>
-      </CardContent>
-      </Card>
-    </TiltCard>
+      </div>
+    </article>
   );
 }
 
@@ -124,29 +87,52 @@ export function Products() {
   return (
     <section
       id="products"
-      className="clykur-story-section clykur-section-soft"
+      className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="products-heading"
     >
-      <div className="absolute inset-0 -z-10 clykur-section-soft" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-white" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-18%,rgba(255,59,31,0.05),transparent_58%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#fafaf9]/80 via-transparent to-[#f5f5f4]/40"
+        aria-hidden
+      />
 
-      <ScrollReveal className="clykur-story-shell">
-        <header data-reveal-item className="mb-14 text-center md:mb-20">
-          <p className="mb-2 sm:mb-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Flagship products
-          </p>
-          <h2 id="products-heading" className="text-5xl font-semibold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+      <ScrollReveal className="clykur-story-shell relative z-10 max-w-6xl">
+        <header data-reveal-item className="mb-10 md:mb-12">
+          <div className="mb-4 flex items-center gap-4">
+            <span
+              className="h-px w-12 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent"
+              aria-hidden
+            />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              Flagship products
+            </p>
+          </div>
+          <h2
+            id="products-heading"
+            className="font-poppins text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.03em] text-foreground"
+          >
             Our Products
           </h2>
-          <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg text-muted-foreground md:text-xl px-0 sm:px-2 leading-relaxed">
-            Category-defining software for modern businesses. We build products
-            that solve real problems, then we ship them.
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
+            Live products we own and ship preview here, explore on-site.
           </p>
         </header>
 
-        <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-12">
-          {PRODUCTS.map((product) => (
+        <div className="grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-2 lg:gap-7">
+          {PRODUCTS.map((product, index) => (
             <div key={product.name} data-reveal-item>
-              <ProductCard {...product} />
+              <ProductCard
+                index={index}
+                name={product.name}
+                tagline={product.tagline}
+                description={product.description}
+                url={product.url}
+                image={product.image}
+              />
             </div>
           ))}
         </div>

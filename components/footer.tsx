@@ -1,8 +1,30 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Mail, ExternalLink, Github, Linkedin } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
+
+const solutionsLinks = [
+  { href: "/#products", label: "Products" },
+  { href: "/#services", label: "Engineering Services" },
+  { href: "/#portfolio", label: "Portfolio" },
+] as const;
+
+const productLinks = [
+  { href: "/#about", label: "About" },
+  { href: "/careers", label: "Careers" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/#trust", label: "Trust & Verification" },
+] as const;
+
+const linkClass =
+  "text-[13px] leading-relaxed text-foreground/65 transition-colors duration-300 hover:text-[#ff3b1f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6] rounded-sm";
+
+const navHeadingClass =
+  "text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/50";
+
+const iconLinkClass =
+  "group inline-flex items-center justify-center text-foreground/55 outline-none transition-colors duration-300 hover:text-[#ff3b1f] focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6] rounded-sm";
 
 export function Footer() {
+  const year = new Date().getFullYear();
   const emailAddress = "info@clykur.com";
   const emailSubject = "Inquiry About Your Services";
   const emailBody = `Hello Team Clykur,
@@ -13,155 +35,116 @@ Best regards`;
   const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
-    <footer className="relative border-t border-border bg-foreground/[0.02]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 lg:gap-20">
-          {/* Brand column — logo unchanged */}
-          <div className="md:col-span-5 lg:col-span-5">
-            <Link
-              href="/"
-              className="inline-block mb-4"
-              aria-label="Clykur home"
-            >
-              <Image
-                src="/Clykur Logo.svg"
-                alt="Clykur"
-                width={540}
-                height={144}
-                className="h-36 w-auto md:h-44"
-              />
-            </Link>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mt-6">
-              A Click Away
+    <footer className="relative z-0 mb-0 w-full overflow-x-hidden border-t border-border/40 pb-0 font-poppins">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#faf9f6] via-[#f6f7f4] to-[#e9eee7]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_100%,rgba(255,59,31,0.05),transparent_55%)]"
+        aria-hidden
+      />
+
+      {/* Watermark — translate-y pulls glyphs to true bottom edge; higher opacity ≈ logo #ff3b1f */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] flex w-full items-end justify-center overflow-x-hidden leading-[0] pb-0"
+        aria-hidden
+      >
+        <span
+          className="m-0 inline-block max-w-none translate-y-[3px] whitespace-nowrap p-0 text-center font-semibold uppercase leading-none text-[#ff3b1f] opacity-[0.52] sm:translate-y-[4px] sm:opacity-[0.58] md:opacity-[0.62] lg:translate-y-[4px] lg:opacity-[0.66] text-[22vw]"
+        >
+          CLYKUR
+        </span>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-12 sm:px-6 sm:pt-14 lg:px-8 lg:pt-16">
+        {/* Main footer grid */}
+        <div className="grid grid-cols-1 gap-16 sm:gap-[4.5rem] md:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-12 lg:gap-x-12">
+          {/* Brand column */}
+          <div className="flex flex-col gap-6 md:col-span-1 lg:col-span-4 lg:max-w-[22rem]">
+            <div className="border-l-2 border-[#ff3b1f]/25 pl-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                A Click Away
+              </p>
+            </div>
+            <p className="text-[14px] leading-[1.75] text-foreground/70">
+              Software products that power modern businesses. Engineering partnerships that ship.
             </p>
-            <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-sm">
-              Software products that power modern businesses. Engineering
-              partnerships that ship.
+            <p className="pt-1 text-[12px] leading-relaxed tracking-wide text-foreground/45">
+              © {year} CLYKUR · All rights reserved
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-4 lg:col-span-3">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground mb-6">
-              Navigation
-            </h4>
-            <ul className="space-y-4 text-sm">
-              <li>
-                <Link
-                  href="/#products"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#about"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#services"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Engineering Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#portfolio"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Portfolio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/careers"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#contact"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#trust"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  Trust & Verification
-                </Link>
-              </li>
-            </ul>
+          <div className="grid grid-cols-2 gap-10 sm:gap-14 md:col-span-1 lg:col-span-5 lg:gap-24">
+            <nav className="min-w-0 space-y-5" aria-labelledby="footer-solutions-heading">
+              <h2 id="footer-solutions-heading" className={navHeadingClass}>
+                Solutions
+              </h2>
+              <ul className="space-y-[0.65rem]">
+                {solutionsLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className={linkClass}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <nav className="min-w-0 space-y-5" aria-labelledby="footer-product-heading">
+              <h2 id="footer-product-heading" className={navHeadingClass}>
+                Product
+              </h2>
+              <ul className="space-y-[0.65rem]">
+                {productLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className={linkClass}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
 
-          {/* Connect */}
-          <div className="md:col-span-3 lg:col-span-4">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground mb-6">
-              Connect
-            </h4>
-            <ul className="space-y-4 text-sm">
-              <li>
-                <a
-                  href={emailUrl}
-                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  <Mail className="h-4 w-4 shrink-0" aria-hidden />
-                  {emailAddress}
-                </a>
-              </li>
-              {/* <li>
-                <a
-                  href="https://portfolio.chandukalluru.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-                  About Me
-                </a>
-              </li> */}
-              {/* <li>
-                <a
-                  href="https://github.com/chinnuk0521"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  <Github className="h-4 w-4 shrink-0" aria-hidden />
-                  GitHub
-                </a>
-              </li> */}
-              <li>
-                <a
-                  href="https://www.linkedin.com/company/clykur"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
-                  LinkedIn
-                </a>
-              </li>
-            </ul>
+          {/* Connect — no circular frames; crisp icon stroke */}
+          <div className="flex flex-col gap-6 border-t border-foreground/[0.05] pt-10 md:col-span-2 md:border-t-0 md:pt-0 lg:col-span-3 lg:border-t-0 lg:pl-1">
+            <h2 className={navHeadingClass}>Connect</h2>
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+              <a
+                href={emailUrl}
+                className={iconLinkClass}
+                aria-label={`Email ${emailAddress}`}
+              >
+                <Mail className="h-6 w-6 sm:h-[26px] sm:w-[26px]" strokeWidth={1.35} aria-hidden />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/clykur"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={iconLinkClass}
+                aria-label="Clykur on LinkedIn"
+              >
+                <Linkedin className="h-6 w-6 sm:h-[26px] sm:w-[26px]" strokeWidth={1.35} aria-hidden />
+              </a>
+            </div>
+            <p className="text-[13px] leading-relaxed text-foreground/60">
+              Prefer email?{" "}
+              <a
+                href={emailUrl}
+                className="font-medium text-[#ff3b1f] underline-offset-[3px] transition-colors hover:underline"
+              >
+                {emailAddress}
+              </a>
+            </p>
           </div>
         </div>
 
-        <div className="mt-16 md:mt-20 pt-8 border-t border-border/80 text-center">
-          <p className="text-xs text-muted-foreground tracking-wide">
-            © {new Date().getFullYear()} Clykur. All rights reserved.
-          </p>
-        </div>
+        {/* Section gap between footer links and CLYKUR */}
+        <div
+          className="mt-8 min-h-[12rem] sm:mt-10 sm:min-h-[14rem] md:mt-12 md:min-h-[17rem] lg:mt-14 lg:min-h-[20rem] xl:min-h-[22rem]"
+          aria-hidden
+        />
       </div>
     </footer>
   );

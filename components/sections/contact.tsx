@@ -1,8 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
-import { TiltCard } from "@/components/landing/tilt-card";
 
 export function Contact() {
   const whatsappNumber = "8179299096";
@@ -21,102 +19,84 @@ Best regards`;
   return (
     <section
       id="contact"
-      className="clykur-story-section bg-white"
+      className="clykur-story-section bg-gradient-to-b from-white via-[#fafaf9] to-white"
       aria-labelledby="contact-heading"
     >
       <ScrollReveal className="clykur-story-shell">
-        <header data-reveal-item className="mb-16 text-center md:mb-20">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+        <header data-reveal-item className="mb-14 text-center md:mb-20">
+          <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
             Let&apos;s talk
           </p>
-          <h2 id="contact-heading" className="mb-4 text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl">
+          <h2
+            id="contact-heading"
+            className="mb-5 font-semibold tracking-tight text-[clamp(2.25rem,5vw,3.75rem)] text-foreground"
+          >
             Get in touch
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
+          <p className="mx-auto mb-10 max-w-xl text-[15px] leading-relaxed text-foreground/55 md:text-lg md:leading-relaxed">
             Building a product or need an engineering partner? We&apos;d like to
             hear from you.
           </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full">
-            <span className="text-sm font-medium text-foreground">
-              Remote-first · Global · Responsive
-            </span>
-          </div>
+          <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/35">
+            Remote-first · Global · Responsive
+          </p>
         </header>
 
-        <div className="w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
-            {/* WhatsApp Card */}
-            <div data-reveal-item>
-              <TiltCard className="clykur-card-shadow rounded-2xl border border-border bg-white p-8 transition-colors hover:border-border">
-                <div className="flex flex-col items-center text-center">
-                <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6">
+        {/* Editorial channels — no card boxes; hairline separation only */}
+        <div data-reveal-item className="mx-auto max-w-2xl">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block border-b border-foreground/[0.07] py-10 transition-colors first:pt-0 md:py-14"
+          >
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
+              <div className="min-w-0 flex-1 space-y-3">
+                <div className="flex items-center gap-3">
                   <Image
                     src="/whatsapp.svg"
-                    alt="WhatsApp"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8"
+                    alt=""
+                    width={22}
+                    height={22}
+                    className="h-[22px] w-[22px] opacity-90"
                   />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ff3b1f]/90">
+                    WhatsApp
+                  </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">WhatsApp</h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-[15px] leading-relaxed text-foreground/55 md:text-base">
                   Quick response, instant communication
                 </p>
-<Button
-  asChild
-  size="lg"
-  className="w-full rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300"
->
-                    <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2"
-                  >
-                    <Image
-                      src="/whatsapp.svg"
-                      alt="WhatsApp"
-                      width={20}
-                      height={20}
-                      className="h-5 w-5"
-                      style={{ filter: "brightness(0) invert(1)" }}
-                    />
-                    Send a Message
-                  </a>
-                </Button>
-                </div>
-              </TiltCard>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors group-hover:text-[#ff3b1f]">
+                Send a message
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} aria-hidden />
+              </span>
             </div>
+          </a>
 
-            {/* Email Card */}
-            <div data-reveal-item>
-              <TiltCard className="clykur-card-shadow rounded-2xl border border-border bg-white p-8 transition-colors hover:border-border">
-                <div className="flex flex-col items-center text-center">
-                <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-6">
-                  <Mail className="h-8 w-8 text-foreground" />
+          <a href={emailUrl} className="group block py-10 md:py-14">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
+              <div className="min-w-0 flex-1 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Mail className="h-[22px] w-[22px] text-foreground/70" strokeWidth={1.35} aria-hidden />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ff3b1f]/90">
+                    Email
+                  </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Email</h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-[15px] leading-relaxed text-foreground/55 md:text-base">
                   Detailed inquiries and project discussions
                 </p>
-              <Button
-  asChild
-  variant="outline"
-  size="lg"
-  className="w-full rounded-2xl px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300"
->
-                  <a
-                    href={emailUrl}
-                    className="inline-flex items-center justify-center gap-2"
-                  >
-                    <Mail className="h-5 w-5" />
-                    {emailAddress}
-                  </a>
-                </Button>
-                </div>
-              </TiltCard>
+                <p className="pt-1 font-mono text-[13px] text-foreground/70 md:text-sm">
+                  {emailAddress}
+                </p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors group-hover:text-[#ff3b1f]">
+                Write us
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} aria-hidden />
+              </span>
             </div>
-          </div>
+          </a>
         </div>
       </ScrollReveal>
     </section>
