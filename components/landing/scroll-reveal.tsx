@@ -22,15 +22,22 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
     const childrenToAnimate = element.querySelectorAll("[data-reveal-item]");
 
     const ctx = gsap.context(() => {
-      gsap.set(childrenToAnimate, {
-        y: 40,
-        opacity: 0,
-        scale: 0.95,
+      childrenToAnimate.forEach((child: Element) => {
+        const rect = child.getBoundingClientRect();
+        const isInViewport =
+          rect.top < window.innerHeight && rect.bottom > 0;
+
+        // FIX: Always keep opacity 1 (no fade ever)
+        gsap.set(
+          child,
+          isInViewport
+            ? { opacity: 1, y: 0, scale: 1 }
+            : { y: 40, opacity: 1, scale: 0.95 }
+        );
       });
 
       gsap.to(childrenToAnimate, {
         y: 0,
-        opacity: 1,
         scale: 1,
         ease: "power2.out",
         duration: 0.9,
@@ -39,7 +46,7 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
           trigger: element,
           start: "top 82%",
           end: "bottom 20%",
-          scrub: 0.8,
+          scrub: 0.8, // keeps motion, no fade now
         },
       });
     }, element);
@@ -47,5 +54,9 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
     return () => ctx.revert();
   }, []);
 
-  return <div ref={ref} className={cn(className)}>{children}</div>;
+  return (
+    <div ref={ref} className={cn(className)}>
+      {children}
+    </div>
+  );
 }

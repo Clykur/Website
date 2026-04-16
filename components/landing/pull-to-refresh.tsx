@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { useLenis } from "@/components/landing/smooth-scroll";
 
-const THRESHOLD_PX = 72;
+const THRESHOLD_PX = 60;
 const MAX_PULL_PX = 120;
 
 function useIsMobilePullEnabled() {
@@ -23,7 +22,6 @@ function useIsMobilePullEnabled() {
 
 export function PullToRefresh() {
   const router = useRouter();
-  const lenis = useLenis();
   const mobile = useIsMobilePullEnabled();
   const [isPending, startTransition] = useTransition();
   const [pullPx, setPullPx] = useState(0);
@@ -37,10 +35,10 @@ export function PullToRefresh() {
 
   refreshingRef.current = refreshing;
 
+  // ✅ FIX: Always use native scroll position
   const atTop = useCallback(() => {
-    const y = lenis ? lenis.scroll : window.scrollY;
-    return y <= 2;
-  }, [lenis]);
+    return window.scrollY <= 2;
+  }, []);
 
   const atTopRef = useRef(atTop);
   atTopRef.current = atTop;
@@ -61,7 +59,9 @@ export function PullToRefresh() {
 
     const onTouchMove = (e: TouchEvent) => {
       if (!armed.current || refreshingRef.current) return;
+
       const dy = e.touches[0].clientY - startY.current;
+
       if (dy <= 0) {
         if (tracking.current) {
           pullDistanceRef.current = 0;
@@ -70,14 +70,19 @@ export function PullToRefresh() {
         }
         return;
       }
+
       if (!atTopRef.current()) {
         armed.current = false;
         pullDistanceRef.current = 0;
         setPullPx(0);
         return;
       }
+
       tracking.current = true;
+
+      // prevent native refresh
       e.preventDefault();
+
       const d = Math.min(dy, MAX_PULL_PX);
       pullDistanceRef.current = d;
       setPullPx(d);
@@ -88,7 +93,9 @@ export function PullToRefresh() {
         armed.current = false;
         return;
       }
+
       const distance = pullDistanceRef.current;
+
       tracking.current = false;
       armed.current = false;
       pullDistanceRef.current = 0;
@@ -97,13 +104,16 @@ export function PullToRefresh() {
       if (distance >= THRESHOLD_PX && !refreshingRef.current) {
         refreshingRef.current = true;
         setRefreshing(true);
+
         startTransition(() => {
           router.refresh();
         });
+
+        // small delay for UX smoothness
         window.setTimeout(() => {
           refreshingRef.current = false;
           setRefreshing(false);
-        }, 650);
+        }, 800);
       }
     };
 
@@ -127,8 +137,9 @@ export function PullToRefresh() {
     pullPx > 0
       ? Math.min(1, pullPx / THRESHOLD_PX)
       : refreshing || isPending
-        ? 1
-        : 0;
+      ? 1
+      : 0;
+
   const show = mobile && (pullPx > 0 || refreshing || isPending);
 
   if (!mobile) return null;
@@ -153,7 +164,9 @@ export function PullToRefresh() {
           }}
         />
         <span className="sr-only">
-          {refreshing || isPending ? "Refreshing" : "Pull down to refresh"}
+          {refreshing || isPending
+            ? "Refreshing"
+            : "Pull down to refresh"}
         </span>
       </div>
     </div>
