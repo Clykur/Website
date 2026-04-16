@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm -rf .next && next build",
+    "build": "rm -rf .next && rm -f tsconfig.tsbuildinfo && next build",
     "start": "next start",
     "lint": "next lint",
     "generate-favicon": "node scripts/generate-favicon.js",
@@ -22,7 +22,7 @@
     "gsap": "^3.15.0",
     "lenis": "^1.3.23",
     "lucide-react": "^0.400.0",
-    "next": "^14.2.18",
+    "next": "^14.2.35",
     "qrcode": "^1.5.4",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SplashScreen } from "@/components/SplashScreen";
 import { SmoothScroll } from "@/components/landing/smooth-scroll";
+import { PullToRefresh } from "@/components/landing/pull-to-refresh";
 import {
   SITE_URL,
   SITE_NAME,
@@ -77,14 +79,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="antialiased">
-        <SmoothScroll />
-        <SplashScreen />
-        <JsonLd />
-        <Navigation />
-        <main id="main-content" className="relative z-10 min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <SmoothScroll>
+          <SplashScreen />
+          <PullToRefresh />
+          <JsonLd />
+          <Navigation />
+          <main id="main-content" className="relative z-10 min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
