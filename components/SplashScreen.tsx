@@ -94,22 +94,22 @@ export function SplashScreen() {
       }}
       aria-hidden="true"
     >
-      <div className="absolute inset-0 flex flex-col">
-        {/* Centered logo */}
-        <div className="flex flex-1 items-center justify-center p-8">
+      <div className="absolute inset-0 flex min-h-0 flex-col">
+        {/* Logo: min-h-0 + overflow so a huge image cannot paint over the percentage row */}
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-6 sm:p-8">
           <Image
             src="/Clykur Logo.svg"
             alt=""
-            width={640}
-            height={171}
-            className="w-full max-w-[min(80vw,440px)] h-auto object-contain"
+            width={1600}
+            height={427}
+            className="h-auto max-h-full w-[88vw] max-w-[88vw] object-contain"
             priority
           />
         </div>
 
-        {/* Bottom right: percentage */}
-        <div className="flex justify-end items-end p-8 md:p-12">
-          <span className="font-mono text-2xl md:text-[2rem] font-light tabular-nums text-foreground/70 tracking-tight">
+        {/* Bottom right: percentage (shrink-0 keeps row from being covered by flex overflow) */}
+        <div className="relative z-10 flex shrink-0 justify-end bg-background/80 p-8 backdrop-blur-[2px] md:p-12">
+          <span className="font-mono text-3xl font-semibold tabular-nums tracking-tight text-[#ff3b1f] drop-shadow-[0_1px_0_rgba(255,255,255,0.6)] md:text-4xl">
             {percent}%
           </span>
         </div>
