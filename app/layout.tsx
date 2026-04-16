@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -19,11 +19,15 @@ const inter = Inter({
   display: "swap",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  icons: {
-    icon: "/clykur_favicon.png",
-  },
   title: {
     default: DEFAULT_META.title,
     template: `%s | ${SITE_NAME}`,
@@ -71,13 +75,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="antialiased">
         <SmoothScroll />
         <SplashScreen />
         <JsonLd />
         <Navigation />
-        <main id="main-content" className="min-h-screen">
+        <main id="main-content" className="relative z-10 min-h-screen">
           {children}
         </main>
         <Footer />

@@ -11,6 +11,8 @@ import {
   submitApplication,
   type ApplyFormState,
 } from "@/lib/careers/apply-actions";
+import { primaryGradientCtaClassName } from "@/lib/cta-styles";
+import { cn } from "@/lib/utils";
 import { CheckCircle2, Loader2, Upload, X } from "lucide-react";
 
 const STORAGE_KEY_PREFIX = "clykur_applied_";
@@ -24,21 +26,23 @@ function getStorageKey(roleSlug: string) {
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button
+    <button
       type="submit"
-      size="lg"
-className="h-12 w-full sm:w-auto min-w-[220px] rounded-[22px] px-6 py-3 font-semibold text-base shadow-sm hover:shadow-md"
       disabled={pending}
+      className={cn(
+        primaryGradientCtaClassName,
+        "h-12 w-full max-w-md justify-center px-8 text-[14px] disabled:pointer-events-none disabled:opacity-60 sm:w-auto sm:max-w-none sm:min-w-[14rem]",
+      )}
     >
       {pending ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
-          Submitting...
-        </>
+        <span className="inline-flex items-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+          Submitting…
+        </span>
       ) : (
         "Submit application"
       )}
-    </Button>
+    </button>
   );
 }
 
@@ -103,7 +107,7 @@ function ResumeUpload() {
         onChange={handleChange}
         className="sr-only"
         id="resume"
-        aria-describedby="resume-helper"
+        aria-describedby="resume-field-description"
       />
       <button
         type="button"
@@ -111,16 +115,20 @@ function ResumeUpload() {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`
-          flex w-full flex-col items-center justify-center rounded-[22px] shadow-sm border-2 border-dashed px-6 py-8 text-center transition-all duration-300 ease-out
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2
-          ${selectedFile ? "border-primary/40 bg-primary/5" : isDragOver ? "border-primary/50 bg-muted/50" : "border-border bg-muted/30 hover:bg-muted/50"}
-        `}
+        className={cn(
+          "flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed px-5 py-8 text-center shadow-[0_1px_0_rgba(255,255,255,0.9)_inset] transition-all duration-300 ease-out",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/25 focus-visible:ring-offset-2",
+          selectedFile
+            ? "border-[#ff3b1f]/35 bg-[#ff3b1f]/[0.04]"
+            : isDragOver
+              ? "border-[#ff3b1f]/45 bg-[#fafaf9]/90"
+              : "border-foreground/[0.12] bg-white/70 hover:border-foreground/[0.18] hover:bg-[#fafaf9]/80",
+        )}
         aria-label="Upload your resume"
       >
         {selectedFile ? (
           <>
-            <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-primary">
+            <div className="flex max-w-full items-center gap-2 rounded-full bg-[#ff3b1f]/10 px-3 py-1.5 text-[13px] font-medium text-[#ff3b1f]">
               <CheckCircle2 className="h-4 w-4" aria-hidden />
               <span className="text-sm font-medium">{selectedFile.name}</span>
             </div>
@@ -143,10 +151,7 @@ function ResumeUpload() {
             <span className="text-sm font-medium text-foreground">
               Upload your resume
             </span>
-            <span
-              id="resume-hint"
-              className="mt-1 text-xs text-muted-foreground"
-            >
+            <span className="mt-1 text-xs text-foreground/45">
               PDF, DOC, or DOCX — max 5MB
             </span>
           </>
@@ -164,10 +169,10 @@ interface ApplicationFormProps {
 const INITIAL_STATE: ApplyFormState = {};
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-[22px] shadow-sm border border-border bg-background px-6 py-3 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-all duration-300 ease-out";
+  "mt-2 h-11 w-full rounded-xl border border-foreground/[0.11] bg-white/90 px-4 py-2.5 text-sm text-foreground shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] placeholder:text-foreground/35 transition-[border-color,box-shadow] duration-200 focus-visible:border-[#ff3b1f]/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/15";
 const labelClass = "text-sm font-medium text-foreground";
 const sectionLabelClass =
-  "text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4";
+  "mb-4 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/38";
 
 export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
   const [state, formAction] = useFormState(submitApplication, INITIAL_STATE);
@@ -212,35 +217,36 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
 
   if (showSuccess) {
     return (
-      <div className="mx-auto max-w-[720px] rounded-2xl border border-border bg-card p-8 md:p-10 text-center shadow-sm">
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <div className="mx-auto max-w-[720px] overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/95 px-6 py-10 text-center shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_56px_-40px_rgba(10,10,10,0.1)] md:px-12 md:py-12">
+        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#ff3b1f]/10 text-[#ff3b1f]">
           <CheckCircle2 className="h-8 w-8" aria-hidden />
         </div>
-        <h2 className="text-xl font-bold tracking-tight text-foreground md:text-2xl">
-          Application received.
+        <h2 className="font-poppins text-xl font-semibold tracking-[-0.02em] text-foreground md:text-2xl">
+          Application received
         </h2>
-        <p className="mt-3 max-w-md mx-auto text-muted-foreground leading-relaxed">
+        <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-foreground/55">
           Our team will review your application and contact you if there&apos;s
           a fit.
         </p>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link href="/careers">
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-[22px] shadow-sm hover:shadow-md font-medium h-12 px-6 py-3"
-            >
-              View other roles
-            </Button>
+        <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center">
+          <Link
+            href="/careers"
+            className={cn(
+              primaryGradientCtaClassName,
+              "h-12 w-full justify-center sm:w-auto",
+            )}
+          >
+            View other roles
           </Link>
           {alreadyApplied && (
             <Button
+              type="button"
               variant="ghost"
               size="lg"
-              className="rounded-[22px] shadow-sm hover:shadow-md font-medium text-muted-foreground h-12 px-6 py-3"
+              className="h-12 rounded-xl px-6 text-[13px] font-medium text-foreground/50 hover:bg-[#fafaf9] hover:text-foreground"
               onClick={handleSubmitAnother}
             >
-              Submit another application for this role
+              Apply again for this role
             </Button>
           )}
         </div>
@@ -249,18 +255,48 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-[720px] rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
-      <div className="border-b border-border bg-muted/20 px-8 py-8 md:px-10 md:py-9">
-        <h2 className="text-xl font-bold tracking-tight text-foreground md:text-2xl">
-          Apply for this role
-        </h2>
-        <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed w-full">
-          Tell us a bit about yourself and upload your resume. Our team
-          personally reviews every application.
-        </p>
+    <div className="mx-auto max-w-[720px] overflow-hidden rounded-2xl border border-foreground/[0.09] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_64px_-40px_rgba(10,10,10,0.1)]">
+      <div className="relative border-b border-foreground/[0.07] px-6 py-9 md:px-10 md:py-11">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_80%_at_100%_0%,rgba(255,59,31,0.07),transparent_55%)]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#fafaf9]/98 via-white/90 to-white"
+          aria-hidden
+        />
+        <div className="relative">
+          <div className="mb-4 flex items-center gap-3 md:mb-5">
+            <span
+              className="h-px w-9 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent md:w-10"
+              aria-hidden
+            />
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.26em] text-foreground/42">
+              Application
+            </p>
+          </div>
+          <h2
+            id="apply-form-title"
+            className="font-poppins text-[clamp(1.375rem,3.5vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.035em] text-foreground"
+          >
+            Apply for {roleTitle}
+          </h2>
+          <p className="mt-4 max-w-[34rem] text-[15px] leading-[1.65] text-foreground/52 md:text-[15.5px]">
+            Share a few details and your resume—our team reads every submission
+            with care. No automated gates; we reply when there&apos;s a genuine
+            fit.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-foreground/[0.07] pt-6 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/36">
+            <span className="text-[#ff3b1f]/85">Human review</span>
+            <span className="text-foreground/18" aria-hidden>
+              ·
+            </span>
+            <span>Response if it&apos;s a match</span>
+          </div>
+        </div>
       </div>
 
-      <form action={formAction} className="p-8 md:p-10">
+      <form action={formAction} className="px-6 py-8 md:px-10 md:py-10">
         <input type="hidden" name="role_slug" value={roleSlug} />
 
         <div className="space-y-10">
@@ -374,7 +410,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
                 name="cover_note"
                 placeholder="Tell us why you're interested in this role or anything you'd like us to know."
                 rows={4}
-className="mt-2 w-full rounded-[22px] shadow-sm border border-border bg-background px-6 py-3 text-sm placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary transition-all duration-300 ease-out resize-y min-h-[120px]"
+                className="mt-2 min-h-[120px] w-full resize-y rounded-xl border border-foreground/[0.11] bg-white/90 px-4 py-3 text-sm text-foreground shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] placeholder:text-foreground/35 transition-[border-color,box-shadow] duration-200 focus-visible:border-[#ff3b1f]/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/15"
               />
             </div>
           </section>
@@ -389,8 +425,8 @@ className="mt-2 w-full rounded-[22px] shadow-sm border border-border bg-backgrou
                 Resume <span className="text-destructive">*</span>
               </Label>
               <p
-                className="mt-1 text-sm text-muted-foreground"
-                id="resume-helper"
+                className="mt-1 text-sm leading-relaxed text-foreground/48"
+                id="resume-field-description"
               >
                 Upload your resume in PDF or Word format. Maximum size 5MB.
               </p>
@@ -403,17 +439,17 @@ className="mt-2 w-full rounded-[22px] shadow-sm border border-border bg-backgrou
 
         {state?.error && (
           <p
-            className="mt-8 text-sm text-destructive rounded-xl bg-destructive/10 px-4 py-3"
+            className="mt-8 rounded-xl border border-red-500/20 bg-red-500/[0.06] px-4 py-3 text-sm text-red-700"
             role="alert"
           >
             {state.error}
           </p>
         )}
 
-        <div className="mt-10 pt-2 flex flex-col items-center text-center">
+        <div className="mt-10 flex flex-col items-center border-t border-foreground/[0.07] bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(250,250,249,0.45))] pt-9 text-center">
           <SubmitButton />
-          <p className="mt-4 text-xs text-muted-foreground">
-            We review every application personally.
+          <p className="mt-4 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/34">
+            We review every application personally
           </p>
         </div>
       </form>

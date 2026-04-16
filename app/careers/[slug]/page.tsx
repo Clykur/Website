@@ -11,6 +11,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { getRoleBySlug, getRolePaths } from "@/lib/careers-roles";
+import { cn } from "@/lib/utils";
 
 const ApplicationForm = dynamic(
   () =>
@@ -20,20 +21,26 @@ const ApplicationForm = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden animate-pulse">
-        <div className="border-b border-border bg-muted/30 px-6 py-5 md:px-8 md:py-6">
-          <div className="h-5 w-40 bg-muted rounded" />
-          <div className="mt-2 h-4 w-72 bg-muted rounded" />
+      <div className="overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)]">
+        <div className="border-b border-foreground/[0.07] bg-gradient-to-b from-[#fafaf9]/90 to-white/80 px-6 py-6 md:px-8 md:py-7">
+          <div className="h-5 w-40 rounded-md bg-foreground/[0.06]" />
+          <div className="mt-3 h-4 max-w-md rounded-md bg-foreground/[0.05]" />
         </div>
-        <div className="p-6 md:p-8 space-y-5">
-          <div className="h-10 w-full max-w-xs bg-muted rounded-lg" />
-          <div className="h-10 w-full max-w-xs bg-muted rounded-lg" />
-          <div className="h-10 w-48 bg-muted rounded-lg" />
+        <div className="space-y-5 p-6 md:p-8">
+          <div className="h-11 w-full max-w-md rounded-xl bg-foreground/[0.05]" />
+          <div className="h-11 w-full max-w-md rounded-xl bg-foreground/[0.05]" />
+          <div className="h-11 w-48 rounded-xl bg-foreground/[0.05]" />
         </div>
       </div>
     ),
   },
 );
+
+const sectionShell =
+  "overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 p-6 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] md:p-8";
+
+const sectionTitleClass =
+  "mb-4 flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38";
 
 interface PageProps {
   params: { slug: string };
@@ -52,6 +59,9 @@ export function generateMetadata({ params }: PageProps) {
   };
 }
 
+const metaChipClass =
+  "inline-flex items-center gap-1.5 rounded-xl border border-foreground/[0.1] bg-white/85 px-3 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-foreground/90 shadow-[0_1px_0_rgba(255,255,255,0.95)_inset]";
+
 export default function JobPage({ params }: PageProps) {
   const role = getRoleBySlug(params.slug);
   if (!role) notFound();
@@ -59,66 +69,84 @@ export default function JobPage({ params }: PageProps) {
   const roleSlug = params.slug;
 
   return (
-    <div className="min-h-screen pt-20 md:pt-28 pb-24 bg-background">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen overflow-hidden bg-white">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-15%,rgba(255,59,31,0.06),transparent_58%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(255,90,60,0.045),transparent_45%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_50%_100%,transparent_35%,rgba(250,250,249,0.88)_100%)]"
+        aria-hidden
+      />
+
+      <div
+        className={cn(
+          "relative z-[1] mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8",
+          "pt-[max(5.25rem,env(safe-area-inset-top))] md:pt-28",
+          "pb-[max(4rem,env(safe-area-inset-bottom))] md:pb-24",
+        )}
+      >
         <Link
           href="/careers"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground mb-10 transition-colors"
+          className="mb-10 inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/40 transition-colors hover:text-[#ff3b1f] md:mb-12"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
           All open roles
         </Link>
 
-        <header className="mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-            {role.industry}
-          </p>
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-4">
+        <header className="mb-12 md:mb-14">
+          <div className="mb-4 flex items-center gap-4">
+            <span
+              className="h-px w-10 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent sm:w-12"
+              aria-hidden
+            />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              {role.industry}
+            </p>
+          </div>
+          <h1 className="font-poppins text-[clamp(1.75rem,4.5vw+0.5rem,2.5rem)] font-medium leading-[1.1] tracking-[-0.035em] text-foreground">
             {role.title}
           </h1>
-          <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/80 text-sm font-medium text-foreground">
-              <Briefcase className="h-4 w-4 text-muted-foreground" />
+          <div className="mt-6 flex flex-wrap gap-2">
+            <span className={metaChipClass}>
+              <Briefcase className="h-4 w-4 text-foreground/45" aria-hidden />
               {role.employmentType}
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/80 text-sm font-medium text-foreground">
-              <MapPin className="h-4 w-4 text-muted-foreground" />
+            <span className={metaChipClass}>
+              <MapPin className="h-4 w-4 text-foreground/45" aria-hidden />
               {role.location}
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted/80 text-sm font-medium text-foreground">
-              {role.team}
-            </span>
+            <span className={metaChipClass}>{role.team}</span>
           </div>
         </header>
 
-        <div className="space-y-12">
-          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
-              <FileText className="h-4 w-4" aria-hidden />
+        <div className="space-y-10 md:space-y-12">
+          <section className={sectionShell} aria-labelledby="jd-heading">
+            <h2 id="jd-heading" className={sectionTitleClass}>
+              <FileText className="h-4 w-4 text-[#ff3b1f]/80" aria-hidden />
               Job description
             </h2>
-            <div className="space-y-4 text-foreground">
+            <div className="space-y-4 text-[15px] leading-relaxed text-foreground/85">
               {role.description.map((p, i) => (
-                <p key={i} className="leading-relaxed text-[15px]">
-                  {p}
-                </p>
+                <p key={i}>{p}</p>
               ))}
             </div>
           </section>
 
-          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
-              <ListChecks className="h-4 w-4" aria-hidden />
+          <section className={sectionShell} aria-labelledby="req-heading">
+            <h2 id="req-heading" className={sectionTitleClass}>
+              <ListChecks className="h-4 w-4 text-[#ff3b1f]/80" aria-hidden />
               Requirements
             </h2>
-            <ul className="space-y-3">
+            <ul className="space-y-3.5">
               {role.requirements.map((r, i) => (
-                <li
-                  key={i}
-                  className="flex gap-3 items-start text-sm text-foreground"
-                >
+                <li key={i} className="flex gap-3 text-[15px] text-foreground/85">
                   <CheckCircle2
-                    className="h-4 w-4 shrink-0 mt-0.5 text-primary"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-[#ff3b1f]"
                     aria-hidden
                   />
                   <span className="leading-relaxed">{r}</span>
@@ -127,25 +155,25 @@ export default function JobPage({ params }: PageProps) {
             </ul>
           </section>
 
-          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
-              <Sparkles className="h-4 w-4" aria-hidden />
+          <section className={sectionShell} aria-labelledby="qual-heading">
+            <h2 id="qual-heading" className={sectionTitleClass}>
+              <Sparkles className="h-4 w-4 text-[#ff3b1f]/80" aria-hidden />
               Qualifications we look for
             </h2>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="space-y-3 text-[15px] leading-relaxed text-foreground/65">
               {role.qualifications.map((q, i) => (
-                <li key={i} className="flex gap-2 leading-relaxed">
-                  <span className="text-foreground">·</span>
+                <li key={i} className="flex gap-3">
+                  <span
+                    className="mt-[0.35rem] h-1 w-1 shrink-0 rounded-full bg-[#ff3b1f]/70"
+                    aria-hidden
+                  />
                   <span>{q}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-              Apply
-            </h2>
+          <section aria-labelledby="apply-form-title">
             <ApplicationForm roleSlug={roleSlug} roleTitle={role.title} />
           </section>
         </div>

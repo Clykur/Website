@@ -1,4 +1,4 @@
-import { Lock } from "lucide-react";
+import { Compass, Lock, Sparkles, Target } from "lucide-react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
 const caseStudies = [
@@ -64,68 +64,153 @@ const caseStudies = [
   },
 ];
 
+const bodyClass =
+  "text-[13.5px] leading-[1.82] text-foreground/55 md:text-[14.5px] md:leading-[1.84]";
+
+const labelClass =
+  "mb-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38";
+
 export function CaseStudies() {
   return (
     <section
       id="case-studies"
-      className="clykur-story-section clykur-section-soft"
+      className="clykur-story-section relative border-t border-foreground/[0.05]"
       aria-labelledby="case-studies-heading"
     >
-      <ScrollReveal className="clykur-story-shell">
-        <header data-reveal-item className="mb-10 md:mb-20">
-          <h2 id="case-studies-heading" className="mb-2 text-5xl font-semibold tracking-tight text-foreground md:mb-3 md:text-6xl lg:text-7xl">
-            Case Studies
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground mb-3 md:mb-4 w-full leading-relaxed">
-            Real projects showcasing our approach to solving frontend challenges
-            and delivering results.
-          </p>
-          <p className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
-            <Lock className="h-3.5 w-3.5 shrink-0 flex-shrink-0" aria-hidden />
-            <span>
-              Client names and specific details are confidential per NDAs.
-            </span>
-          </p>
+      {/* Layered backdrop */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#fafaf8]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-30%,rgba(255,59,31,0.07),transparent_55%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_100%_50%,rgba(10,10,10,0.03),transparent_60%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(to_right,rgba(10,10,10,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(10,10,10,0.03)_1px,transparent_1px)] [background-size:72px_72px]"
+        aria-hidden
+      />
+
+      <ScrollReveal className="clykur-story-shell relative z-10 max-w-6xl">
+        <header data-reveal-item className="mb-16 md:mb-24">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+            <div className="max-w-3xl">
+              <div className="mb-6 flex items-center gap-4">
+                <span
+                  className="h-px w-12 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-[#ff3b1f]/0"
+                  aria-hidden
+                />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                  Selected work
+                </p>
+              </div>
+              <h2
+                id="case-studies-heading"
+                className="font-poppins text-[clamp(2.25rem,5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.03em] text-foreground"
+              >
+                <span className="block text-balance">Case studies</span>
+              </h2>
+              <p className="mt-6 max-w-xl text-[15px] leading-[1.75] text-foreground/48 md:text-base">
+                Outcomes from real engagements structured so you can scan the
+                problem, the path, and the impact without the noise.
+              </p>
+            </div>
+
+            <div className="shrink-0 lg:max-w-xs lg:text-right">
+              <div className="inline-flex flex-col gap-4 rounded-none border border-foreground/[0.08] bg-white/55 px-6 py-5 text-left shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_24px_48px_-24px_rgba(10,10,10,0.08)] backdrop-blur-sm lg:text-right">
+                <Lock
+                  className="h-4 w-4 text-foreground/35 lg:ml-auto"
+                  strokeWidth={1.5}
+                  aria-hidden
+                />
+                <p className="text-[12.5px] leading-relaxed text-foreground/48">
+                  Identities and specifics stay under NDA narratives are
+                  representative of the work.
+                </p>
+              </div>
+            </div>
+          </div>
         </header>
 
-        <div className="space-y-0">
+        <div>
           {caseStudies.map((study, index) => (
             <article
               key={index}
               data-reveal-item
-              className="border-b border-border py-8 sm:py-10 md:py-12 last:border-b-0"
+              className="group border-t border-foreground/[0.07] py-16 first:border-t-0 first:pt-0 md:py-[4.5rem] lg:py-24"
             >
-              <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-0.5 sm:mb-1">
-                {study.category}
-              </p>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight text-foreground mb-4 sm:mb-6">
-                {study.title}
-              </h3>
+              <div className="relative border-l-2 border-transparent pl-5 transition-[border-color] duration-500 group-hover:border-[#ff3b1f]/35 md:pl-8">
+                {/* Watermark: scoped to title block so it aligns with index + headline (not body columns) */}
+                <div className="relative mb-10 min-h-[4.5rem] md:mb-12 md:min-h-[5.25rem]">
+                  <span
+                    className="pointer-events-none absolute left-0 top-1/2 z-0 -translate-y-1/2 select-none font-calegar text-[clamp(3.25rem,11vw,7rem)] leading-[0.85] tracking-tight text-foreground/[0.055]"
+                    aria-hidden
+                  >
+                    {(index + 1).toString().padStart(2, "0")}
+                  </span>
+                  <div className="relative z-[1] md:flex md:items-end md:justify-between md:gap-8">
+                    <div className="min-w-0">
+                      <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                        <span className="font-mono text-[11px] tabular-nums tracking-tight text-foreground/28">
+                          {(index + 1).toString().padStart(2, "0")}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#ff3b1f]">
+                          {study.category}
+                        </span>
+                      </div>
+                      <h3 className="max-w-2xl font-poppins text-[1.5rem] font-medium leading-[1.15] tracking-[-0.02em] text-foreground md:text-[1.75rem] lg:text-[2rem]">
+                        {study.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-10">
-                <div className="rounded-lg bg-muted/40 p-4 sm:p-0 sm:bg-transparent sm:rounded-none">
-                  <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5 sm:mb-2">
-                    Challenge
-                  </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {study.challenge}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-muted/40 p-4 sm:p-0 sm:bg-transparent sm:rounded-none">
-                  <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5 sm:mb-2">
-                    Approach
-                  </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {study.approach}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-muted/40 p-4 sm:p-0 sm:bg-transparent sm:rounded-none">
-                  <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5 sm:mb-2">
-                    Result
-                  </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {study.result}
-                  </p>
+                <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+                  <div className="min-w-0 lg:col-span-4">
+                    <p className={labelClass}>
+                      <Target
+                        className="h-3.5 w-3.5 text-foreground/30"
+                        strokeWidth={1.5}
+                        aria-hidden
+                      />
+                      Challenge
+                    </p>
+                    <p className={bodyClass}>{study.challenge}</p>
+                  </div>
+                  <div className="min-w-0 lg:col-span-4">
+                    <p className={labelClass}>
+                      <Compass
+                        className="h-3.5 w-3.5 text-foreground/30"
+                        strokeWidth={1.5}
+                        aria-hidden
+                      />
+                      Approach
+                    </p>
+                    <p className={bodyClass}>{study.approach}</p>
+                  </div>
+                  <div className="relative min-w-0 lg:col-span-4">
+                    <div
+                      className="absolute -inset-x-4 -inset-y-3 rounded-sm bg-gradient-to-br from-[#ff3b1f]/[0.06] via-transparent to-transparent md:-inset-x-5 md:-inset-y-4"
+                      aria-hidden
+                    />
+                    <div className="relative border-l-2 border-[#ff3b1f]/35 pl-5 md:pl-6">
+                      <p className={labelClass}>
+                        <Sparkles
+                          className="h-3.5 w-3.5 text-[#ff3b1f]/70"
+                          strokeWidth={1.5}
+                          aria-hidden
+                        />
+                        Result
+                      </p>
+                      <p className="text-[14px] font-medium leading-[1.82] text-foreground/72 md:text-[15px] md:leading-[1.84]">
+                        {study.result}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </article>
