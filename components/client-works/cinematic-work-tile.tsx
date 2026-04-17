@@ -64,17 +64,15 @@ export function CinematicWorkTile({
           aria-hidden
         />
 
-        <div className="absolute left-5 top-5 flex items-start justify-between gap-4 md:left-8 md:top-8 md:right-8">
-          <span className="font-mono text-[11px] font-medium tabular-nums tracking-[0.35em] text-white/45">
-            {n}
-          </span>
-          <span
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-[background-color,border-color,color,transform] duration-300 group-hover:scale-105 group-hover:border-white/35 group-hover:bg-white/18"
-            aria-hidden
-          >
-            <ArrowUpRight className="h-[18px] w-[18px]" strokeWidth={1.85} />
-          </span>
-        </div>
+        <span className="absolute left-4 top-4 font-mono text-[11px] font-medium tabular-nums tracking-[0.35em] text-white/45 md:left-8 md:top-8">
+          {n}
+        </span>
+        <span
+          className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-[background-color,border-color,color,transform] duration-300 group-hover:scale-105 group-hover:border-white/35 group-hover:bg-white/18 md:right-8 md:top-8"
+          aria-hidden
+        >
+          <ArrowUpRight className="h-[18px] w-[18px]" strokeWidth={1.85} />
+        </span>
 
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10">
           <div className="max-w-xl">
