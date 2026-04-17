@@ -4,6 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { useMobileViewport } from "@/hooks/use-is-mobile-viewport";
 import { primaryGradientCtaClassName } from "@/lib/cta-styles";
 import { cn } from "@/lib/utils";
 
@@ -13,10 +14,33 @@ const HeroVisual = dynamic(
 );
 
 export function Hero() {
+  const { isMobile, isMobileRef } = useMobileViewport();
   const { scrollYProgress } = useScroll();
-  const bgScale = useTransform(scrollYProgress, [0, 0.4], [1, 1.1]);
-  const textY = useTransform(scrollYProgress, [0, 0.45], [0, -48]);
-  const visualY = useTransform(scrollYProgress, [0, 0.45], [0, 36]);
+
+  const bgScale = useTransform(scrollYProgress, (v) => {
+    const m = isMobileRef.current;
+    const max = m ? 1.04 : 1.1;
+    const span = m ? 0.35 : 0.4;
+    if (v <= 0) return 1;
+    if (v >= span) return max;
+    return 1 + (v / span) * (max - 1);
+  });
+  const textY = useTransform(scrollYProgress, (v) => {
+    const m = isMobileRef.current;
+    const max = m ? -22 : -48;
+    const span = 0.45;
+    if (v <= 0) return 0;
+    if (v >= span) return max;
+    return (v / span) * max;
+  });
+  const visualY = useTransform(scrollYProgress, (v) => {
+    const m = isMobileRef.current;
+    const max = m ? 16 : 36;
+    const span = 0.45;
+    if (v <= 0) return 0;
+    if (v >= span) return max;
+    return (v / span) * max;
+  });
 
   return (
     <section
@@ -25,15 +49,24 @@ export function Hero() {
     >
       <motion.div
         style={{ scale: bgScale }}
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_25%_25%,rgba(255,90,60,0.12),transparent_45%),radial-gradient(circle_at_80%_15%,rgba(255,59,31,0.1),transparent_40%)] will-change-transform"
+        className="pointer-events-none absolute inset-0 -z-10 will-change-transform bg-[radial-gradient(circle_at_25%_25%,rgba(255,90,60,0.12),transparent_45%),radial-gradient(circle_at_80%_15%,rgba(255,59,31,0.1),transparent_40%)]"
         aria-hidden
       />
-      <motion.div
-        animate={{ opacity: [0.24, 0.34, 0.24] }}
-        transition={{ duration: 9, repeat: Infinity, ease: [0.4, 0, 0.2, 1] }}
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_40%,rgba(255,59,31,0.18),transparent_35%)]"
-        aria-hidden
-      />
+      {isMobile ? (
+        <motion.div
+          animate={{ opacity: [0.26, 0.32, 0.26] }}
+          transition={{ duration: 12, repeat: Infinity, ease: [0.4, 0, 0.2, 1] }}
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_40%,rgba(255,59,31,0.16),transparent_35%)]"
+          aria-hidden
+        />
+      ) : (
+        <motion.div
+          animate={{ opacity: [0.24, 0.34, 0.24] }}
+          transition={{ duration: 9, repeat: Infinity, ease: [0.4, 0, 0.2, 1] }}
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_40%,rgba(255,59,31,0.18),transparent_35%)]"
+          aria-hidden
+        />
+      )}
 
       <div className="clykur-story-shell relative z-[1] w-full max-w-6xl">
         <ScrollReveal className="flex w-full flex-col items-stretch gap-14 lg:flex-row lg:items-center lg:justify-center lg:gap-14 xl:gap-16">

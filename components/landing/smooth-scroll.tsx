@@ -25,17 +25,21 @@ export function SmoothScroll({ children }: { children?: ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
+    const mobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches;
+
     const instance = new Lenis({
       autoRaf: true,
-      duration: 1.25,
+      duration: mobile ? 0.78 : 1.25,
       easing: easeOutExpo,
-      lerp: 0.092,
+      lerp: mobile ? 0.12 : 0.092,
       smoothWheel: true,
-      wheelMultiplier: 0.92,
+      wheelMultiplier: mobile ? 1 : 0.92,
       syncTouch: true,
-      syncTouchLerp: 0.1,
-      touchMultiplier: 1.08,
-      touchInertiaExponent: 1.65,
+      syncTouchLerp: mobile ? 0.2 : 0.1,
+      touchMultiplier: mobile ? 0.92 : 1.08,
+      touchInertiaExponent: mobile ? 1.5 : 1.65,
       anchors: true,
     });
 

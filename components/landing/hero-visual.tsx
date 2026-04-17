@@ -10,6 +10,8 @@ import {
   PortfolioWireframeSvg,
   ServicesPipelineSvg,
 } from "@/components/landing/section-diagrams";
+import { useMobileViewport } from "@/hooks/use-is-mobile-viewport";
+import { cn } from "@/lib/utils";
 
 const diagramLabels: Record<(typeof ecosystemVisualTypes)[number], string> = {
   automation: "Automation",
@@ -28,6 +30,8 @@ const portfolioLabels = [
 ];
 
 const SLIDE_MS = 5200;
+/** Slower auto-advance on small viewports — calmer, less janky while scrolling. */
+const SLIDE_MS_MOBILE = 6800;
 const easeLux = [0.22, 1, 0.28, 1] as const;
 
 /** One line per scene — context without boxing diagrams in cards */
@@ -64,26 +68,37 @@ function ServicesScene() {
 /** Scene-based presentation — floating line art, no background cards */
 export function HeroVisual() {
   const reduce = useReducedMotion();
+  const { isMobile } = useMobileViewport();
   const sceneCount = 6;
   const [slide, setSlide] = useState(0);
+
+  const slideIntervalMs = isMobile ? SLIDE_MS_MOBILE : SLIDE_MS;
 
   useEffect(() => {
     if (reduce) return;
     const id = window.setInterval(() => {
       setSlide((s) => (s + 1) % sceneCount);
-    }, SLIDE_MS);
+    }, slideIntervalMs);
     return () => window.clearInterval(id);
-  }, [reduce, sceneCount]);
+  }, [reduce, slideIntervalMs, sceneCount]);
 
   const transition = reduce
     ? { duration: 0 }
-    : { duration: 0.88, ease: easeLux };
+    : isMobile
+      ? { duration: 0.52, ease: easeLux }
+      : { duration: 0.88, ease: easeLux };
 
   const enter = reduce
     ? { opacity: 1, scale: 1, y: 0 }
-    : { opacity: 0, scale: 0.96, y: 18 };
+    : isMobile
+      ? { opacity: 0, scale: 0.985, y: 8 }
+      : { opacity: 0, scale: 0.96, y: 18 };
   const animate = { opacity: 1, scale: 1, y: 0 };
-  const exit = reduce ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 1.02, y: -12 };
+  const exit = reduce
+    ? { opacity: 1, scale: 1, y: 0 }
+    : isMobile
+      ? { opacity: 0, scale: 0.995, y: -6 }
+      : { opacity: 0, scale: 1.02, y: -12 };
 
   const pairLayout =
     "grid h-full w-full grid-cols-1 justify-items-center gap-7 md:grid-cols-2 md:gap-x-12 md:gap-y-6";
@@ -156,9 +171,24 @@ export function HeroVisual() {
 
   const activeCaption = sceneCaptions[reduce ? 0 : slide];
 
+  const logoMark = (
+    <Image
+      src="/Clykur Logo.svg"
+      alt=""
+      width={44}
+      height={44}
+      className="h-10 w-10 object-contain md:h-11 md:w-11"
+      priority
+      unoptimized
+    />
+  );
+
   return (
     <div
-      className="relative mx-auto mt-2 w-full max-w-xl sm:mt-5 lg:mt-0 lg:max-w-none"
+      className={cn(
+        "relative mx-auto mt-2 w-full max-w-xl sm:mt-5 lg:mt-0 lg:max-w-none",
+        "max-md:[contain:layout]",
+      )}
       role="region"
       aria-label="Studio diagram presentation"
     >
@@ -169,10 +199,16 @@ export function HeroVisual() {
       >
         <motion.div
           className="drop-shadow-[0_4px_20px_rgba(10,10,10,0.08)]"
-          animate={reduce ? undefined : { y: [0, -3, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          animate={
+            reduce || isMobile ? undefined : { y: [0, -3, 0] }
+          }
+          transition={
+            reduce || isMobile
+              ? undefined
+              : { duration: 5, repeat: Infinity, ease: "easeInOut" }
+          }
         >
-          <Image src="/Clykur Logo.svg" alt="" width={44} height={44} className="h-10 w-10 object-contain md:h-11 md:w-11" priority />
+          {logoMark}
         </motion.div>
       </div>
 
@@ -200,10 +236,10 @@ export function HeroVisual() {
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={activeCaption}
-              initial={{ opacity: 0, y: 6 }}
+              initial={{ opacity: 0, y: isMobile ? 4 : 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.45, ease: easeLux }}
+              exit={{ opacity: 0, y: isMobile ? -3 : -4 }}
+              transition={{ duration: isMobile ? 0.36 : 0.45, ease: easeLux }}
               className="mx-auto mt-4 max-w-md px-2 text-center font-mono text-[10px] font-medium uppercase leading-relaxed tracking-[0.18em] text-foreground/38 lg:mt-6 lg:px-0 lg:tracking-[0.2em]"
             >
               {activeCaption}
@@ -220,7 +256,10 @@ export function HeroVisual() {
               className="h-full w-full origin-left rounded-full bg-gradient-to-r from-[#ff7a62] via-[#ff3b1f] to-[#ff6a4d]"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: SLIDE_MS / 1000, ease: "linear" }}
+              transition={{
+                duration: slideIntervalMs / 1000,
+                ease: "linear",
+              }}
             />
           </div>
 
