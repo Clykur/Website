@@ -5,6 +5,7 @@ const solutionsLinks = [
   { href: "/#products", label: "Products" },
   { href: "/#services", label: "Engineering Services" },
   { href: "/#portfolio", label: "Portfolio" },
+  { href: "/work", label: "Client work" },
 ] as const;
 
 const productLinks = [
@@ -35,7 +36,7 @@ Best regards`;
   const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
-    <footer className="relative z-0 mb-0 w-full overflow-x-hidden border-t border-border/40 pb-0 font-poppins">
+    <footer className="relative z-[12] mb-0 w-full overflow-x-hidden border-t border-border/40 pb-0 font-poppins">
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#faf9f6] via-[#f6f7f4] to-[#e9eee7]"
         aria-hidden
