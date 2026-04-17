@@ -224,11 +224,16 @@ export function Navigation() {
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const sentinel = document.getElementById("nav-scroll-sentinel");
+    if (!sentinel) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        setIsScrolled(!e.isIntersecting);
+      },
+      { root: null, threshold: 0 },
+    );
+    io.observe(sentinel);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -259,7 +264,7 @@ export function Navigation() {
 
     const NAV_OFFSET = 140;
 
-    const updateActiveFromScroll = () => {
+    const updateActiveFromSections = () => {
       const y = window.scrollY;
       const activationPoint = y + NAV_OFFSET;
       let currentRaw = "";
@@ -276,15 +281,32 @@ export function Navigation() {
       setActiveSection(mapScrollSectionToNavId(currentRaw));
     };
 
-    updateActiveFromScroll();
-    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
-    window.addEventListener("resize", updateActiveFromScroll);
-    window.addEventListener("hashchange", updateActiveFromScroll);
+    const io = new IntersectionObserver(
+      () => {
+        updateActiveFromSections();
+      },
+      {
+        root: null,
+        rootMargin: `-${NAV_OFFSET}px 0px -45% 0px`,
+        threshold: 0,
+      },
+    );
+
+    for (const id of PAGE_SECTION_ORDER) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    }
+
+    updateActiveFromSections();
+
+    const onLayout = () => updateActiveFromSections();
+    window.addEventListener("hashchange", onLayout);
+    window.addEventListener("resize", onLayout);
 
     return () => {
-      window.removeEventListener("scroll", updateActiveFromScroll);
-      window.removeEventListener("resize", updateActiveFromScroll);
-      window.removeEventListener("hashchange", updateActiveFromScroll);
+      io.disconnect();
+      window.removeEventListener("hashchange", onLayout);
+      window.removeEventListener("resize", onLayout);
     };
   }, [pathname]);
 
