@@ -19,6 +19,13 @@ const Portfolio = dynamic(
     })),
   { ssr: true },
 );
+const ClientWorks = dynamic(
+  () =>
+    import("@/components/sections/client-works").then((m) => ({
+      default: m.ClientWorks,
+    })),
+  { ssr: true },
+);
 const CaseStudies = dynamic(
   () =>
     import("@/components/sections/case-studies").then((m) => ({
@@ -55,6 +62,7 @@ export default function Home() {
       <About />
       <Process />
       <Portfolio />
+      <ClientWorks />
       <CaseStudies />
       <FAQ />
       <TrustVerification />
