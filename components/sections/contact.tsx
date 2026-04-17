@@ -59,6 +59,7 @@ Best regards`;
                     width={22}
                     height={22}
                     className="h-[22px] w-[22px] opacity-90"
+                    unoptimized
                   />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ff3b1f]/90">
                     WhatsApp

@@ -104,6 +104,7 @@ export function SplashScreen() {
             height={427}
             className="h-auto max-h-full w-[88vw] max-w-[88vw] object-contain"
             priority
+            unoptimized
           />
         </div>
 

@@ -46,6 +46,12 @@
   }
   html {
     scroll-behavior: auto;
+    scroll-padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem));
+  }
+  @media (max-width: 767px) {
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
   body {
     @apply bg-background text-foreground;
