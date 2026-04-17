@@ -52,6 +52,19 @@
     html {
       -webkit-tap-highlight-color: transparent;
     }
+    /* Native momentum scrolling; avoid extra compositor work from smooth-scroll CSS */
+    body {
+      -webkit-overflow-scrolling: touch;
+      text-rendering: optimizeSpeed;
+    }
+    /*
+      Defer full layout/paint for off-screen sections (first section = hero, keep fully painted for LCP).
+      contain-intrinsic-size approximates height so scrollbars stay stable.
+    */
+    #main-content section:not(:first-of-type) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 480px;
+    }
   }
   body {
     @apply bg-background text-foreground;

@@ -7,8 +7,9 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { Lock } from "lucide-react";
-import { useCallback, useState, type ReactNode } from "react";
+import { memo, useCallback, useState, type ReactNode } from "react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { usePerformanceMode } from "@/hooks/use-performance-mode";
 import { cn } from "@/lib/utils";
 
 const portfolioItems = [
@@ -278,6 +279,8 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
 /** Abstract “preview” art — expands with the card; layers fill dead space. */
 function PortfolioVisual({ index }: { index: number }) {
   const reduceMotion = useReducedMotion();
+  const { liteMode } = usePerformanceMode();
+  const staticAmbient = reduceMotion || liteMode;
   const phase = index % 3;
   const sweepDur = 10 + index * 0.5;
   return (
@@ -295,7 +298,7 @@ function PortfolioVisual({ index }: { index: number }) {
       <motion.div
         className="absolute -right-6 -top-8 h-[min(55%,220px)] w-[min(70%,280px)] rounded-full bg-[#ff3b1f]/[0.14] blur-3xl"
         animate={
-          reduceMotion
+          staticAmbient
             ? false
             : { x: [0, 12, 0], y: [0, 16, 0], scale: [1, 1.06, 1] }
         }
@@ -308,7 +311,7 @@ function PortfolioVisual({ index }: { index: number }) {
       />
       <motion.div
         className="absolute -bottom-10 -left-8 h-[min(50%,200px)] w-[min(65%,260px)] rounded-full bg-foreground/[0.06] blur-3xl"
-        animate={reduceMotion ? false : { x: [0, -14, 0], y: [0, -10, 0] }}
+        animate={staticAmbient ? false : { x: [0, -14, 0], y: [0, -10, 0] }}
         transition={{
           duration: 11 + index * 0.3,
           repeat: Infinity,
@@ -319,7 +322,7 @@ function PortfolioVisual({ index }: { index: number }) {
       <motion.div
         className="absolute left-1/2 top-1/2 h-[min(90%,320px)] w-[min(90%,400px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-[#ff3b1f]/[0.07] via-transparent to-foreground/[0.04] blur-2xl"
         animate={
-          reduceMotion
+          staticAmbient
             ? false
             : { scale: [1, 1.04, 1], opacity: [0.7, 1, 0.7] }
         }
@@ -339,7 +342,7 @@ function PortfolioVisual({ index }: { index: number }) {
             "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.5) 48%, rgba(255,59,31,0.06) 52%, transparent 65%)",
         }}
         animate={
-          reduceMotion
+          staticAmbient
             ? { x: "0%" }
             : { x: ["-20%", "25%", "-20%"] }
         }
@@ -396,7 +399,65 @@ function PortfolioVisual({ index }: { index: number }) {
   );
 }
 
-function PortfolioInteractiveCard({
+function portfolioArticleClass(featured?: boolean) {
+  return cn(
+    "group relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-foreground/[0.07] bg-white shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_20px_50px_-28px_rgba(10,10,10,0.12)] transition-shadow duration-500 hover:shadow-[0_1px_0_rgba(255,255,255,0.95)_inset,0_28px_60px_-24px_rgba(255,59,31,0.12)]",
+    featured && "min-h-[300px] lg:min-h-0",
+  );
+}
+
+function PortfolioCardContent({
+  item,
+  index,
+  featured,
+}: {
+  item: Item;
+  index: number;
+  featured?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative z-[2] flex min-h-0 flex-1 flex-col",
+        featured && "lg:min-h-[280px] lg:flex-row lg:items-stretch",
+      )}
+    >
+      <div
+        className={cn(
+          "relative flex min-h-0 flex-1 flex-col overflow-hidden",
+          featured ? "lg:min-h-0 lg:w-[56%]" : "w-full",
+        )}
+      >
+        <PortfolioVisual index={index} />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/[0.97] via-white/35 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <span className="font-mono text-[10px] tabular-nums text-foreground/35">
+            {(index + 1).toString().padStart(2, "0")}
+          </span>
+        </div>
+      </div>
+
+      <div
+        className={cn(
+          "relative z-[2] flex shrink-0 flex-col p-5 md:p-6",
+          featured && "lg:w-[44%] lg:justify-center lg:py-8",
+        )}
+      >
+        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ff3b1f]/90">
+          {item.category}
+        </p>
+        <h3 className="font-poppins text-lg font-medium leading-snug tracking-[-0.02em] text-foreground md:text-xl">
+          {item.title}
+        </h3>
+        <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-foreground/48 md:line-clamp-3 md:text-[14px]">
+          {item.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const PortfolioInteractiveCardLite = memo(function PortfolioInteractiveCardLite({
   item,
   index,
   featured,
@@ -407,109 +468,112 @@ function PortfolioInteractiveCard({
   featured?: boolean;
   gridClassName?: string;
 }) {
-  const reduceMotion = useReducedMotion();
-  const mx = useMotionValue(50);
-  const my = useMotionValue(50);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const updatePointer = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const r = e.currentTarget.getBoundingClientRect();
-      if (!reduceMotion) {
-        mx.set(((e.clientX - r.left) / r.width) * 100);
-        my.set(((e.clientY - r.top) / r.height) * 100);
-        const x = e.clientX - r.left;
-        const y = e.clientY - r.top;
-        const rotateY = ((x / r.width) * 2 - 1) * (featured ? 4 : 5);
-        const rotateX = -((y / r.height) * 2 - 1) * (featured ? 4 : 5);
-        setTilt({ x: rotateX, y: rotateY });
-      }
-    },
-    [featured, mx, my, reduceMotion],
-  );
-
-  const resetPointer = useCallback(() => {
-    mx.set(50);
-    my.set(50);
-    setTilt({ x: 0, y: 0 });
-  }, [mx, my]);
-
-  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, rgba(255, 59, 31, 0.2), transparent 55%)`;
-
   return (
     <div className={cn("[perspective:1100px] h-full min-h-0", gridClassName)}>
-      <motion.article
+      <article
         data-reveal-item
-        className={cn(
-          "group relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-foreground/[0.07] bg-white shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_20px_50px_-28px_rgba(10,10,10,0.12)] transition-shadow duration-500 hover:shadow-[0_1px_0_rgba(255,255,255,0.95)_inset,0_28px_60px_-24px_rgba(255,59,31,0.12)]",
-          featured && "min-h-[300px] lg:min-h-0",
-        )}
-        onMouseMove={updatePointer}
-        onMouseLeave={resetPointer}
-        style={{
-          rotateX: tilt.x,
-          rotateY: tilt.y,
-          transformStyle: "preserve-3d",
-        }}
-        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+        className={portfolioArticleClass(featured)}
       >
-        <motion.div
-          className={cn(
-            "pointer-events-none absolute inset-0 z-[1] rounded-2xl",
-            reduceMotion
-              ? "opacity-0"
-              : "opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-          )}
-          style={
-            reduceMotion
-              ? undefined
-              : { background: spotlight }
-          }
-          aria-hidden
+        <PortfolioCardContent
+          item={item}
+          index={index}
+          featured={featured}
         />
-
-        <div
-          className={cn(
-            "relative z-[2] flex min-h-0 flex-1 flex-col",
-            featured && "lg:min-h-[280px] lg:flex-row lg:items-stretch",
-          )}
-        >
-          <div
-            className={cn(
-              "relative flex min-h-0 flex-1 flex-col overflow-hidden",
-              featured ? "lg:min-h-0 lg:w-[56%]" : "w-full",
-            )}
-          >
-            <PortfolioVisual index={index} />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/[0.97] via-white/35 to-transparent" />
-            <div className="absolute bottom-4 left-4">
-              <span className="font-mono text-[10px] tabular-nums text-foreground/35">
-                {(index + 1).toString().padStart(2, "0")}
-              </span>
-            </div>
-          </div>
-
-          <div
-            className={cn(
-              "relative z-[2] flex shrink-0 flex-col p-5 md:p-6",
-              featured && "lg:w-[44%] lg:justify-center lg:py-8",
-            )}
-          >
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ff3b1f]/90">
-              {item.category}
-            </p>
-            <h3 className="font-poppins text-lg font-medium leading-snug tracking-[-0.02em] text-foreground md:text-xl">
-              {item.title}
-            </h3>
-            <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-foreground/48 md:line-clamp-3 md:text-[14px]">
-              {item.description}
-            </p>
-          </div>
-        </div>
-      </motion.article>
+      </article>
     </div>
   );
-}
+});
+
+const PortfolioInteractiveCardDesktop = memo(
+  function PortfolioInteractiveCardDesktop({
+    item,
+    index,
+    featured,
+    gridClassName,
+  }: {
+    item: Item;
+    index: number;
+    featured?: boolean;
+    gridClassName?: string;
+  }) {
+    const reduceMotion = useReducedMotion();
+    const mx = useMotionValue(50);
+    const my = useMotionValue(50);
+    const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+    const updatePointer = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        if (!reduceMotion) {
+          mx.set(((e.clientX - r.left) / r.width) * 100);
+          my.set(((e.clientY - r.top) / r.height) * 100);
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          const rotateY = ((x / r.width) * 2 - 1) * (featured ? 4 : 5);
+          const rotateX = -((y / r.height) * 2 - 1) * (featured ? 4 : 5);
+          setTilt({ x: rotateX, y: rotateY });
+        }
+      },
+      [featured, mx, my, reduceMotion],
+    );
+
+    const resetPointer = useCallback(() => {
+      mx.set(50);
+      my.set(50);
+      setTilt({ x: 0, y: 0 });
+    }, [mx, my]);
+
+    const spotlight = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, rgba(255, 59, 31, 0.2), transparent 55%)`;
+
+    return (
+      <div className={cn("[perspective:1100px] h-full min-h-0", gridClassName)}>
+        <motion.article
+          data-reveal-item
+          className={portfolioArticleClass(featured)}
+          onMouseMove={updatePointer}
+          onMouseLeave={resetPointer}
+          style={{
+            rotateX: tilt.x,
+            rotateY: tilt.y,
+            transformStyle: "preserve-3d",
+          }}
+          transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+        >
+          <motion.div
+            className={cn(
+              "pointer-events-none absolute inset-0 z-[1] rounded-2xl",
+              reduceMotion
+                ? "opacity-0"
+                : "opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+            )}
+            style={reduceMotion ? undefined : { background: spotlight }}
+            aria-hidden
+          />
+          <PortfolioCardContent
+            item={item}
+            index={index}
+            featured={featured}
+          />
+        </motion.article>
+      </div>
+    );
+  },
+);
+
+const PortfolioInteractiveCard = memo(function PortfolioInteractiveCard(
+  props: {
+    item: Item;
+    index: number;
+    featured?: boolean;
+    gridClassName?: string;
+  },
+) {
+  const { liteMode } = usePerformanceMode();
+  if (liteMode) {
+    return <PortfolioInteractiveCardLite {...props} />;
+  }
+  return <PortfolioInteractiveCardDesktop {...props} />;
+});
 
 const bentoPlacement = [
   "lg:col-start-1 lg:row-start-1 lg:col-span-2 lg:row-span-2",
