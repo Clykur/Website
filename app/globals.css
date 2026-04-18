@@ -65,6 +65,14 @@
       content-visibility: auto;
       contain-intrinsic-size: auto 480px;
     }
+    /*
+      Legal pages use many <section>s; content-visibility + intrinsic height breaks scroll,
+      blank regions, and layout on narrow viewports.
+    */
+    #main-content .legal-prose-page section {
+      content-visibility: visible;
+      contain-intrinsic-size: unset;
+    }
   }
   body {
     @apply bg-background text-foreground;
