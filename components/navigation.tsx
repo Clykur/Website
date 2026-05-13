@@ -14,7 +14,9 @@ import {
   ListOrdered,
   Menu,
   Package,
+  Globe,
   ShieldCheck,
+  Sparkles,
   Users,
   Wrench,
   X,
@@ -74,6 +76,8 @@ const NAV_STRUCTURE: NavBlock[] = [
     menuAlign: "center",
     items: [
       { href: "/#portfolio", label: "Portfolio", id: "portfolio", icon: LayoutGrid },
+      { href: "/#client-works", label: "Client works", id: "client-works", icon: Sparkles },
+      { href: "/work", label: "All projects", id: "work-all", icon: Globe },
       { href: "/#case-studies", label: "Case studies", id: "case-studies", icon: FileText },
     ],
   },
@@ -99,6 +103,7 @@ const PAGE_SECTION_ORDER = [
   "about",
   "process",
   "portfolio",
+  "client-works",
   "case-studies",
   "faq",
   "trust",
@@ -114,6 +119,7 @@ function mapScrollSectionToNavId(raw: string): string {
     "about",
     "process",
     "portfolio",
+    "client-works",
     "case-studies",
     "faq",
     "trust",
@@ -122,8 +128,15 @@ function mapScrollSectionToNavId(raw: string): string {
   return navSectionIds.has(raw) ? raw : "";
 }
 
-function groupContainsActive(group: NavGroup, activeSection: string): boolean {
-  return group.items.some((i) => i.id === activeSection);
+function groupContainsActive(
+  group: NavGroup,
+  activeSection: string,
+  pathname: string,
+): boolean {
+  return group.items.some((i) => {
+    if (i.href === "/work") return pathname === "/work";
+    return activeSection === i.id;
+  });
 }
 
 function menuPanelAlignClass(align: MenuAlign): string {
@@ -143,10 +156,12 @@ function menuPanelAlignClass(align: MenuAlign): string {
 function NavProcessSheet({
   group,
   activeSection,
+  pathname,
   onPick,
 }: {
   group: NavGroup;
   activeSection: string;
+  pathname: string;
   onPick: () => void;
 }) {
   const twoCol = group.items.length === 2;
@@ -174,7 +189,10 @@ function NavProcessSheet({
           )}
         >
           {group.items.map((item) => {
-            const itemActive = activeSection === item.id;
+            const itemActive =
+              item.href === "/work"
+                ? pathname === "/work"
+                : activeSection === item.id;
             const ItemIcon = item.icon;
 
             return (
@@ -224,11 +242,16 @@ export function Navigation() {
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const sentinel = document.getElementById("nav-scroll-sentinel");
+    if (!sentinel) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        setIsScrolled(!e.isIntersecting);
+      },
+      { root: null, threshold: 0 },
+    );
+    io.observe(sentinel);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -259,7 +282,7 @@ export function Navigation() {
 
     const NAV_OFFSET = 140;
 
-    const updateActiveFromScroll = () => {
+    const updateActiveFromSections = () => {
       const y = window.scrollY;
       const activationPoint = y + NAV_OFFSET;
       let currentRaw = "";
@@ -276,15 +299,32 @@ export function Navigation() {
       setActiveSection(mapScrollSectionToNavId(currentRaw));
     };
 
-    updateActiveFromScroll();
-    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
-    window.addEventListener("resize", updateActiveFromScroll);
-    window.addEventListener("hashchange", updateActiveFromScroll);
+    const io = new IntersectionObserver(
+      () => {
+        updateActiveFromSections();
+      },
+      {
+        root: null,
+        rootMargin: `-${NAV_OFFSET}px 0px -45% 0px`,
+        threshold: 0,
+      },
+    );
+
+    for (const id of PAGE_SECTION_ORDER) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    }
+
+    updateActiveFromSections();
+
+    const onLayout = () => updateActiveFromSections();
+    window.addEventListener("hashchange", onLayout);
+    window.addEventListener("resize", onLayout);
 
     return () => {
-      window.removeEventListener("scroll", updateActiveFromScroll);
-      window.removeEventListener("resize", updateActiveFromScroll);
-      window.removeEventListener("hashchange", updateActiveFromScroll);
+      io.disconnect();
+      window.removeEventListener("hashchange", onLayout);
+      window.removeEventListener("resize", onLayout);
     };
   }, [pathname]);
 
@@ -347,7 +387,11 @@ export function Navigation() {
                 }
 
                 const GroupIcon = block.icon;
-                const groupActive = groupContainsActive(block, activeSection);
+                const groupActive = groupContainsActive(
+                  block,
+                  activeSection,
+                  pathname ?? "",
+                );
                 const isOpen = openDropdown === block.id;
 
                 return (
@@ -418,6 +462,7 @@ export function Navigation() {
                             <NavProcessSheet
                               group={block}
                               activeSection={activeSection}
+                              pathname={pathname ?? ""}
                               onPick={() => setOpenDropdown(null)}
                             />
                           </motion.div>
@@ -491,7 +536,11 @@ export function Navigation() {
 
                   const GroupIcon = block.icon;
                   const expanded = mobileOpenGroup === block.id;
-                  const groupActive = groupContainsActive(block, activeSection);
+                  const groupActive = groupContainsActive(
+                    block,
+                    activeSection,
+                    pathname ?? "",
+                  );
 
                   return (
                     <div key={block.id} className="rounded-xl border border-transparent">

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import "lenis/dist/lenis.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
@@ -27,6 +26,13 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -85,6 +91,12 @@ export default function RootLayout({
           <JsonLd />
           <Navigation />
           <main id="main-content" className="relative z-10 min-h-screen">
+            {/* IntersectionObserver target: first ~20px of scroll (no scroll listener for nav background). */}
+            <div
+              id="nav-scroll-sentinel"
+              aria-hidden
+              className="pointer-events-none absolute left-0 right-0 top-0 z-0 h-5 w-full"
+            />
             {children}
           </main>
           <Footer />

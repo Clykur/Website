@@ -29,7 +29,8 @@ export function SplashScreen() {
   const [mounted, setMounted] = useState(true);
   const [fadedIn, setFadedIn] = useState(false);
   const startRef = useRef<number | null>(null);
-  const rafRef = useRef<number>(0);
+  const rafRef = useRef(0);
+  const intervalRef = useRef<number | null>(null);
 
   // Only on first visit: decide whether to show splash (client-side check)
   useEffect(() => {
@@ -47,19 +48,45 @@ export function SplashScreen() {
 
     startRef.current = performance.now();
 
-    const tick = (now: number) => {
-      const start = startRef.current ?? now;
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / DURATION_MS, 1);
-      const eased = easeOutCubic(progress);
-      setPercent(Math.round(eased * 100));
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const ultra = window.matchMedia("(max-width: 479px)").matches;
 
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
+    const clearTick = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      rafRef.current = 0;
+      intervalRef.current = null;
     };
 
-    rafRef.current = requestAnimationFrame(tick);
+    if (ultra) {
+      setPercent(100);
+    } else if (mobile) {
+      intervalRef.current = window.setInterval(() => {
+        const start = startRef.current ?? performance.now();
+        const elapsed = performance.now() - start;
+        const progress = Math.min(elapsed / DURATION_MS, 1);
+        const eased = easeOutCubic(progress);
+        setPercent(Math.round(eased * 100));
+        if (progress >= 1 && intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      }, 140);
+    } else {
+      const tick = (now: number) => {
+        const start = startRef.current ?? now;
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / DURATION_MS, 1);
+        const eased = easeOutCubic(progress);
+        setPercent(Math.round(eased * 100));
+
+        if (progress < 1) {
+          rafRef.current = requestAnimationFrame(tick);
+        }
+      };
+
+      rafRef.current = requestAnimationFrame(tick);
+    }
 
     const hideTimer = setTimeout(() => {
       try {
@@ -75,7 +102,7 @@ export function SplashScreen() {
     }, DURATION_MS + FADE_OUT_MS);
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      clearTick();
       clearTimeout(hideTimer);
       clearTimeout(unmountTimer);
     };

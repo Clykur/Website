@@ -19,7 +19,8 @@ export function WhatsAppIcon({
         alt="WhatsApp"
         width={24}
         height={24}
-        className="w-full h-full"
+        className="h-full w-full"
+        unoptimized
       />
     </div>
   );

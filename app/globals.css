@@ -46,6 +46,33 @@
   }
   html {
     scroll-behavior: auto;
+    scroll-padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem));
+  }
+  @media (max-width: 767px) {
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Native momentum scrolling; avoid extra compositor work from smooth-scroll CSS */
+    body {
+      -webkit-overflow-scrolling: touch;
+      text-rendering: optimizeSpeed;
+    }
+    /*
+      Defer full layout/paint for off-screen sections (first section = hero, keep fully painted for LCP).
+      contain-intrinsic-size approximates height so scrollbars stay stable.
+    */
+    #main-content section:not(:first-of-type) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 480px;
+    }
+    /*
+      Legal pages use many <section>s; content-visibility + intrinsic height breaks scroll,
+      blank regions, and layout on narrow viewports.
+    */
+    #main-content .legal-prose-page section {
+      content-visibility: visible;
+      contain-intrinsic-size: unset;
+    }
   }
   body {
     @apply bg-background text-foreground;
