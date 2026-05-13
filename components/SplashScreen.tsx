@@ -97,13 +97,10 @@ export function SplashScreen() {
       <div className="absolute inset-0 flex min-h-0 flex-col">
         {/* Logo: min-h-0 + overflow so a huge image cannot paint over the percentage row */}
         <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-6 sm:p-8">
-          <Image
+          <img
             src="/Clykur Logo.svg"
             alt=""
-            width={1600}
-            height={427}
             className="h-auto max-h-full w-[88vw] max-w-[88vw] object-contain"
-            priority
           />
         </div>
 

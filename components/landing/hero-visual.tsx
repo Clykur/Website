@@ -172,7 +172,7 @@ export function HeroVisual() {
           animate={reduce ? undefined : { y: [0, -3, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <Image src="/Clykur Logo.svg" alt="" width={44} height={44} className="h-10 w-10 object-contain md:h-11 md:w-11" priority />
+          <img src="/Clykur Logo.svg" alt="" className="h-10 w-10 object-contain md:h-11 md:w-11" />
         </motion.div>
       </div>
 

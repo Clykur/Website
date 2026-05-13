@@ -1,7 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +13,8 @@ import {
 import { primaryGradientCtaClassName } from "@/lib/cta-styles";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Loader2, Upload, X } from "lucide-react";
+import { useFormStatus } from "react-dom";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const STORAGE_KEY_PREFIX = "clykur_applied_";
 const ACCEPT =
@@ -175,23 +176,21 @@ const sectionLabelClass =
   "mb-4 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/38";
 
 export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
-  const [state, formAction] = useFormState(submitApplication, INITIAL_STATE);
+  const [state, formAction] = useActionState(submitApplication, INITIAL_STATE);
   const [alreadyApplied, setAlreadyApplied] = useState(false);
   const [submitAgain, setSubmitAgain] = useState(false);
-
+  const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
-    const key = getStorageKey(roleSlug);
-    try {
-      if (
-        typeof window !== "undefined" &&
-        localStorage.getItem(key) === "true"
-      ) {
-        setAlreadyApplied(true);
+    if (state?.success) {
+      setSubmitted(true);
+
+      try {
+        localStorage.setItem(getStorageKey(roleSlug), "true");
+      } catch {
+        // ignore
       }
-    } catch {
-      // ignore
     }
-  }, [roleSlug]);
+  }, [state?.success, roleSlug]);
 
   useEffect(() => {
     if (state?.success) {
@@ -203,8 +202,9 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
     }
   }, [state?.success, roleSlug]);
 
-  const showSuccess = !submitAgain && (state?.success || alreadyApplied);
-
+  const showSuccess =
+    !submitAgain &&
+    (submitted || alreadyApplied);
   const handleSubmitAnother = () => {
     try {
       localStorage.removeItem(getStorageKey(roleSlug));
@@ -298,6 +298,12 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
 
       <form action={formAction} className="px-6 py-8 md:px-10 md:py-10">
         <input type="hidden" name="role_slug" value={roleSlug} />
+        
+        {/* Honeypot field - hidden from real users */}
+        <div style={{ display: "none" }} aria-hidden="true">
+          <label htmlFor="site_url_reference">Leave this empty</label>
+          <input type="text" id="site_url_reference" name="site_url_reference" tabIndex={-1} autoComplete="off" />
+        </div>
 
         <div className="space-y-10">
           {/* Group 1: Personal info */}
@@ -444,6 +450,13 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
           >
             {state.error}
           </p>
+        )}
+
+        {/* Turnstile Widget Placeholder for production */}
+        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+          <div className="mt-8 flex justify-center">
+            <Turnstile siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
+          </div>
         )}
 
         <div className="mt-10 flex flex-col items-center border-t border-foreground/[0.07] bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(250,250,249,0.45))] pt-9 text-center">

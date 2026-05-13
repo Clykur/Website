@@ -302,13 +302,10 @@ export function Navigation() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-20">
           <Link href="/" className="flex items-center">
-            <Image
+            <img
               src="/Clykur Logo.svg"
               alt="Clykur"
-              width={540}
-              height={144}
               className="h-36 w-auto md:h-44"
-              priority
             />
           </Link>
 
