@@ -41,3 +41,6 @@ next-env.d.ts
 
 # .next 2
 /.next 2
+
+# Sentry Config File
+.env.sentry-build-plugin

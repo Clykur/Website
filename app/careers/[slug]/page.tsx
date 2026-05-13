@@ -1,5 +1,4 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -12,29 +11,7 @@ import {
 } from "lucide-react";
 import { getRoleBySlug, getRolePaths } from "@/lib/careers-roles";
 import { cn } from "@/lib/utils";
-
-const ApplicationForm = dynamic(
-  () =>
-    import("@/components/careers/ApplicationForm").then((m) => ({
-      default: m.ApplicationForm,
-    })),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)]">
-        <div className="border-b border-foreground/[0.07] bg-gradient-to-b from-[#fafaf9]/90 to-white/80 px-6 py-6 md:px-8 md:py-7">
-          <div className="h-5 w-40 rounded-md bg-foreground/[0.06]" />
-          <div className="mt-3 h-4 max-w-md rounded-md bg-foreground/[0.05]" />
-        </div>
-        <div className="space-y-5 p-6 md:p-8">
-          <div className="h-11 w-full max-w-md rounded-xl bg-foreground/[0.05]" />
-          <div className="h-11 w-full max-w-md rounded-xl bg-foreground/[0.05]" />
-          <div className="h-11 w-48 rounded-xl bg-foreground/[0.05]" />
-        </div>
-      </div>
-    ),
-  },
-);
+import { CareerApplicationClient } from "@/components/careers/CareerApplicationClient";
 
 const sectionShell =
   "overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 p-6 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] md:p-8";
@@ -43,15 +20,17 @@ const sectionTitleClass =
   "mb-4 flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
+
 
 export function generateStaticParams() {
   return getRolePaths().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: PageProps) {
-  const role = getRoleBySlug(params.slug);
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const role = getRoleBySlug(slug);
   if (!role) return { title: "Role not found - Clykur Careers" };
   return {
     title: `${role.title} - Careers | Clykur`,
@@ -59,14 +38,17 @@ export function generateMetadata({ params }: PageProps) {
   };
 }
 
+
 const metaChipClass =
   "inline-flex items-center gap-1.5 rounded-xl border border-foreground/[0.1] bg-white/85 px-3 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-foreground/90 shadow-[0_1px_0_rgba(255,255,255,0.95)_inset]";
 
-export default function JobPage({ params }: PageProps) {
-  const role = getRoleBySlug(params.slug);
+export default async function JobPage({ params }: PageProps) {
+  const { slug } = await params;
+  const role = getRoleBySlug(slug);
   if (!role) notFound();
 
-  const roleSlug = params.slug;
+  const roleSlug = slug;
+
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-white">
@@ -174,7 +156,7 @@ export default function JobPage({ params }: PageProps) {
           </section>
 
           <section aria-labelledby="apply-form-title">
-            <ApplicationForm roleSlug={roleSlug} roleTitle={role.title} />
+            <CareerApplicationClient roleSlug={roleSlug} />
           </section>
         </div>
       </div>

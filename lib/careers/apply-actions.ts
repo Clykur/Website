@@ -1,26 +1,14 @@
 "use server";
 
-import { createServerSupabaseClient } from "@/lib/supabase/server";
-
-const RESUMES_BUCKET = "Resumes";
-const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5MB
-const ALLOWED_TYPES = [
-  "application/pdf",
-  "application/msword", // .doc
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-];
-const ALLOWED_EXTENSIONS = [".pdf", ".doc", ".docx"];
-const isDev = process.env.NODE_ENV === "development";
-
-function getExtension(name: string): string {
-  const i = name.lastIndexOf(".");
-  return i === -1 ? "" : name.slice(i).toLowerCase();
-}
-
-function isValidFileType(type: string, name: string): boolean {
-  if (ALLOWED_TYPES.includes(type)) return true;
-  return ALLOWED_EXTENSIONS.some((ext) => name.toLowerCase().endsWith(ext));
-}
+import { headers } from "next/headers";
+import { applicationSchema } from "@/lib/security/validation";
+import { checkRateLimit } from "@/lib/security/rate-limit";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
+import { validateResumeFile } from "@/lib/security/file-validation";
+import { checkDuplicateApplication, saveApplication } from "@/lib/services/db-service";
+import { uploadResume } from "@/lib/services/upload-service";
+import { sendApplicantConfirmationEmail } from "@/lib/services/email-service";
+import * as Sentry from "@sentry/nextjs";
 
 export type ApplyFormState = { success?: boolean; error?: string };
 
@@ -29,131 +17,109 @@ export async function submitApplication(
   formData: FormData,
 ): Promise<ApplyFormState> {
   try {
-    const name = (formData.get("name") as string)?.trim();
-    const email = (formData.get("email") as string)?.trim();
-    const phone = (formData.get("phone") as string)?.trim();
-    const linkedin = (formData.get("linkedin") as string)?.trim() || null;
-    const portfolio = (formData.get("portfolio") as string)?.trim() || null;
-    const role_slug = (formData.get("role_slug") as string)?.trim();
-    const cover_note = (formData.get("cover_note") as string)?.trim() || null;
+    const headerStore = await headers();
+    const ip = headerStore.get("x-forwarded-for") ?? "127.0.0.1";
+
+    // 1. Rate Limiting
+    const rateLimitResult = await checkRateLimit(ip);
+    if (!rateLimitResult.success) {
+      return { success: false, error: "Too many requests. Please try again later." };
+    }
+
+    // 2. Honeypot check
+    const honeypot = formData.get("site_url_reference");
+    if (honeypot) {
+      // Bot filled the honeypot field
+      console.warn("Honeypot filled by bot:", ip);
+      return { success: true }; // Silent failure for bots
+    }
+
+    // 3. Turnstile Verification
+    const turnstileToken = formData.get("cf-turnstile-response") as string | null;
+    if (process.env.NODE_ENV === "production") {
+      if (!turnstileToken) {
+        return { success: false, error: "Security check failed. Please refresh and try again." };
+      }
+      const isValidToken = await verifyTurnstileToken(turnstileToken);
+      if (!isValidToken) {
+        return { success: false, error: "Security validation failed." };
+      }
+    }
+
+    // 4. Schema Validation (Zod)
+    const rawData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      linkedin: formData.get("linkedin"),
+      portfolio: formData.get("portfolio"),
+      role_slug: formData.get("role_slug"),
+      cover_note: formData.get("cover_note"),
+    };
+
+    const validationResult = applicationSchema.safeParse(rawData);
+    if (!validationResult.success) {
+      // Collect human-readable errors
+      const errors = validationResult.error.issues.map((i) => i.message).join(", ");
+      return { success: false, error: `Validation error: ${errors}` };
+    }
+
+    const data = validationResult.data;
+
+    // 5. File Upload Hardening
     const resume = formData.get("resume") as File | null;
-
-    if (!name || !email || !phone || !role_slug) {
-      return {
-        success: false,
-        error: "Name, email, phone, and role are required.",
-      };
-    }
-
     if (!resume || resume.size === 0) {
-      return {
-        success: false,
-        error: "Please upload your resume (PDF, DOC, or DOCX, max 5MB).",
-      };
+      return { success: false, error: "Please upload your resume (PDF, DOC, or DOCX, max 5MB)." };
     }
-
-    if (resume.size > MAX_FILE_BYTES) {
-      return { success: false, error: "Resume must be 5MB or smaller." };
-    }
-
-    const ext = getExtension(resume.name);
-    if (!ALLOWED_EXTENSIONS.includes(ext)) {
-      return { success: false, error: "Resume must be PDF, DOC, or DOCX." };
-    }
-
-    if (!isValidFileType(resume.type, resume.name)) {
-      return { success: false, error: "Resume must be PDF, DOC, or DOCX." };
-    }
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!supabaseUrl || !serviceRoleKey) {
-      console.error("Missing Supabase env vars");
-      return {
-        success: false,
-        error: "Server configuration error. Please contact the site owner.",
-      };
-    }
-
-    const supabase = createServerSupabaseClient();
-
-    // Prevent duplicate: same email + role
-    const emailLower = email.toLowerCase();
-    const { data: existing } = await supabase
-      .from("applications")
-      .select("id, email")
-      .eq("role_slug", role_slug);
-    const duplicate = existing?.some(
-      (row) => row.email?.toLowerCase() === emailLower,
-    );
-    if (duplicate) {
-      return {
-        success: false,
-        error:
-          "You have already applied for this role with this email address.",
-      };
-    }
-
-    const applicationId = crypto.randomUUID();
-    const resumeFileName = `resume${ext}`;
-    const storagePath = `${applicationId}/${resumeFileName}`;
 
     const arrayBuffer = await resume.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { error: uploadError } = await supabase.storage
-      .from(RESUMES_BUCKET)
-      .upload(storagePath, buffer, {
-        contentType: resume.type,
-        upsert: false,
-      });
-
-    if (uploadError) {
-      console.error("Resume upload error:", uploadError.message, uploadError);
-      const hint = isDev ? ` (${uploadError.message})` : "";
-      return {
-        success: false,
-        error: `Failed to upload resume. Please try again.${hint}`,
-      };
+    const fileCheckResult = await validateResumeFile(buffer, resume.name);
+    if (!fileCheckResult.success) {
+      return { success: false, error: fileCheckResult.error };
     }
 
-    const resume_path = `${applicationId}/${resumeFileName}`;
+    // 6. Duplicate Check
+    const dupCheck = await checkDuplicateApplication(data.email, data.role_slug);
+    if (dupCheck.error) {
+      return { success: false, error: "Could not verify application status. Please try again." };
+    }
+    if (dupCheck.isDuplicate) {
+      return { success: false, error: "You have already applied for this role with this email address." };
+    }
 
-    const { error: insertError } = await supabase.from("applications").insert({
-      id: applicationId,
-      name,
-      email,
-      phone,
-      linkedin,
-      portfolio,
-      role_slug,
-      cover_note,
-      resume_path,
-      status: "new",
-    });
+    // 7. Upload Resume
+    const applicationId = crypto.randomUUID();
+    const uploadResult = await uploadResume(buffer, resume.name, resume.type, data.role_slug, applicationId);
+    
+    if (uploadResult.error || !uploadResult.path) {
+      Sentry.captureMessage(`Resume upload failed: ${uploadResult.error}`, "error");
+      return { success: false, error: "Failed to upload resume. Please try again." };
+    }
 
-    if (insertError) {
-      console.error(
-        "Application insert error:",
-        insertError.message,
-        insertError,
-      );
-      const hint = isDev ? ` (${insertError.message})` : "";
-      return {
-        success: false,
-        error: `Failed to submit application. Please try again.${hint}`,
-      };
+    // 8. Save Application to DB
+    const dbResult = await saveApplication(applicationId, data, uploadResult.path);
+    if (!dbResult.success) {
+      Sentry.captureMessage(`DB Insert failed: ${dbResult.error}`, "error");
+      return { success: false, error: "Failed to submit application. Please try again." };
+    }
+
+    // 9. Send Confirmation Email
+    const emailResult = await sendApplicantConfirmationEmail(data.name, data.email, data.role_slug, applicationId);
+    if (!emailResult.success) {
+      Sentry.captureMessage(`Confirmation email failed to send: ${emailResult.error}`, "error");
+      // Don't fail the whole submission just because the email failed
     }
 
     return { success: true };
   } catch (err) {
-    console.error("Application submit error:", err);
-    const message = err instanceof Error ? err.message : "Unknown error";
+    const error = err instanceof Error ? err : new Error(String(err));
+    console.error("Application submission failed:", error);
+    Sentry.captureException(error);
     return {
       success: false,
-      error: isDev
-        ? `Something went wrong: ${message}`
-        : "Something went wrong. Please try again.",
+      error: "An unexpected error occurred. Please try again.",
     };
   }
 }

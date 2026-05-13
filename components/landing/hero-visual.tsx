@@ -223,7 +223,7 @@ export function HeroVisual() {
             ease: "easeInOut",
           }}
         >
-          {logoMark}
+          <img src="/Clykur Logo.svg" alt="" className="h-10 w-10 object-contain md:h-11 md:w-11" />
         </motion.div>
       </div>
 
