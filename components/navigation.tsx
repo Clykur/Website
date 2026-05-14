@@ -333,7 +333,7 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "fixed left-0 right-0 top-0 z-[100] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "fixed left-0 right-0 top-0 z-[100] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
         isScrolled
           ? "border-b border-foreground/[0.06] bg-white/72 shadow-[0_1px_0_rgba(255,255,255,0.85)_inset,0_8px_32px_-8px_rgba(10,10,10,0.06)] backdrop-blur-xl supports-[backdrop-filter]:bg-white/60"
           : "border-b border-transparent bg-gradient-to-b from-white via-white/85 to-white/0"
@@ -375,7 +375,7 @@ export function Navigation() {
                       <span className="relative z-10 whitespace-nowrap">{block.label}</span>
                       <span
                         className={cn(
-                          "pointer-events-none absolute bottom-0.5 left-2.5 right-2.5 h-[2px] origin-center rounded-full bg-gradient-to-r from-[#ff5a3c] via-[#ff3b1f] to-[#ff5a3c] transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:left-3 lg:right-3",
+                          "pointer-events-none absolute bottom-0.5 left-2.5 right-2.5 h-[2px] origin-center rounded-full bg-gradient-to-r from-[#ff5a3c] via-[#ff3b1f] to-[#ff5a3c] transition-[transform,opacity] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] lg:left-3 lg:right-3",
                           isActive
                             ? "scale-x-100 opacity-100"
                             : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
@@ -431,7 +431,7 @@ export function Navigation() {
                       />
                       <span
                         className={cn(
-                          "pointer-events-none absolute bottom-0.5 left-2.5 right-2.5 h-[2px] origin-center rounded-full bg-gradient-to-r from-[#ff5a3c] via-[#ff3b1f] to-[#ff5a3c] transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:left-3 lg:right-3",
+                          "pointer-events-none absolute bottom-0.5 left-2.5 right-2.5 h-[2px] origin-center rounded-full bg-gradient-to-r from-[#ff5a3c] via-[#ff3b1f] to-[#ff5a3c] transition-[transform,opacity] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] lg:left-3 lg:right-3",
                           groupActive
                             ? "scale-x-100 opacity-100"
                             : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"

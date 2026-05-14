@@ -110,9 +110,16 @@ function ResumeUpload() {
         id="resume"
         aria-describedby="resume-field-description"
       />
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex={0}
         onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -157,7 +164,7 @@ function ResumeUpload() {
             </span>
           </>
         )}
-      </button>
+      </div>
     </div>
   );
 }
@@ -282,9 +289,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
             Apply for {roleTitle}
           </h2>
           <p className="mt-4 max-w-[34rem] text-[15px] leading-[1.65] text-foreground/52 md:text-[15.5px]">
-            Share a few details and your resume—our team reads every submission
-            with care. No automated gates; we reply when there&apos;s a genuine
-            fit.
+            Share a few details along with your resume. Every application is carefully reviewed by our team, and we respond personally when there is a strong alignment with the role.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-foreground/[0.07] pt-6 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/36">
             <span className="text-[#ff3b1f]/85">Human review</span>
@@ -298,7 +303,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
 
       <form action={formAction} className="px-6 py-8 md:px-10 md:py-10">
         <input type="hidden" name="role_slug" value={roleSlug} />
-        
+
         {/* Honeypot field - hidden from real users */}
         <div style={{ display: "none" }} aria-hidden="true">
           <label htmlFor="site_url_reference">Leave this empty</label>

@@ -26,7 +26,7 @@ export function CinematicWorkTile({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "group relative isolate block overflow-hidden rounded-[1.5rem] ring-1 ring-black/[0.06] transition-[transform,box-shadow,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:rounded-[2rem]",
+        "group relative isolate block overflow-hidden rounded-[1.5rem] ring-1 ring-black/[0.06] transition-[transform,box-shadow,ring-color] duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] md:rounded-[2rem]",
         "shadow-[0_1px_0_rgba(255,255,255,0.08)_inset,0_40px_80px_-48px_rgba(10,10,10,0.35)]",
         "hover:-translate-y-1 hover:shadow-[0_1px_0_rgba(255,255,255,0.1)_inset,0_48px_90px_-40px_rgba(255,59,31,0.18)] hover:ring-[#ff3b1f]/20",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fafaf9]",
@@ -46,7 +46,7 @@ export function CinematicWorkTile({
           alt=""
           fill
           sizes={sizes}
-          className="object-cover object-center transition-transform duration-[1.15s] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.06]"
+          className="object-cover object-center transition-transform [transition-duration:1.15s] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.06]"
           loading={priority ? "eager" : "lazy"}
           priority={priority}
           quality={90}
