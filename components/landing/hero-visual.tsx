@@ -309,7 +309,7 @@ export function HeroVisual() {
                 onClick={() => setSlide(i)}
               >
                 <span
-                  className={`block w-[1.5px] rounded-full transition-all duration-[520ms] ease-[cubic-bezier(0.22,1,0.28,1)] ${
+                  className={`block w-[1.5px] rounded-full transition-all [transition-duration:520ms] [transition-timing-function:cubic-bezier(0.22,1,0.28,1)] ${
                     i === slide
                       ? "h-6 bg-gradient-to-b from-[#ff7a62] to-[#ff3b1f] shadow-[0_0_14px_rgba(255,59,31,0.28)]"
                       : "h-1.5 bg-foreground/10 group-hover:h-2.5 group-hover:bg-foreground/18"

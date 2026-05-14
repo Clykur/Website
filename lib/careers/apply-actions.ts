@@ -38,11 +38,11 @@ export async function submitApplication(
     const turnstileToken = formData.get("cf-turnstile-response") as string | null;
     if (process.env.NODE_ENV === "production") {
       if (!turnstileToken) {
-        return { success: false, error: "Security check failed. Please refresh and try again." };
+        return { success: false, error: "Something went wrong. Please refresh and try again." };
       }
       const isValidToken = await verifyTurnstileToken(turnstileToken);
       if (!isValidToken) {
-        return { success: false, error: "Security validation failed." };
+        return { success: false, error: "Something went wrong. Please refresh and try again." };
       }
     }
 
@@ -92,7 +92,7 @@ export async function submitApplication(
     // 7. Upload Resume
     const applicationId = crypto.randomUUID();
     const uploadResult = await uploadResume(buffer, resume.name, resume.type, data.role_slug, applicationId);
-    
+
     if (uploadResult.error || !uploadResult.path) {
       Sentry.captureMessage(`Resume upload failed: ${uploadResult.error}`, "error");
       return { success: false, error: "Failed to upload resume. Please try again." };

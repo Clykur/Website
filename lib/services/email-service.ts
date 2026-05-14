@@ -87,37 +87,90 @@ LinkedIn: https://www.linkedin.com/company/clykur
     We appreciate your interest in becoming part of Clykur
     and thank you for taking the time to apply.
   </p>
+<br/>
+<table
+  role="presentation"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="margin-top:16px;"
+>
+  <tr>
+    <td style="padding:0;">
 
-  <br />
+      <div
+        style="
+          margin:0;
+          padding:0;
+          font-size:16px;
+          line-height:24px;
+          color:#111111;
+        "
+      >
+        Warm Regards,
+      </div>
 
-  <p>
-    Warm Regards,<br />
-    <strong>Clykur Hiring Team</strong>
-  </p>
- <img
-  src="https://www.clykur.com/ClykurLogo.png"
-  alt="Clykur Logo"
-style="width:140px; height:auto;"
-/>
-  <p style="margin-top:20px;">
-    <a
-      href="https://www.clykur.com"
-      target="_blank"
-      style="color:#111111; text-decoration:none;"
-    >
-      www.clykur.com
-    </a>
-  </p>
+      <div
+        style="
+          margin:4px 0 10px 0;
+          padding:0;
+          font-size:16px;
+          font-weight:700;
+          line-height:24px;
+          color:#111111;
+        "
+      >
+        Clykur Hiring Team
+      </div>
 
-  <p>
-    <a
-      href="https://www.linkedin.com/company/clykur"
-      target="_blank"
-      style="color:#111111; text-decoration:none;"
-    >
-      LinkedIn
-    </a>
-  </p>
+      <img
+        src="https://www.clykur.com/ClykurLogo.png"
+        alt="Clykur Logo"
+        width="120"
+        style="
+          display:block;
+          margin:0;
+          padding:0;
+          border:0;
+          outline:none;
+          text-decoration:none;
+          height:auto;
+        "
+      />
+
+      <div style="height:10px; line-height:10px;">
+        &nbsp;
+      </div>
+
+      <div style="margin:0 0 6px 0;">
+        <a
+          href="https://www.clykur.com"
+          target="_blank"
+          style="
+            color:#111111;
+            text-decoration:none;
+          "
+        >
+          www.clykur.com
+        </a>
+      </div>
+
+      <div style="margin:0;">
+        <a
+          href="https://www.linkedin.com/company/clykur"
+          target="_blank"
+          style="
+            color:#111111;
+            text-decoration:none;
+          "
+        >
+          LinkedIn
+        </a>
+      </div>
+
+    </td>
+  </tr>
+</table>
     <div
     style="
       margin-top:30px;
