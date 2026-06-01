@@ -8,10 +8,10 @@ const nextConfig = {
   },
   // Avoid intermittent build failures where `pages-manifest.json` is read before the server bundle is flushed (Next 14.2 + webpack build worker).
   experimental: {
-    webpackBuildWorker: false,
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   images: {
+    qualities: [25, 50, 75, 90, 100],
     remotePatterns: [
       {
         protocol: "https",
