@@ -13,6 +13,7 @@ import {
   DEFAULT_OG_IMAGE,
   DEFAULT_META,
 } from "@/lib/site-config";
+import { ChatWidget } from "@/components/ui/chat-widget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -101,6 +102,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </SmoothScroll>
+        <ChatWidget />
       </body>
     </html>
   );
