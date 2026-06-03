@@ -137,8 +137,8 @@ export function PullToRefresh() {
     pullPx > 0
       ? Math.min(1, pullPx / THRESHOLD_PX)
       : refreshing || isPending
-      ? 1
-      : 0;
+        ? 1
+        : 0;
 
   const show = mobile && (pullPx > 0 || refreshing || isPending);
 
@@ -164,9 +164,7 @@ export function PullToRefresh() {
           }}
         />
         <span className="sr-only">
-          {refreshing || isPending
-            ? "Refreshing"
-            : "Pull down to refresh"}
+          {refreshing || isPending ? "Refreshing" : "Pull down to refresh"}
         </span>
       </div>
     </div>

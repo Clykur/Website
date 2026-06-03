@@ -1,17 +1,11 @@
-import type { Metadata } from "next";
-import { SITE_URL } from "@/lib/site-config";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Careers",
   description:
     "Join Clykur in building the next generation of software products. Product engineering roles, startup culture, ownership, and remote-first positions.",
-  openGraph: {
-    title: "Careers | Clykur - Build products that power modern businesses",
-    description:
-      "Join us in building software products and engineering partnerships. Remote-first, product-focused roles.",
-    url: `${SITE_URL}/careers`,
-  },
-};
+  path: "/careers",
+});
 
 export default function CareersLayout({
   children,

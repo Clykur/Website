@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: `Culture, code of conduct, confidentiality, performance, and exit expectations for team members at ${SITE_NAME}.`,
   openGraph: {
     title: `Employment Policy | ${SITE_NAME}`,
-    description: `Employment and conduct standards at ${SITE_NAME} — remote-first culture, integrity, and zero tolerance for misconduct.`,
+    description: `Employment and conduct standards at ${SITE_NAME}: remote-first culture, integrity, and zero tolerance for misconduct.`,
   },
 };
 

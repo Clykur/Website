@@ -2,10 +2,10 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 
-/** Matches Tailwind `md` — phones / small tablets. */
+/** Matches Tailwind `md`: phones / small tablets. */
 export const MOBILE_VIEWPORT_MQ = "(max-width: 767px)";
 
-/** Very small phones — disable non-essential motion, favor native feel. */
+/** Very small phones: disable non-essential motion, favor native feel. */
 export const ULTRA_SMALL_VIEWPORT_MQ = "(max-width: 479px)";
 
 export type PerformanceMode = {
@@ -21,7 +21,7 @@ export type PerformanceMode = {
 
 /**
  * Central perf toggles: viewport + `prefers-reduced-motion` + coarse heuristics
- * (`saveData`, low CPU core count). Does not remove features — drives lighter paths.
+ * (`saveData`, low CPU core count). Does not remove features: drives lighter paths.
  */
 export function usePerformanceMode(): PerformanceMode {
   const [mode, setMode] = useState<PerformanceMode>(() => ({

@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       console.error("Supabase error:", error);
       return NextResponse.json(
         { message: "Error fetching emails" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     console.error("GET /api/email error:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     if (!validation.success) {
       return NextResponse.json(
         { message: "Invalid request body", errors: validation.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -66,19 +66,19 @@ export async function POST(req: NextRequest) {
       console.error("Supabase error:", error);
       return NextResponse.json(
         { message: "Error saving email metadata" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { message: "Email sent and metadata saved", data },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("POST /api/email error:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,6 +1,28 @@
-import { ChevronDown, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, ChevronDown, ChevronRight } from "lucide-react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 import { cn } from "@/lib/utils";
+
+const homeCoreServices = [
+  {
+    title: "Web development",
+    description:
+      "Production-ready React and Next.js interfaces, from marketing sites to complex product UI.",
+    href: "/services/web-development",
+  },
+  {
+    title: "Product engineering",
+    description:
+      "End-to-end delivery partnership for founders and product teams shipping real software.",
+    href: "/services/product-engineering",
+  },
+  {
+    title: "UI/UX design",
+    description:
+      "Research-driven interfaces and design systems before and during build.",
+    href: "/services/ui-ux-design",
+  },
+] as const;
 
 const services = [
   {
@@ -43,7 +65,10 @@ function FlowConnector({ dir = "h" }: { dir?: "h" | "v" }) {
         aria-hidden
       >
         <div className="h-5 w-px bg-gradient-to-b from-[#ff3b1f]/40 to-foreground/15" />
-        <ChevronDown className="my-1 h-4 w-4 text-[#ff3b1f]/50" strokeWidth={2} />
+        <ChevronDown
+          className="my-1 h-4 w-4 text-[#ff3b1f]/50"
+          strokeWidth={2}
+        />
         <div className="h-5 w-px bg-gradient-to-b from-foreground/15 to-[#ff3b1f]/28" />
       </div>
     );
@@ -111,7 +136,7 @@ function ServicesFlowDiagram() {
           <FlowConnector />
           <FlowConnector dir="v" />
 
-          {/* Step 2 — core */}
+          {/* Step 2: core */}
           <div className={coreClass}>
             <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-[#ff3b1f]/25" />
             <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-[#ff3b1f]/25" />
@@ -154,14 +179,23 @@ function ServicesFlowDiagram() {
   );
 }
 
-export function Services() {
+type ServicesProps = {
+  variant?: "full" | "home";
+};
+
+export function Services({ variant = "full" }: ServicesProps) {
+  const isHome = variant === "home";
+
   return (
     <section
       id="services"
       className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="services-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[#f9f9f8]" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#f9f9f8]"
+        aria-hidden
+      />
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-20%,rgba(255,59,31,0.055),transparent_58%)]"
         aria-hidden
@@ -186,25 +220,34 @@ export function Services() {
             id="services-heading"
             className="font-poppins text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.03em] text-foreground"
           >
-            Engineering services
+            {isHome ? "Core services" : "Engineering services"}
           </h2>
           <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
-            We embed with product teams not ad-hoc tickets. Same rigor as our
-            own products: clear scope, steady communication, delivery you can
-            plan around.
+            {isHome
+              ? "The engagements we run most often for startups and product teams. Deeper detail lives on each service page."
+              : "We embed with product teams not ad-hoc tickets. Same rigor as our own products: clear scope, steady communication, delivery you can plan around."}
           </p>
         </header>
 
-        <div data-reveal-item className="mb-12 md:mb-14">
-          <ServicesFlowDiagram />
-        </div>
+        {!isHome ? (
+          <div data-reveal-item className="mb-12 md:mb-14">
+            <ServicesFlowDiagram />
+          </div>
+        ) : null}
 
-        <div data-reveal-item className="mb-3 flex flex-col gap-1 md:flex-row md:items-end md:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/40">
-            Capability map
-          </p>
-          <p className="font-mono text-[10px] text-foreground/32">06 disciplines</p>
-        </div>
+        {!isHome ? (
+          <div
+            data-reveal-item
+            className="mb-3 flex flex-col gap-1 md:flex-row md:items-end md:justify-between"
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/40">
+              Capability map
+            </p>
+            <p className="font-mono text-[10px] text-foreground/32">
+              06 disciplines
+            </p>
+          </div>
+        ) : null}
 
         <div
           data-reveal-item
@@ -213,31 +256,81 @@ export function Services() {
           <div className="border-b border-foreground/[0.06] bg-gradient-to-r from-[#fafaf9] to-white px-5 py-3.5 md:px-8">
             <div className="h-[2px] w-16 rounded-full bg-gradient-to-r from-[#ff3b1f] to-[#ff3b1f]/20" />
             <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/45">
-              What we deliver
+              {isHome ? "Start here" : "What we deliver"}
             </p>
           </div>
-          <div className="grid grid-cols-1 divide-y divide-foreground/[0.06] bg-white md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-3">
-            {services.map((service, index) => (
-              <div
-                key={service.title}
-                className={cn(
-                  "group flex flex-col gap-2.5 p-6 transition-colors duration-300 md:p-8 lg:p-9",
-                  "hover:bg-[#fafaf9]/70",
-                )}
-              >
-                <span className="font-mono text-[10px] font-semibold tabular-nums text-[#ff3b1f]/85">
-                  {(index + 1).toString().padStart(2, "0")}
-                </span>
-                <h3 className="font-poppins text-base font-medium leading-snug tracking-[-0.02em] text-foreground group-hover:text-foreground">
-                  {service.title}
-                </h3>
-                <p className="text-[13px] leading-[1.75] text-foreground/50 md:text-[14px]">
-                  {service.description}
-                </p>
-              </div>
-            ))}
+          <div
+            className={cn(
+              "grid grid-cols-1 divide-y divide-foreground/[0.06] bg-white",
+              isHome
+                ? ""
+                : "md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-3",
+            )}
+          >
+            {(isHome ? homeCoreServices : services).map((service, index) => {
+              const inner = (
+                <>
+                  <span className="font-mono text-[10px] font-semibold tabular-nums text-[#ff3b1f]/85">
+                    {(index + 1).toString().padStart(2, "0")}
+                  </span>
+                  <h3 className="font-poppins text-base font-medium leading-snug tracking-[-0.02em] text-foreground">
+                    {service.title}
+                  </h3>
+                  <p className="text-[13px] leading-[1.75] text-foreground/50 md:text-[14px]">
+                    {service.description}
+                  </p>
+                  {isHome && "href" in service ? (
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#ff3b1f]">
+                      View service
+                      <ArrowUpRight
+                        className="h-3.5 w-3.5"
+                        strokeWidth={1.85}
+                        aria-hidden
+                      />
+                    </span>
+                  ) : null}
+                </>
+              );
+
+              const cellClass =
+                "group flex flex-col gap-2.5 p-6 transition-colors duration-300 md:p-8 lg:p-9 hover:bg-[#fafaf9]/70";
+
+              if (isHome && "href" in service) {
+                return (
+                  <Link
+                    key={service.title}
+                    href={service.href}
+                    className={cellClass}
+                  >
+                    {inner}
+                  </Link>
+                );
+              }
+
+              return (
+                <div key={service.title} className={cellClass}>
+                  {inner}
+                </div>
+              );
+            })}
           </div>
         </div>
+
+        {isHome ? (
+          <div data-reveal-item className="mt-10 flex justify-center">
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 rounded-xl border border-foreground/[0.1] bg-white px-6 py-3 text-[13px] font-semibold text-foreground/70 transition-colors hover:border-[#ff3b1f]/30 hover:text-[#ff3b1f]"
+            >
+              View all services
+              <ArrowUpRight
+                className="h-4 w-4"
+                strokeWidth={1.85}
+                aria-hidden
+              />
+            </Link>
+          </div>
+        ) : null}
       </ScrollReveal>
     </section>
   );

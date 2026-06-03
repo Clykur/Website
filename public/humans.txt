@@ -1,0 +1,12 @@
+/* TEAM */
+Company: Clykur
+Site: https://www.clykur.com
+Contact: info@clykur.com
+Location: Bengaluru, Karnataka, India (remote-first, global clients)
+
+/* THANKS */
+Built with: Next.js, React, TypeScript, Tailwind CSS, Vercel
+
+/* SITE */
+Last update: 2026-06-02
+Standards: HTML5, WCAG-oriented patterns, structured data (Organization, Service, FAQ, Breadcrumb)

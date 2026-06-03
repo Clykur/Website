@@ -23,7 +23,7 @@ export function useLenis() {
 
 const easeOutExpo = (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
-/** Desktop / tablet only — mobile uses native scroll (no Lenis) for smooth touch + less main-thread work. */
+/** Desktop / tablet only: mobile uses native scroll (no Lenis) for smooth touch + less main-thread work. */
 export function SmoothScroll({ children }: { children?: ReactNode }) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
@@ -49,7 +49,8 @@ export function SmoothScroll({ children }: { children?: ReactNode }) {
       void (async () => {
         await import("lenis/dist/lenis.css");
         const { default: LenisCtor } = await import("lenis");
-        if (cancelled || mq.matches || loadToken !== loadTokenRef.current) return;
+        if (cancelled || mq.matches || loadToken !== loadTokenRef.current)
+          return;
 
         const instance = new LenisCtor({
           autoRaf: true,

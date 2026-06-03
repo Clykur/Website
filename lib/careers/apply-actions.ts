@@ -5,7 +5,10 @@ import { applicationSchema } from "@/lib/security/validation";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import { validateResumeFile } from "@/lib/security/file-validation";
-import { checkDuplicateApplication, saveApplication } from "@/lib/services/db-service";
+import {
+  checkDuplicateApplication,
+  saveApplication,
+} from "@/lib/services/db-service";
 import { uploadResume } from "@/lib/services/upload-service";
 import { sendApplicantConfirmationEmail } from "@/lib/services/email-service";
 import * as Sentry from "@sentry/nextjs";
@@ -23,7 +26,10 @@ export async function submitApplication(
     // 1. Rate Limiting
     const rateLimitResult = await checkRateLimit(ip);
     if (!rateLimitResult.success) {
-      return { success: false, error: "Too many requests. Please try again later." };
+      return {
+        success: false,
+        error: "Too many requests. Please try again later.",
+      };
     }
 
     // 2. Honeypot check
@@ -35,14 +41,22 @@ export async function submitApplication(
     }
 
     // 3. Turnstile Verification
-    const turnstileToken = formData.get("cf-turnstile-response") as string | null;
+    const turnstileToken = formData.get("cf-turnstile-response") as
+      | string
+      | null;
     if (process.env.NODE_ENV === "production") {
       if (!turnstileToken) {
-        return { success: false, error: "Something went wrong. Please refresh and try again." };
+        return {
+          success: false,
+          error: "Something went wrong. Please refresh and try again.",
+        };
       }
       const isValidToken = await verifyTurnstileToken(turnstileToken);
       if (!isValidToken) {
-        return { success: false, error: "Something went wrong. Please refresh and try again." };
+        return {
+          success: false,
+          error: "Something went wrong. Please refresh and try again.",
+        };
       }
     }
 
@@ -60,7 +74,9 @@ export async function submitApplication(
     const validationResult = applicationSchema.safeParse(rawData);
     if (!validationResult.success) {
       // Collect human-readable errors
-      const errors = validationResult.error.issues.map((i) => i.message).join(", ");
+      const errors = validationResult.error.issues
+        .map((i) => i.message)
+        .join(", ");
       return { success: false, error: `Validation error: ${errors}` };
     }
 
@@ -69,7 +85,10 @@ export async function submitApplication(
     // 5. File Upload Hardening
     const resume = formData.get("resume") as File | null;
     if (!resume || resume.size === 0) {
-      return { success: false, error: "Please upload your resume (PDF, DOC, or DOCX, max 5MB)." };
+      return {
+        success: false,
+        error: "Please upload your resume (PDF, DOC, or DOCX, max 5MB).",
+      };
     }
 
     const arrayBuffer = await resume.arrayBuffer();
@@ -81,34 +100,71 @@ export async function submitApplication(
     }
 
     // 6. Duplicate Check
-    const dupCheck = await checkDuplicateApplication(data.email, data.role_slug);
+    const dupCheck = await checkDuplicateApplication(
+      data.email,
+      data.role_slug,
+    );
     if (dupCheck.error) {
-      return { success: false, error: "Could not verify application status. Please try again." };
+      return {
+        success: false,
+        error: "Could not verify application status. Please try again.",
+      };
     }
     if (dupCheck.isDuplicate) {
-      return { success: false, error: "You have already applied for this role with this email address." };
+      return {
+        success: false,
+        error:
+          "You have already applied for this role with this email address.",
+      };
     }
 
     // 7. Upload Resume
     const applicationId = crypto.randomUUID();
-    const uploadResult = await uploadResume(buffer, resume.name, resume.type, data.role_slug, applicationId);
+    const uploadResult = await uploadResume(
+      buffer,
+      resume.name,
+      resume.type,
+      data.role_slug,
+      applicationId,
+    );
 
     if (uploadResult.error || !uploadResult.path) {
-      Sentry.captureMessage(`Resume upload failed: ${uploadResult.error}`, "error");
-      return { success: false, error: "Failed to upload resume. Please try again." };
+      Sentry.captureMessage(
+        `Resume upload failed: ${uploadResult.error}`,
+        "error",
+      );
+      return {
+        success: false,
+        error: "Failed to upload resume. Please try again.",
+      };
     }
 
     // 8. Save Application to DB
-    const dbResult = await saveApplication(applicationId, data, uploadResult.path);
+    const dbResult = await saveApplication(
+      applicationId,
+      data,
+      uploadResult.path,
+    );
     if (!dbResult.success) {
       Sentry.captureMessage(`DB Insert failed: ${dbResult.error}`, "error");
-      return { success: false, error: "Failed to submit application. Please try again." };
+      return {
+        success: false,
+        error: "Failed to submit application. Please try again.",
+      };
     }
 
     // 9. Send Confirmation Email
-    const emailResult = await sendApplicantConfirmationEmail(data.name, data.email, data.role_slug, applicationId);
+    const emailResult = await sendApplicantConfirmationEmail(
+      data.name,
+      data.email,
+      data.role_slug,
+      applicationId,
+    );
     if (!emailResult.success) {
-      Sentry.captureMessage(`Confirmation email failed to send: ${emailResult.error}`, "error");
+      Sentry.captureMessage(
+        `Confirmation email failed to send: ${emailResult.error}`,
+        "error",
+      );
       // Don't fail the whole submission just because the email failed
     }
 

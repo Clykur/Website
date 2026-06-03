@@ -1,305 +1,528 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as dotenv from 'dotenv';
-import * as cheerio from 'cheerio';
-import { GoogleGenAI } from '@google/genai';
-import { createClient } from '@supabase/supabase-js';
+import * as crypto from "crypto";
+import * as path from "path";
+import * as dotenv from "dotenv";
+import * as cheerio from "cheerio";
+import { GoogleGenAI } from "@google/genai";
+import { createClient } from "@supabase/supabase-js";
+import { getAllSitemapPaths } from "../lib/seo/pages";
 
-// Load environment variables from .env.local
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const GOOGLE_API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error("Missing Supabase credentials in .env.local");
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !GOOGLE_API_KEY) {
+  console.error(
+    "Missing Supabase or GOOGLE_GENERATIVE_AI_API_KEY in .env.local",
+  );
   process.exit(1);
 }
 
-if (!GOOGLE_API_KEY) {
-  console.error("Missing GOOGLE_GENERATIVE_AI_API_KEY in .env.local");
-  process.exit(1);
-}
-
-// Initialize official Google Gen AI SDK
-// Accept-Encoding: identity is CRITICAL to bypass Node 26 fetch gzip bugs
 const ai = new GoogleGenAI({
   apiKey: GOOGLE_API_KEY,
-  httpOptions: { headers: { 'Accept-Encoding': 'identity' } }
+  httpOptions: { headers: { "Accept-Encoding": "identity" } },
 });
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-const EMBEDDING_MODEL = 'gemini-embedding-001';
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.clykur.com';
+const EMBEDDING_MODEL = "gemini-embedding-001";
+const BASE_URL = (
+  process.env.INGEST_BASE_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://www.clykur.com"
+).replace(/\/$/, "");
 
-const HARDCODED_FALLBACK_ROUTES = [
-  `${BASE_URL}`,
-  `${BASE_URL}/careers`,
-  `${BASE_URL}/work`,
-  `${BASE_URL}/terms-and-conditions`,
-  `${BASE_URL}/privacy-policy`,
-  `${BASE_URL}/engagement-terms`,
-  `${BASE_URL}/refund-policy`,
-  `${BASE_URL}/employment-policy`
-];
+const TARGET_CHARS_MIN = 1200;
+const TARGET_CHARS_MAX = 2000;
+const OVERLAP_RATIO = 0.1;
+const SCRAPE_CONCURRENCY = 3;
+const UPSERT_BATCH = 20;
+const EMBED_DELAY_MS = 150;
 
-interface DocumentChunk {
+type PageType =
+  | "homepage"
+  | "service"
+  | "product"
+  | "blog"
+  | "case-study"
+  | "careers"
+  | "legal"
+  | "industry"
+  | "page";
+
+export type DocumentChunk = {
   url: string;
   title: string;
   section_title: string;
   content: string;
-}
+  page_type: PageType;
+  slug: string;
+  priority_score: number;
+  content_hash: string;
+};
 
-// Logging counters
 let routesDiscovered = 0;
 let pagesCrawled = 0;
 let chunksGenerated = 0;
 let chunksInserted = 0;
+let chunksSkipped = 0;
 let failures = 0;
 
-// Helper for exponential backoff
 async function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((r) => setTimeout(r, ms));
 }
 
-// Fetch sitemap.xml and extract routes
-async function getRoutesFromSitemap(): Promise<string[]> {
-  const sitemapUrl = `${BASE_URL}/sitemap.xml`;
-  console.log(`Fetching sitemap: ${sitemapUrl}`);
+function hashContent(text: string): string {
+  return crypto.createHash("sha256").update(text).digest("hex");
+}
 
+function normalizePageUrl(href: string, origin: string): string | null {
   try {
-    const response = await fetch(sitemapUrl, {
-      redirect: 'follow',
-      headers: {
-        'User-Agent': 'Mozilla/5.0 ClykurBot/1.0',
-        'Accept': 'application/xml,text/xml,text/plain,*/*',
-        'Accept-Encoding': 'identity' // Prevent gzip decoding issues
-      },
-    });
-
-    if (!response.ok) {
-      console.warn(`Failed to fetch sitemap. Status: ${response.status}`);
-      return HARDCODED_FALLBACK_ROUTES;
+    const u = new URL(href, origin);
+    if (u.origin !== new URL(origin).origin) return null;
+    u.hash = "";
+    let pathname = u.pathname || "/";
+    if (pathname.length > 1 && pathname.endsWith("/")) {
+      pathname = pathname.slice(0, -1);
     }
-
-    const xml = await response.text();
-    
-    // Parse all <loc> tags using a global regex
-    const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/gi)];
-    const urls = matches.map(m => m[1].trim());
-
-    if (urls.length === 0) {
-      console.warn("No URLs found in sitemap. Using fallback routes.");
-      return HARDCODED_FALLBACK_ROUTES;
+    u.pathname = pathname;
+    if (/\.(pdf|zip|png|jpe?g|gif|webp|svg|ico|xml|json)$/i.test(pathname)) {
+      return null;
     }
-
-    console.log(`Discovered ${urls.length} routes from sitemap.`);
-    return urls;
-  } catch (error) {
-    console.error("Error parsing sitemap. Falling back to hardcoded routes.", error);
-    return HARDCODED_FALLBACK_ROUTES;
+    return u.toString();
+  } catch {
+    return null;
   }
 }
 
-// Generate embedding with retry logic
-async function generateEmbedding(text: string, retries = 3, delay = 1000): Promise<number[] | null> {
+function inferPageMeta(
+  url: string,
+  pageTitle: string,
+): {
+  page_type: PageType;
+  slug: string;
+  priority_score: number;
+} {
+  let pathname = "/";
+  try {
+    pathname = new URL(url).pathname || "/";
+  } catch {
+    /* keep default */
+  }
+  const slug =
+    pathname === "/"
+      ? "home"
+      : (pathname.split("/").filter(Boolean).pop() ?? "page");
+
+  if (pathname === "/") {
+    return { page_type: "homepage", slug, priority_score: 1 };
+  }
+  if (pathname.startsWith("/services")) {
+    return {
+      page_type: "service",
+      slug,
+      priority_score: pathname === "/services" ? 0.95 : 0.88,
+    };
+  }
+  if (pathname.startsWith("/products")) {
+    return { page_type: "product", slug, priority_score: 0.9 };
+  }
+  if (pathname.startsWith("/case-studies")) {
+    return { page_type: "case-study", slug, priority_score: 0.88 };
+  }
+  if (pathname.startsWith("/blog")) {
+    return { page_type: "blog", slug, priority_score: 0.65 };
+  }
+  if (pathname.startsWith("/careers")) {
+    return { page_type: "careers", slug, priority_score: 0.82 };
+  }
+  if (pathname.startsWith("/industries")) {
+    return { page_type: "industry", slug, priority_score: 0.84 };
+  }
+  if (
+    /privacy|terms|refund|engagement|employment|compliance|security/i.test(
+      pathname,
+    )
+  ) {
+    return { page_type: "legal", slug, priority_score: 0.72 };
+  }
+  if (pathname === "/contact" || pathname === "/faq" || pathname === "/about") {
+    return { page_type: "page", slug, priority_score: 0.92 };
+  }
+  return { page_type: "page", slug, priority_score: 0.8 };
+}
+
+async function fetchText(url: string): Promise<string | null> {
+  const response = await fetch(url, {
+    redirect: "follow",
+    headers: {
+      "User-Agent": "Mozilla/5.0 ClykurBot/1.0",
+      Accept: "text/html,application/xml,text/xml,*/*",
+      "Accept-Encoding": "identity",
+    },
+  });
+  if (!response.ok) return null;
+  return response.text();
+}
+
+async function parseSitemapRecursive(
+  sitemapUrl: string,
+  seen: Set<string>,
+): Promise<string[]> {
+  if (seen.has(sitemapUrl)) return [];
+  seen.add(sitemapUrl);
+
+  const xml = await fetchText(sitemapUrl);
+  if (!xml) return [];
+
+  const locs = [...xml.matchAll(/<loc>\s*(.*?)\s*<\/loc>/gi)].map((m) =>
+    m[1].trim(),
+  );
+  const isIndex = /<sitemapindex/i.test(xml);
+
+  if (isIndex) {
+    const nested: string[] = [];
+    for (const loc of locs) {
+      nested.push(...(await parseSitemapRecursive(loc, seen)));
+    }
+    return nested;
+  }
+
+  return locs;
+}
+
+async function discoverAllUrls(): Promise<string[]> {
+  const sitemapRoot = `${BASE_URL}/sitemap.xml`;
+  console.log(`Fetching sitemap tree from ${sitemapRoot}`);
+  const fromSitemap = await parseSitemapRecursive(sitemapRoot, new Set());
+  const normalized = new Set<string>();
+
+  for (const raw of fromSitemap) {
+    const n = normalizePageUrl(raw, BASE_URL);
+    if (n) normalized.add(n);
+  }
+
+  // Same route set as app/sitemap.ts (live /sitemap.xml may be stale vs this repo).
+  for (const path of getAllSitemapPaths()) {
+    const n = normalizePageUrl(
+      path === "/" ? BASE_URL : `${BASE_URL}${path}`,
+      BASE_URL,
+    );
+    if (n) normalized.add(n);
+  }
+
+  normalized.add(normalizePageUrl(BASE_URL, BASE_URL)!);
+
+  const queue = [...normalized];
+  const crawled = new Set<string>();
+
+  while (queue.length > 0) {
+    const batch = queue.splice(0, SCRAPE_CONCURRENCY);
+    await Promise.all(
+      batch.map(async (url) => {
+        if (crawled.has(url)) return;
+        crawled.add(url);
+
+        const html = await fetchText(url);
+        if (!html) return;
+
+        const $ = cheerio.load(html);
+        $("a[href]").each((_, el) => {
+          const href = $(el).attr("href");
+          if (
+            !href ||
+            href.startsWith("#") ||
+            href.startsWith("mailto:") ||
+            href.startsWith("tel:")
+          ) {
+            return;
+          }
+          const next = normalizePageUrl(href, BASE_URL);
+          if (next && !normalized.has(next)) {
+            normalized.add(next);
+            queue.push(next);
+          }
+        });
+      }),
+    );
+  }
+
+  const sorted = [...normalized].sort();
+  console.log(
+    `Discovered ${sorted.length} unique URLs (sitemap + internal links).`,
+  );
+  return sorted;
+}
+
+function stripBoilerplate($: cheerio.CheerioAPI) {
+  $(
+    "script, style, noscript, iframe, svg, canvas, nav, footer, header, [role='navigation'], [aria-label='Footer'], [aria-label='Navigation']",
+  ).remove();
+}
+
+function extractHeadingSections(
+  url: string,
+  pageTitle: string,
+  $: cheerio.CheerioAPI,
+): Array<{ section_title: string; text: string }> {
+  const main = $("main").first();
+  const root = main.length ? main : $("body");
+  const sections: Array<{ section_title: string; text: string }> = [];
+  let currentTitle = pageTitle;
+  let buffer: string[] = [];
+
+  const flush = () => {
+    const text = buffer.join("\n\n").replace(/\s+/g, " ").trim();
+    if (text.length > 40) {
+      sections.push({ section_title: currentTitle, text });
+    }
+    buffer = [];
+  };
+
+  root.find("h1, h2, h3, p, li").each((_, el) => {
+    const tag = el.tagName?.toLowerCase();
+    const line = $(el).text().replace(/\s+/g, " ").trim();
+    if (!line) return;
+
+    if (tag === "h1" || tag === "h2" || tag === "h3") {
+      flush();
+      currentTitle = line;
+      return;
+    }
+    buffer.push(line);
+  });
+  flush();
+
+  if (sections.length === 0) {
+    const fallback = root.text().replace(/\s+/g, " ").trim();
+    if (fallback.length > 40) {
+      sections.push({ section_title: pageTitle, text: fallback });
+    }
+  }
+
+  return sections;
+}
+
+function splitWithOverlap(text: string, maxLen: number): string[] {
+  if (text.length <= maxLen) return [text];
+  const overlap = Math.floor(maxLen * OVERLAP_RATIO);
+  const parts: string[] = [];
+  let start = 0;
+  while (start < text.length) {
+    let end = Math.min(start + maxLen, text.length);
+    if (end < text.length) {
+      const slice = text.slice(start, end);
+      const breakAt = slice.lastIndexOf(". ");
+      if (breakAt > maxLen * 0.5) {
+        end = start + breakAt + 1;
+      }
+    }
+    parts.push(text.slice(start, end).trim());
+    if (end >= text.length) break;
+    start = Math.max(end - overlap, start + 1);
+  }
+  return parts.filter((p) => p.length > 20);
+}
+
+function chunkSections(
+  url: string,
+  pageTitle: string,
+  sections: Array<{ section_title: string; text: string }>,
+): DocumentChunk[] {
+  const meta = inferPageMeta(url, pageTitle);
+  const out: DocumentChunk[] = [];
+
+  for (const section of sections) {
+    const pieces =
+      section.text.length > TARGET_CHARS_MAX
+        ? splitWithOverlap(section.text, TARGET_CHARS_MAX)
+        : section.text.length < TARGET_CHARS_MIN && section.text.length > 40
+          ? [section.text]
+          : section.text.length >= TARGET_CHARS_MIN
+            ? splitWithOverlap(section.text, TARGET_CHARS_MAX)
+            : [section.text];
+
+    for (const piece of pieces) {
+      const content = piece.trim();
+      if (content.length < 30) continue;
+      out.push({
+        url,
+        title: pageTitle,
+        section_title: section.section_title,
+        content,
+        page_type: meta.page_type,
+        slug: meta.slug,
+        priority_score: meta.priority_score,
+        content_hash: hashContent(`${url}|${section.section_title}|${content}`),
+      });
+    }
+  }
+
+  const seen = new Set<string>();
+  return out.filter((c) => {
+    if (seen.has(c.content_hash)) return false;
+    seen.add(c.content_hash);
+    return true;
+  });
+}
+
+async function scrapePage(url: string): Promise<DocumentChunk[]> {
+  try {
+    const html = await fetchText(url);
+    if (!html) {
+      console.warn(`[Scrape] Failed: ${url}`);
+      return [];
+    }
+
+    const $ = cheerio.load(html);
+    stripBoilerplate($);
+    const title =
+      $("title")
+        .text()
+        .replace(/\s*\|\s*Clykur\s*$/i, "")
+        .trim() || "Clykur";
+
+    const mainHtml = $("main").first().html();
+    const $content = cheerio.load(
+      mainHtml ? `<body>${mainHtml}</body>` : $.html(),
+    );
+    stripBoilerplate($content);
+
+    const sections = extractHeadingSections(url, title, $content);
+    const chunks = chunkSections(url, title, sections);
+    console.log(`[Scrape] ${url} → ${chunks.length} chunks`);
+    return chunks;
+  } catch (e) {
+    console.error(`[Scrape] Error ${url}:`, e);
+    return [];
+  }
+}
+
+async function generateEmbedding(
+  text: string,
+  retries = 3,
+): Promise<number[] | null> {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await ai.models.embedContent({
         model: EMBEDDING_MODEL,
         contents: text,
-        config: { outputDimensionality: 768 }
+        config: { outputDimensionality: 768 },
       });
-      
       const values = response.embeddings?.[0]?.values;
-      if (values && values.length > 0) {
-        return values;
-      }
-      throw new Error('No embedding returned from API');
-    } catch (error) {
-      console.error(`[Attempt ${attempt}/${retries}] Embedding generation failed:`, error instanceof Error ? error.message : error);
-      if (attempt === retries) return null;
-      await sleep(delay * attempt); // Exponential backoff
+      if (values?.length) return values;
+    } catch (err) {
+      console.error(
+        `Embed attempt ${attempt}:`,
+        err instanceof Error ? err.message : err,
+      );
+      await sleep(400 * attempt);
     }
   }
   return null;
 }
 
-// Semantic Chunker
-function extractSemanticChunks(url: string, pageTitle: string, $: cheerio.CheerioAPI): DocumentChunk[] {
-  const chunks: DocumentChunk[] = [];
-  
-  // Append newlines to block elements to safely extract paragraphs
-  $('p, div, section, article, h1, h2, h3, h4, h5, h6, li').append('\n\n');
-  const rawText = $('body').text().replace(/[ \t]+/g, ' ').replace(/\n\s*\n/g, '\n\n').trim();
-  
-  const paragraphs = rawText.split('\n\n').map(p => p.trim()).filter(p => p.length > 0);
-  
-  let currentChunkContent = '';
-  
-  for (const para of paragraphs) {
-    if (currentChunkContent.length + para.length > 1500) {
-      if (currentChunkContent.length > 0) {
-        chunks.push({ url, title: pageTitle, section_title: pageTitle, content: currentChunkContent.trim() });
-        currentChunkContent = '';
-      }
-      
-      if (para.length > 1500) {
-        let remaining = para;
-        while (remaining.length > 0) {
-          chunks.push({ url, title: pageTitle, section_title: pageTitle, content: remaining.slice(0, 1500).trim() });
-          remaining = remaining.slice(1500);
-        }
-      } else {
-        currentChunkContent = para;
-      }
-    } else {
-      currentChunkContent += (currentChunkContent ? '\n\n' : '') + para;
-    }
-  }
-  
-  if (currentChunkContent.length > 0) {
-    chunks.push({ url, title: pageTitle, section_title: pageTitle, content: currentChunkContent.trim() });
-  }
-  
-  // Deduplicate and filter empty/tiny chunks
-  const uniqueChunks: DocumentChunk[] = [];
-  const seenContent = new Set<string>();
-  
-  for (const c of chunks) {
-    if (c.content.length > 10 && !seenContent.has(c.content)) {
-      seenContent.add(c.content);
-      uniqueChunks.push(c);
-    }
-  }
-  
-  return uniqueChunks;
-}
-
-async function scrapePage(url: string): Promise<DocumentChunk[]> {
-  try {
-    console.log(`[Scrape] Fetching ${url}...`);
-    const response = await fetch(url, {
-      redirect: 'follow',
-      headers: {
-        'User-Agent': 'Mozilla/5.0 ClykurBot/1.0',
-        'Accept-Encoding': 'identity'
-      },
-    });
-    
-    if (!response.ok) {
-      console.warn(`[Scrape] Failed to fetch ${url}: ${response.status} ${response.statusText}`);
-      return [];
-    }
-    
-    const html = await response.text();
-    console.log(`[Scrape] Downloaded ${html.length} bytes from ${url}`);
-    
-    const $ = cheerio.load(html);
-
-    // Remove noise
-    $('script, style, nav, footer, header, noscript, iframe, svg, canvas').remove();
-    
-    const title = $('title').text().replace(' | Clykur', '').trim() || 'Clykur Page';
-    
-    const chunks = extractSemanticChunks(url, title, $);
-    console.log(`[Scrape] Extracted ${chunks.length} semantic chunks from ${url}`);
-    
-    return chunks;
-
-  } catch (error) {
-    console.error(`[Scrape] Error scraping ${url}:`, error);
-    return [];
-  }
-}
-
-async function verifyEmbeddingModel() {
-  console.log(`Verifying embedding model: ${EMBEDDING_MODEL}`);
-  const embedding = await generateEmbedding('test');
+async function verifyEmbeddingModel(): Promise<number> {
+  const embedding = await generateEmbedding("clykur ingest test");
   if (!embedding) {
-    console.error("Failed to generate test embedding. Aborting ingestion.");
+    console.error("Embedding model check failed.");
     process.exit(1);
   }
-  console.log(`Embedding dimension: ${embedding.length}`);
+  console.log(`Embedding dimensions: ${embedding.length}`);
   return embedding.length;
 }
 
-async function ingest() {
-  console.log("Starting website ingestion...");
-  
-  const dimensions = await verifyEmbeddingModel();
-  console.log(`Using embedding dimensions: ${dimensions}`);
-
-  // 1. Clear existing chunks
-  console.log("Clearing old knowledge chunks...");
-  const { error: deleteError } = await supabase
-    .from('knowledge_chunks')
-    .delete()
-    .neq('id', '00000000-0000-0000-0000-000000000000');
-
-  if (deleteError) {
-    console.error("Error clearing chunks:", deleteError);
+async function runPool<T, R>(
+  items: T[],
+  concurrency: number,
+  fn: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  async function worker() {
+    while (true) {
+      const idx = next++;
+      if (idx >= items.length) break;
+      results[idx] = await fn(items[idx]);
+    }
   }
+  const workers = Math.min(concurrency, Math.max(items.length, 1));
+  await Promise.all(Array.from({ length: workers }, () => worker()));
+  return results;
+}
 
-  const allChunks: DocumentChunk[] = [];
+async function ingest() {
+  console.log("Starting full-site RAG ingestion...");
+  console.log(`Base URL: ${BASE_URL}`);
 
-  // 2. Discover and scrape all routes
-  const urls = await getRoutesFromSitemap();
+  const dimensions = await verifyEmbeddingModel();
+  const urls = await discoverAllUrls();
   routesDiscovered = urls.length;
 
-  for (const url of urls) {
-    const chunks = await scrapePage(url);
-    if (chunks.length > 0) pagesCrawled++;
-    allChunks.push(...chunks);
+  const allChunks: DocumentChunk[] = [];
+  const chunkLists = await runPool(urls, SCRAPE_CONCURRENCY, scrapePage);
+  for (const list of chunkLists) {
+    if (list.length > 0) pagesCrawled++;
+    allChunks.push(...list);
+  }
+  chunksGenerated = allChunks.length;
+  console.log(`\n${chunksGenerated} chunks from ${pagesCrawled} pages.\n`);
+
+  const { error: deleteError } = await supabase
+    .from("knowledge_chunks")
+    .delete()
+    .neq("id", "00000000-0000-0000-0000-000000000000");
+
+  if (deleteError) {
+    console.warn(
+      "Could not clear old chunks (table may need migration):",
+      deleteError.message,
+    );
   }
 
-  chunksGenerated = allChunks.length;
-  console.log(`\nGenerated ${chunksGenerated} total chunks to process.\n`);
+  type Row = DocumentChunk & { embedding: number[] };
+  const pending: Row[] = [];
 
-  // 3. Generate embeddings and insert into Supabase
+  async function flushBatch() {
+    if (pending.length === 0) return;
+    const batch = pending.splice(0, pending.length);
+    const { error } = await supabase.from("knowledge_chunks").insert(
+      batch.map((c) => ({
+        url: c.url,
+        title: c.title,
+        section_title: c.section_title,
+        content: c.content,
+        page_type: c.page_type,
+        slug: c.slug,
+        priority_score: c.priority_score,
+        content_hash: c.content_hash,
+        embedding: c.embedding,
+      })),
+    );
+    if (error) {
+      console.error("Batch insert error:", error.message);
+      failures += batch.length;
+    } else {
+      chunksInserted += batch.length;
+    }
+  }
+
   for (let i = 0; i < allChunks.length; i++) {
     const chunk = allChunks[i];
-    console.log(`[Process] Chunk ${i + 1}/${allChunks.length} | ${chunk.url}`);
-    
-    try {
-      const embedding = await generateEmbedding(chunk.content);
-      
-      if (!embedding) {
-        console.warn(`[Process] Skipping chunk ${i + 1} due to embedding failure.`);
-        failures++;
-        continue;
-      }
 
-      if (embedding.length !== dimensions) {
-         console.warn(`[Process] Skipping chunk ${i + 1}: Dimension mismatch (got ${embedding.length}, expected ${dimensions})`);
-         failures++;
-         continue;
-      }
-
-      const { error: insertError } = await supabase
-        .from('knowledge_chunks')
-        .insert({
-          url: chunk.url,
-          title: chunk.title,
-          section_title: chunk.section_title,
-          content: chunk.content,
-          embedding: embedding
-        });
-
-      if (insertError) {
-        console.error(`[Process] Error inserting chunk ${i + 1}:`, insertError.message || insertError);
-        failures++;
-      } else {
-        chunksInserted++;
-      }
-    } catch (e) {
-      console.error(`[Process] Unexpected error processing chunk ${i + 1}:`, e);
+    const embedding = await generateEmbedding(chunk.content);
+    if (!embedding || embedding.length !== dimensions) {
       failures++;
+      continue;
     }
-    
-    await sleep(200);
+
+    pending.push({ ...chunk, embedding });
+    if (pending.length >= UPSERT_BATCH) {
+      await flushBatch();
+    }
+    await sleep(EMBED_DELAY_MS);
   }
+  await flushBatch();
 
   console.log("\n====================================");
   console.log("         INGESTION COMPLETE         ");
@@ -308,11 +531,12 @@ async function ingest() {
   console.log(`Pages crawled     : ${pagesCrawled}`);
   console.log(`Chunks generated  : ${chunksGenerated}`);
   console.log(`Chunks inserted   : ${chunksInserted}`);
+  console.log(`Skipped (hash)    : ${chunksSkipped}`);
   console.log(`Failures          : ${failures}`);
   console.log("====================================\n");
 }
 
-ingest().catch((error) => {
-  console.error("Fatal error during ingestion:", error);
+ingest().catch((e) => {
+  console.error("Fatal ingest error:", e);
   process.exit(1);
 });

@@ -31,7 +31,7 @@ export function CinematicWorkTile({
         "hover:-translate-y-1 hover:shadow-[0_1px_0_rgba(255,255,255,0.1)_inset,0_48px_90px_-40px_rgba(255,59,31,0.18)] hover:ring-[#ff3b1f]/20",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#fafaf9]",
       )}
-      aria-label={`${work.name} — open live site in a new tab`}
+      aria-label={`${work.name}: open live site in a new tab`}
     >
       <div
         className={cn(
@@ -43,7 +43,7 @@ export function CinematicWorkTile({
       >
         <Image
           src={work.image}
-          alt=""
+          alt={`${work.name}: ${work.category}`}
           fill
           sizes={sizes}
           className="object-cover object-center transition-transform [transition-duration:1.15s] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-[1.06]"
@@ -94,7 +94,11 @@ export function CinematicWorkTile({
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold tracking-[-0.01em] text-white/95 opacity-90 transition-[gap,opacity] duration-300 group-hover:gap-3 group-hover:opacity-100">
               Visit live site
-              <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
+              <ArrowUpRight
+                className="h-4 w-4"
+                strokeWidth={1.85}
+                aria-hidden
+              />
             </span>
           </div>
         </div>

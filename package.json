@@ -10,7 +10,10 @@
     "lint": "next lint",
     "generate-favicon": "node scripts/generate-favicon.js",
     "generate-udyam-qr": "node scripts/generate-udyam-qr.js",
-    "ingest": "tsx scripts/ingest-website.ts"
+    "ingest": "tsx scripts/ingest-website.ts",
+    "validate:chat": "tsx scripts/validate-chat.ts",
+    "optimize-images": "node scripts/optimize-public-images.mjs",
+    "capture-client-heroes": "node scripts/capture-client-hero-screenshots.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.80",
@@ -58,6 +61,7 @@
     "canvas": "^3.2.1",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.2.6",
+    "playwright": "^1.60.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "tsx": "^4.22.4",

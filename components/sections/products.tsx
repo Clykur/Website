@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { PRODUCTS } from "@/lib/products";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
-/** One crisp sentence for the card body—no walls of copy. */
+/** One crisp sentence for the card body, no walls of copy. */
 function leadSentence(text: string) {
   const dot = text.indexOf(". ");
   if (dot === -1) return text;
@@ -32,12 +32,14 @@ function ProductCard({
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#faf6f3]">
         <Image
           src={image}
-          alt={`${name} — ${tagline}`}
+          alt={`${name}: ${tagline}`}
           fill
+          loading="lazy"
+          quality={80}
           className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 480px"
         />
-        {/* Light warm wash — brand orange, not heavy */}
+        {/* Light warm wash: brand orange, not heavy */}
         <div
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(255,59,31,0.14)_0%,rgba(255,120,90,0.05)_38%,transparent_62%),linear-gradient(to_bottom,rgba(255,90,60,0.07)_0%,transparent_42%)]"
           aria-hidden
@@ -90,7 +92,10 @@ export function Products() {
       className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="products-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-white" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-white"
+        aria-hidden
+      />
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-18%,rgba(255,59,31,0.05),transparent_58%)]"
         aria-hidden
@@ -115,10 +120,11 @@ export function Products() {
             id="products-heading"
             className="font-poppins text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.03em] text-foreground"
           >
-            Our Products
+            Featured products
           </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
-            Live products we own and ship preview here, explore on-site.
+            Software we build and operate. Full detail on each product site and
+            dedicated product pages.
           </p>
         </header>
 

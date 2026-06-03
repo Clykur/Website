@@ -1,0 +1,33 @@
+---
+description: Clykur website copy, UI, and code conventions for this repo
+alwaysApply: true
+---
+
+# Clykur website standards
+
+Follow existing patterns in this codebase before introducing new abstractions. Match file structure, naming, Tailwind usage, and component style used in neighboring files.
+
+## Copy and punctuation
+
+- Do **not** use em dashes (U+2014, `—`) in user-facing copy, metadata, aria-labels, or SEO content.
+- Use commas, periods, colons, or parentheses instead. Example: "weeks, not months" not "weeks—not months"; "Cusown: appointment booking" not "Cusown — appointment booking".
+- En dashes for numeric ranges are fine when needed (e.g. 1–5).
+
+## SEO pages
+
+- Use `buildPageMetadata` from `@/lib/seo/metadata` for new routes.
+- Landing pages: `SeoLandingPageView`, semantic HTML (`article`, `section`, `h1`, `h2`, `dl` for FAQs).
+- Avoid duplicate FAQ questions between `buildAiAnswers` and page `faqs` arrays.
+
+## Performance
+
+- Prefer Server Components; use `next/image` with configured `quality` values in `next.config.js`.
+- Lazy-load below-fold and third-party scripts; do not add blocking analytics on first paint.
+
+## Buttons
+
+- Do **not** use pill-shaped buttons (`rounded-full` on CTAs). Use `rounded-xl` or `rounded-lg` to match existing primary CTAs (`lib/cta-styles.ts`).
+
+## Scope
+
+- Minimize diff size. Do not refactor unrelated files when fixing a targeted issue.

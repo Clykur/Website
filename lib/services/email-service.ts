@@ -1,15 +1,13 @@
 import { Resend } from "resend";
 import { env } from "@/lib/env";
 
-const resend = env.RESEND_API_KEY
-  ? new Resend(env.RESEND_API_KEY)
-  : null;
+const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
 
 export async function sendApplicantConfirmationEmail(
   name: string,
   email: string,
   roleSlug: string,
-  applicationId: string
+  applicationId: string,
 ): Promise<{ success: boolean; error?: string }> {
   if (!resend) {
     console.warn("⚠️ Resend is not configured. Email will not be sent.");
@@ -209,10 +207,7 @@ LinkedIn: https://www.linkedin.com/company/clykur
     });
 
     if (error) {
-      console.error(
-        "Failed to send applicant confirmation email:",
-        error
-      );
+      console.error("Failed to send applicant confirmation email:", error);
 
       return {
         success: false,
@@ -222,10 +217,7 @@ LinkedIn: https://www.linkedin.com/company/clykur
 
     return { success: true };
   } catch (err) {
-    console.error(
-      "Unexpected error sending confirmation email:",
-      err
-    );
+    console.error("Unexpected error sending confirmation email:", err);
 
     return {
       success: false,

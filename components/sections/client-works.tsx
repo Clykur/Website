@@ -5,9 +5,10 @@ import { ScrollReveal } from "@/components/landing/scroll-reveal";
 import { CLIENT_WORKS } from "@/lib/client-works";
 import { cn } from "@/lib/utils";
 
-const [featured, ...rest] = CLIENT_WORKS;
+const HOME_CLIENT_WORKS_LIMIT = 3;
 
 export function ClientWorks() {
+  const [featured, ...rest] = CLIENT_WORKS.slice(0, HOME_CLIENT_WORKS_LIMIT);
   return (
     <section
       id="client-works"
@@ -83,12 +84,12 @@ export function ClientWorks() {
 
         <div
           data-reveal-item
-          className="mt-14 flex justify-center border-t border-foreground/[0.06] pt-12 md:mt-[4.5rem] md:pt-16"
+          className="mt-14 flex flex-col items-center justify-center gap-4 border-t border-foreground/[0.06] pt-12 sm:flex-row sm:gap-6 md:mt-[4.5rem] md:pt-16"
         >
           <Link
             href="/work"
             className={cn(
-              "inline-flex items-center gap-2.5 rounded-full border border-foreground/[0.1] bg-white/95 px-7 py-3.5",
+              "inline-flex items-center gap-2.5 rounded-xl border border-foreground/[0.1] bg-white/95 px-7 py-3.5",
               "font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/55",
               "shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_16px_40px_-28px_rgba(10,10,10,0.12)]",
               "transition-[color,transform,border-color,box-shadow] duration-300",
@@ -97,6 +98,18 @@ export function ClientWorks() {
             )}
           >
             View all work
+            <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
+          </Link>
+          <Link
+            href="/case-studies"
+            className={cn(
+              "inline-flex items-center gap-2.5 rounded-xl border border-transparent px-7 py-3.5",
+              "font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/45",
+              "transition-colors hover:text-[#ff3b1f]",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/35 focus-visible:ring-offset-2",
+            )}
+          >
+            Case studies
             <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
           </Link>
         </div>

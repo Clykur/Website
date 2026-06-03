@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Page not found",
+  description:
+    "The page you requested does not exist on Clykur. Return to the homepage or contact us for help.",
+  path: "/404",
+  noIndex: true,
+});
 
 export default function NotFound() {
   return (
@@ -10,11 +20,12 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="mt-3 text-[14px] leading-relaxed text-foreground/55">
-        This URL doesn&apos;t exist or may have moved. Check the address or head back home.
+        This URL doesn&apos;t exist or may have moved. Check the address or head
+        back home.
       </p>
       <Link
         href="/"
-        className="mt-8 rounded-full bg-[#ff3b1f] px-6 py-2.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
+        className="mt-8 rounded-xl bg-[#ff3b1f] px-6 py-2.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
       >
         Back to home
       </Link>

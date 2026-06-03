@@ -58,8 +58,7 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
     const ctx = gsap.context(() => {
       childrenToAnimate.forEach((child: Element) => {
         const rect = child.getBoundingClientRect();
-        const isInViewport =
-          rect.top < window.innerHeight && rect.bottom > 0;
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
         gsap.set(
           child,

@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
-const faqs = [
+const allFaqs = [
   {
     question: "What is Cusown?",
     answer:
@@ -38,9 +39,24 @@ const faqs = [
   },
 ];
 
+/** Homepage: decision-stage questions only (full list on /faq). */
+const homeFaqs = allFaqs.filter((f) =>
+  [
+    "How long does a typical project take?",
+    "Do you provide revisions and what tech do you use?",
+    "What is Cusown?",
+    "What is FreeTrust?",
+  ].includes(f.question),
+);
+
 const ITEMS_PER_PAGE = 10;
 
-export function FAQ() {
+type FAQProps = {
+  variant?: "home" | "full";
+};
+
+export function FAQ({ variant = "full" }: FAQProps) {
+  const faqs = variant === "home" ? homeFaqs : allFaqs;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -76,7 +92,7 @@ export function FAQ() {
           </p>
         </header>
 
-        {/* List: hairlines only — no card boxes */}
+        {/* List: hairlines only: no card boxes */}
         <div
           className="divide-y divide-foreground/[0.08] border-t border-b border-foreground/[0.08]"
           data-reveal-item
@@ -108,7 +124,9 @@ export function FAQ() {
                 <div
                   className={cn(
                     "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0",
                   )}
                 >
                   <div className="min-h-0 overflow-hidden">
@@ -121,6 +139,22 @@ export function FAQ() {
             );
           })}
         </div>
+
+        {variant === "home" ? (
+          <div data-reveal-item className="mt-10 text-center">
+            <Link
+              href="/faq"
+              className="inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/45 transition-colors hover:text-[#ff3b1f]"
+            >
+              View all FAQs
+              <ArrowUpRight
+                className="h-4 w-4"
+                strokeWidth={1.85}
+                aria-hidden
+              />
+            </Link>
+          </div>
+        ) : null}
 
         {totalPages > 1 && (
           <div

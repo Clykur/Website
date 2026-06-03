@@ -4,7 +4,7 @@ import { EmailSchema } from "@/lib/types/email";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -19,14 +19,14 @@ export async function GET(
       console.error("Supabase error:", error);
       return NextResponse.json(
         { message: `Error fetching email with id: ${id}` },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     if (!data) {
       return NextResponse.json(
         { message: `Email with id: ${id} not found` },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -35,14 +35,14 @@ export async function GET(
     console.error("GET /api/email/[id] error:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -52,7 +52,7 @@ export async function PUT(
     if (!validation.success) {
       return NextResponse.json(
         { message: "Invalid request body", errors: validation.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -67,26 +67,26 @@ export async function PUT(
       console.error("Supabase error:", error);
       return NextResponse.json(
         { message: `Error updating email with id: ${id}` },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { message: `Email with id: ${id} updated successfully`, data },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("PUT /api/email/[id] error:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -97,19 +97,19 @@ export async function DELETE(
       console.error("Supabase error:", error);
       return NextResponse.json(
         { message: `Error deleting email with id: ${id}` },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
     return NextResponse.json(
       { message: `Email with id: ${id} deleted successfully` },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("DELETE /api/email/[id] error:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

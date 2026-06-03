@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowLeft,
   Briefcase,
   MapPin,
   Building2,
@@ -22,10 +21,21 @@ import {
   EMPLOYMENT_TYPES,
   LOCATIONS,
   getSlugForRole,
-  type CareerRole,
 } from "@/lib/careers-roles";
-import { primaryGradientCtaClassName } from "@/lib/cta-styles";
 import { cn } from "@/lib/utils";
+import {
+  StoryPageBackdrop,
+  StoryPageHero,
+  StoryPageMain,
+  storySectionH2Class,
+} from "@/components/layout/story-page-shell";
+import {
+  CareerSectionCard,
+  RoleListCard,
+  careersSurfaceClass,
+} from "@/components/careers/careers-ui";
+import { SeoCta } from "@/components/seo/seo-cta";
+import { primaryGradientCtaClassName } from "@/lib/cta-styles";
 
 const CAREERS_INTRO = {
   eyebrow: "Careers at Clykur",
@@ -37,49 +47,7 @@ const CAREERS_INTRO = {
     "Clykur builds software products that power modern businesses and partners with companies to ship exceptional technology. We care about product thinking, engineering excellence, and execution speed. Recognized as an MSME under the Government of India, we combine product innovation with real client impact. If you want ownership, innovation, and a no-drama culture, you'll fit right in.",
 };
 
-const roleCardClass =
-  "group block overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 p-5 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] transition-all duration-300 md:p-7 " +
-  "hover:-translate-y-0.5 hover:border-foreground/[0.12] hover:shadow-[0_24px_56px_-40px_rgba(10,10,10,0.12)] active:translate-y-0";
-
-function RoleCard({ role }: { role: CareerRole }) {
-  return (
-    <Link href={`/careers/${getSlugForRole(role)}`} className={roleCardClass}>
-      <div className="flex items-center justify-between gap-4">
-        <div className="min-w-0">
-          <h2 className="truncate font-poppins text-[1.0625rem] font-semibold tracking-[-0.02em] text-foreground md:text-lg">
-            {role.title}
-          </h2>
-          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-foreground/45 md:text-sm">
-            <span>{role.team}</span>
-            <span className="text-foreground/20" aria-hidden>
-              ·
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <Briefcase className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
-              {role.employmentType}
-            </span>
-            <span className="text-foreground/20" aria-hidden>
-              ·
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <MapPin className="h-3.5 w-3.5 shrink-0 opacity-70" aria-hidden />
-              {role.location}
-            </span>
-          </div>
-        </div>
-        <span
-          className="shrink-0 text-foreground/25 transition-colors group-hover:text-[#ff3b1f]"
-          aria-hidden
-        >
-          <ChevronDown className="h-5 w-5 rotate-[-90deg]" />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-const filterShellClass =
-  "rounded-2xl border border-foreground/[0.09] bg-white/80 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_64px_-40px_rgba(10,10,10,0.09)]";
+const filterShellClass = careersSurfaceClass;
 
 const filterInputClass =
   "h-12 w-full rounded-xl border border-foreground/[0.1] bg-white/90 pl-10 pr-3 text-[13px] text-foreground shadow-[0_1px_0_rgba(255,255,255,0.98)_inset] placeholder:text-foreground/32 transition-[border-color,box-shadow] " +
@@ -211,64 +179,48 @@ export default function CareersPage() {
     (location !== "All" ? 1 : 0);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white">
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-15%,rgba(255,59,31,0.06),transparent_58%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(255,90,60,0.05),transparent_42%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_50%_100%,transparent_35%,rgba(250,250,249,0.85)_100%)]"
-        aria-hidden
+    <StoryPageBackdrop>
+      <StoryPageHero
+        titleId="careers-page-heading"
+        title={CAREERS_INTRO.headline}
+        eyebrow={CAREERS_INTRO.eyebrow}
+        lede={CAREERS_INTRO.supporting}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Careers", href: "/careers" },
+        ]}
+        actions={
+          <>
+            <a
+              href="mailto:info@clykur.com?subject=General%20careers%20inquiry%20-%20Clykur"
+              className={primaryGradientCtaClassName}
+            >
+              Email your resume
+            </a>
+            <Link
+              href="/about"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold tracking-[-0.01em] text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
+            >
+              About Clykur
+            </Link>
+          </>
+        }
       />
 
-      <div
-        className={cn(
-          "relative z-[1] mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8",
-          "pt-[max(5.25rem,env(safe-area-inset-top))] md:pt-28",
-          "pb-[max(4rem,env(safe-area-inset-bottom))] md:pb-24",
-        )}
-      >
-        <Link
-          href="/"
-          className="mb-9 inline-flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/40 transition-colors hover:text-[#ff3b1f] md:mb-11"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-          Back to home
-        </Link>
-
-        <header className="mb-12 md:mb-14">
-          <div className="mb-5 flex items-center gap-4">
-            <span
-              className="h-px w-10 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent sm:w-12"
-              aria-hidden
-            />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
-              {CAREERS_INTRO.eyebrow}
+      <StoryPageMain width="default" className="!pt-0">
+        <div className="mx-auto max-w-3xl">
+          <CareerSectionCard
+            id="why-clykur"
+            title={CAREERS_INTRO.aboutTitle}
+            icon={Building2}
+          >
+            <p className="text-[15px] leading-[1.85] text-foreground/62 md:text-base">
+              {CAREERS_INTRO.aboutBody}
             </p>
-          </div>
-          <h1 className="text-balance font-poppins text-[clamp(1.875rem,5vw+0.5rem,2.875rem)] font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
-            {CAREERS_INTRO.headline}
-          </h1>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground/52 md:text-lg md:leading-relaxed">
-            {CAREERS_INTRO.supporting}
-          </p>
-        </header>
+          </CareerSectionCard>
+        </div>
 
-        <section className="mb-12 overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 p-6 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] md:mb-14 md:p-8">
-          <h2 className="mb-4 flex items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
-            <Building2 className="h-4 w-4 text-[#ff3b1f]/80" aria-hidden />
-            {CAREERS_INTRO.aboutTitle}
-          </h2>
-          <p className="max-w-3xl text-[15px] leading-relaxed text-foreground/80">
-            {CAREERS_INTRO.aboutBody}
-          </p>
-        </section>
-
-        <div className="mb-6 md:mb-7">
+        <div className="mx-auto mt-12 max-w-3xl md:mt-14">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
@@ -279,7 +231,7 @@ export default function CareersPage() {
                   className="hidden h-px w-8 shrink-0 bg-gradient-to-r from-[#ff3b1f] to-transparent sm:block"
                   aria-hidden
                 />
-                <h2 className="font-poppins text-xl font-medium tracking-[-0.025em] text-foreground md:text-2xl">
+                <h2 className={cn(storySectionH2Class, "text-xl md:text-2xl")}>
                   Find your team
                 </h2>
               </div>
@@ -299,7 +251,12 @@ export default function CareersPage() {
           </div>
         </div>
 
-        <div className={cn(filterShellClass, "relative z-20 mb-8")}>
+        <div
+          className={cn(
+            filterShellClass,
+            "relative z-20 mx-auto mb-8 max-w-3xl",
+          )}
+        >
           <div
             className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_70%_55%_at_100%_0%,rgba(255,59,31,0.06),transparent_58%)]"
             aria-hidden
@@ -384,162 +341,177 @@ export default function CareersPage() {
                           }}
                           className="fixed left-3 right-3 top-[4.5rem] z-[97] mx-auto max-h-[min(78vh,calc(100dvh-5rem))] overflow-hidden md:hidden"
                         >
-                        <div className={navDropdownFrameClass}>
-                          <div
-                            className={cn(
-                              navDropdownPanelClass,
-                              "flex max-h-[min(78vh,calc(100dvh-8rem))] flex-col overflow-hidden",
-                            )}
-                          >
-                            <div className="flex shrink-0 items-center justify-between border-b border-foreground/[0.08] bg-[#fafaf9] px-4 py-3 sm:px-5">
-                              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/50">
-                                Filters
-                              </p>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setMenuOpen(false);
-                                  setOpenSection(null);
-                                }}
-                                className="flex h-9 w-9 items-center justify-center rounded-lg text-foreground/45 transition hover:bg-white hover:text-foreground"
-                                aria-label="Close filters"
-                              >
-                                <X className="h-4 w-4" strokeWidth={2} />
-                              </button>
-                            </div>
-                            <div className={navCoralRuleClass} aria-hidden />
-                            <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden bg-white">
-                              <div className="divide-y divide-foreground/[0.08]">
-                                {filterGroups.map((filter) => {
-                                  const Icon = filter.icon;
-                                  const summary =
-                                    filter.key === "team"
-                                      ? filter.format(team)
-                                      : filter.key === "employmentType"
-                                        ? filter.format(employmentType)
-                                        : filter.format(location);
-                                  const expanded = openSection === filter.key;
-                                  return (
-                                    <div key={filter.key} className="bg-white">
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setOpenSection(
-                                            expanded ? null : filter.key,
-                                          )
-                                        }
-                                        className={cn(
-                                          "flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors duration-200",
-                                          expanded
-                                            ? "bg-[#ff3b1f]/[0.06]"
-                                            : "hover:bg-[#fafaf9]/90",
-                                        )}
+                          <div className={navDropdownFrameClass}>
+                            <div
+                              className={cn(
+                                navDropdownPanelClass,
+                                "flex max-h-[min(78vh,calc(100dvh-8rem))] flex-col overflow-hidden",
+                              )}
+                            >
+                              <div className="flex shrink-0 items-center justify-between border-b border-foreground/[0.08] bg-[#fafaf9] px-4 py-3 sm:px-5">
+                                <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/50">
+                                  Filters
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setMenuOpen(false);
+                                    setOpenSection(null);
+                                  }}
+                                  className="flex h-9 w-9 items-center justify-center rounded-lg text-foreground/45 transition hover:bg-white hover:text-foreground"
+                                  aria-label="Close filters"
+                                >
+                                  <X className="h-4 w-4" strokeWidth={2} />
+                                </button>
+                              </div>
+                              <div className={navCoralRuleClass} aria-hidden />
+                              <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden bg-white">
+                                <div className="divide-y divide-foreground/[0.08]">
+                                  {filterGroups.map((filter) => {
+                                    const Icon = filter.icon;
+                                    const summary =
+                                      filter.key === "team"
+                                        ? filter.format(team)
+                                        : filter.key === "employmentType"
+                                          ? filter.format(employmentType)
+                                          : filter.format(location);
+                                    const expanded = openSection === filter.key;
+                                    return (
+                                      <div
+                                        key={filter.key}
+                                        className="bg-white"
                                       >
-                                        <span className="flex min-w-0 items-center gap-3">
-                                          <Icon
-                                            className={cn(
-                                              "h-[18px] w-[18px] shrink-0",
-                                              expanded
-                                                ? "text-[#ff3b1f]"
-                                                : "text-foreground/45",
-                                            )}
-                                            strokeWidth={1.5}
-                                            aria-hidden
-                                          />
-                                          <span className="min-w-0">
-                                            <span className="block font-poppins text-[13px] font-medium leading-snug tracking-[-0.02em] text-foreground md:text-sm">
-                                              {filter.label}
-                                            </span>
-                                            <span className="mt-0.5 block truncate text-[12px] text-foreground/45">
-                                              {summary}
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setOpenSection(
+                                              expanded ? null : filter.key,
+                                            )
+                                          }
+                                          className={cn(
+                                            "flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-colors duration-200",
+                                            expanded
+                                              ? "bg-[#ff3b1f]/[0.06]"
+                                              : "hover:bg-[#fafaf9]/90",
+                                          )}
+                                        >
+                                          <span className="flex min-w-0 items-center gap-3">
+                                            <Icon
+                                              className={cn(
+                                                "h-[18px] w-[18px] shrink-0",
+                                                expanded
+                                                  ? "text-[#ff3b1f]"
+                                                  : "text-foreground/45",
+                                              )}
+                                              strokeWidth={1.5}
+                                              aria-hidden
+                                            />
+                                            <span className="min-w-0">
+                                              <span className="block font-poppins text-[13px] font-medium leading-snug tracking-[-0.02em] text-foreground md:text-sm">
+                                                {filter.label}
+                                              </span>
+                                              <span className="mt-0.5 block truncate text-[12px] text-foreground/45">
+                                                {summary}
+                                              </span>
                                             </span>
                                           </span>
-                                        </span>
-                                        <ChevronDown
-                                          className={cn(
-                                            "h-4 w-4 shrink-0 text-foreground/40 transition-transform duration-300",
-                                            expanded && "rotate-180",
+                                          <ChevronDown
+                                            className={cn(
+                                              "h-4 w-4 shrink-0 text-foreground/40 transition-transform duration-300",
+                                              expanded && "rotate-180",
+                                            )}
+                                            strokeWidth={2}
+                                            aria-hidden
+                                          />
+                                        </button>
+                                        <AnimatePresence initial={false}>
+                                          {expanded && (
+                                            <motion.div
+                                              initial={{
+                                                height: 0,
+                                                opacity: 0,
+                                              }}
+                                              animate={{
+                                                height: "auto",
+                                                opacity: 1,
+                                              }}
+                                              exit={{ height: 0, opacity: 0 }}
+                                              transition={{
+                                                duration: 0.25,
+                                                ease: [0.22, 1, 0.36, 1],
+                                              }}
+                                              className="overflow-hidden border-t border-foreground/[0.08] bg-[#fafaf9]/30"
+                                            >
+                                              <ol className="divide-y divide-foreground/[0.08]">
+                                                {filter.options.map(
+                                                  (option) => {
+                                                    const selected =
+                                                      filter.value === option;
+                                                    return (
+                                                      <li key={option}>
+                                                        <button
+                                                          type="button"
+                                                          onClick={() => {
+                                                            filter.setter(
+                                                              option,
+                                                            );
+                                                            setMenuOpen(false);
+                                                            setOpenSection(
+                                                              null,
+                                                            );
+                                                          }}
+                                                          className={cn(
+                                                            "flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left font-poppins text-[13px] font-medium leading-snug tracking-[-0.02em] transition-colors duration-200 md:text-sm",
+                                                            selected
+                                                              ? "bg-[#ff3b1f]/[0.06] text-foreground"
+                                                              : "text-foreground/85 hover:bg-white hover:text-[#ff3b1f]",
+                                                          )}
+                                                        >
+                                                          <span>
+                                                            {optionLabel(
+                                                              filter.key,
+                                                              option,
+                                                            )}
+                                                          </span>
+                                                          {selected ? (
+                                                            <Check
+                                                              className="h-4 w-4 shrink-0 text-[#ff3b1f]"
+                                                              strokeWidth={2.5}
+                                                              aria-hidden
+                                                            />
+                                                          ) : null}
+                                                        </button>
+                                                      </li>
+                                                    );
+                                                  },
+                                                )}
+                                              </ol>
+                                            </motion.div>
                                           )}
-                                          strokeWidth={2}
-                                          aria-hidden
-                                        />
-                                      </button>
-                                      <AnimatePresence initial={false}>
-                                        {expanded && (
-                                          <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{
-                                              duration: 0.25,
-                                              ease: [0.22, 1, 0.36, 1],
-                                            }}
-                                            className="overflow-hidden border-t border-foreground/[0.08] bg-[#fafaf9]/30"
-                                          >
-                                            <ol className="divide-y divide-foreground/[0.08]">
-                                              {filter.options.map((option) => {
-                                                const selected =
-                                                  filter.value === option;
-                                                return (
-                                                  <li key={option}>
-                                                    <button
-                                                      type="button"
-                                                      onClick={() => {
-                                                        filter.setter(option);
-                                                        setMenuOpen(false);
-                                                        setOpenSection(null);
-                                                      }}
-                                                      className={cn(
-                                                        "flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left font-poppins text-[13px] font-medium leading-snug tracking-[-0.02em] transition-colors duration-200 md:text-sm",
-                                                        selected
-                                                          ? "bg-[#ff3b1f]/[0.06] text-foreground"
-                                                          : "text-foreground/85 hover:bg-white hover:text-[#ff3b1f]",
-                                                      )}
-                                                    >
-                                                      <span>
-                                                        {optionLabel(
-                                                          filter.key,
-                                                          option,
-                                                        )}
-                                                      </span>
-                                                      {selected ? (
-                                                        <Check
-                                                          className="h-4 w-4 shrink-0 text-[#ff3b1f]"
-                                                          strokeWidth={2.5}
-                                                          aria-hidden
-                                                        />
-                                                      ) : null}
-                                                    </button>
-                                                  </li>
-                                                );
-                                              })}
-                                            </ol>
-                                          </motion.div>
-                                        )}
-                                      </AnimatePresence>
-                                    </div>
-                                  );
-                                })}
+                                        </AnimatePresence>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                              <div className="shrink-0 border-t border-foreground/[0.08] bg-[#fafaf9] px-4 py-3">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setMenuOpen(false);
+                                    setOpenSection(null);
+                                  }}
+                                  className={cn(
+                                    primaryGradientCtaClassName,
+                                    "h-11 w-full justify-center text-[13px]",
+                                  )}
+                                >
+                                  Show results
+                                </button>
                               </div>
                             </div>
-                            <div className="shrink-0 border-t border-foreground/[0.08] bg-[#fafaf9] px-4 py-3">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setMenuOpen(false);
-                                  setOpenSection(null);
-                                }}
-                                className={cn(
-                                  primaryGradientCtaClassName,
-                                  "h-11 w-full justify-center text-[13px]",
-                                )}
-                              >
-                                Show results
-                              </button>
-                            </div>
                           </div>
-                        </div>
-                      </motion.div>
+                        </motion.div>
                       </>
                     )}
                   </AnimatePresence>
@@ -617,7 +589,10 @@ export default function CareersPage() {
                                     {filter.label}
                                   </p>
                                 </div>
-                                <div className={navCoralRuleClass} aria-hidden />
+                                <div
+                                  className={navCoralRuleClass}
+                                  aria-hidden
+                                />
                                 <ul
                                   className="max-h-[min(50vh,20rem)] divide-y divide-foreground/[0.08] overflow-y-auto overflow-x-hidden bg-white"
                                   role="listbox"
@@ -670,7 +645,7 @@ export default function CareersPage() {
           </div>
         </div>
 
-        <div className="mb-5 flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/38">
+        <div className="mx-auto mb-5 flex max-w-3xl items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/38">
           <Users className="h-3.5 w-3.5 text-foreground/30" aria-hidden />
           <span>
             {filteredRoles.length} open role
@@ -678,19 +653,29 @@ export default function CareersPage() {
           </span>
         </div>
 
-        <div className="space-y-3">
+        <div className="mx-auto mt-8 max-w-3xl space-y-3 md:mt-10">
           {filteredRoles.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-foreground/[0.12] bg-white/50 py-12 text-center text-[15px] text-foreground/45">
+            <p
+              className={cn(
+                careersSurfaceClass,
+                "py-12 text-center text-[15px] text-foreground/45",
+              )}
+            >
               No roles match your filters. Try adjusting the search or filters.
             </p>
           ) : (
             filteredRoles.map((role) => (
-              <RoleCard key={getSlugForRole(role)} role={role} />
+              <RoleListCard key={getSlugForRole(role)} role={role} />
             ))
           )}
         </div>
 
-        <div className="mt-12 rounded-2xl border border-foreground/[0.07] bg-white/60 px-5 py-6 backdrop-blur-sm md:mt-14 md:px-8 md:py-8">
+        <div
+          className={cn(
+            careersSurfaceClass,
+            "mx-auto mt-12 max-w-3xl px-5 py-6 md:mt-14 md:px-8 md:py-8",
+          )}
+        >
           <p className="text-[15px] leading-relaxed text-foreground/55">
             Don&apos;t see a fit? We still want to hear from you. Reach out at{" "}
             <a
@@ -702,7 +687,11 @@ export default function CareersPage() {
             with your resume and a short note.
           </p>
         </div>
-      </div>
-    </div>
+
+        <div className="mx-auto max-w-3xl">
+          <SeoCta headingId="careers-hub-cta" />
+        </div>
+      </StoryPageMain>
+    </StoryPageBackdrop>
   );
 }

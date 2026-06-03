@@ -46,7 +46,10 @@
   }
   html {
     scroll-behavior: auto;
-    scroll-padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.5rem));
+    scroll-padding-top: max(
+      4.5rem,
+      calc(env(safe-area-inset-top, 0px) + 3.5rem)
+    );
   }
   @media (max-width: 767px) {
     html {
@@ -133,5 +136,16 @@
 
   .motion-premium {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

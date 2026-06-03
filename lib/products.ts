@@ -18,7 +18,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "Cusown",
     tagline: "Smart appointment and slot booking platform",
-    image: "/Product Images/Cusown.png",
+    image: "/Product Images/Cusown.webp",
     description:
       "A modern scheduling platform that helps businesses manage bookings, appointments, and customer interactions efficiently. Built for service businesses that need reliability at scale.",
     problem:
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
   {
     name: "FreeTrust",
     tagline: "The Trust Layer Freelancing Deserves",
-    image: "/Product Images/FreeTrust.png",
+    image: "/Product Images/FreeTrust.webp",
     description:
       "A platform designed to improve trust between freelancers and clients through transparent credibility and reputation validation. Institutional-grade protection for the future of work.",
     problem:

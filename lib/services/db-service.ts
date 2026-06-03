@@ -1,11 +1,14 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { ApplicationInput } from "@/lib/security/validation";
 
-export async function checkDuplicateApplication(email: string, roleSlug: string): Promise<{ isDuplicate: boolean; error?: string }> {
+export async function checkDuplicateApplication(
+  email: string,
+  roleSlug: string,
+): Promise<{ isDuplicate: boolean; error?: string }> {
   try {
     const supabase = createServerSupabaseClient();
     const emailLower = email.toLowerCase();
-    
+
     const { data: existing, error } = await supabase
       .from("applications")
       .select("id")
@@ -15,20 +18,26 @@ export async function checkDuplicateApplication(email: string, roleSlug: string)
 
     if (error) {
       console.error("Error checking duplicate:", error);
-      return { isDuplicate: false, error: "Could not verify existing applications." };
+      return {
+        isDuplicate: false,
+        error: "Could not verify existing applications.",
+      };
     }
 
     return { isDuplicate: existing && existing.length > 0 };
   } catch (err) {
     console.error("Unexpected error in checkDuplicateApplication:", err);
-    return { isDuplicate: false, error: "Unexpected error checking duplicates." };
+    return {
+      isDuplicate: false,
+      error: "Unexpected error checking duplicates.",
+    };
   }
 }
 
 export async function saveApplication(
   id: string,
   data: ApplicationInput,
-  storagePath: string
+  storagePath: string,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     const supabase = createServerSupabaseClient();

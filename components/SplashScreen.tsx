@@ -23,6 +23,13 @@ function getSplashSeen(): boolean {
 }
 
 export function SplashScreen() {
+  if (process.env.NODE_ENV !== "development") {
+    return null;
+  }
+  return <SplashScreenDev />;
+}
+
+function SplashScreenDev() {
   const [showSplash, setShowSplash] = useState<boolean | null>(null);
   const [percent, setPercent] = useState(0);
   const [visible, setVisible] = useState(true);

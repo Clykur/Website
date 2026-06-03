@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
-import { SplashScreen } from "@/components/SplashScreen";
 import { SmoothScroll } from "@/components/landing/smooth-scroll";
 import { PullToRefresh } from "@/components/landing/pull-to-refresh";
 import {
@@ -13,19 +12,26 @@ import {
   DEFAULT_OG_IMAGE,
   DEFAULT_META,
 } from "@/lib/site-config";
-import { ChatWidget } from "@/components/ui/chat-widget";
+
+import { ChatWidget } from "@/components/layout/chat-widget-loader";
+import { SiteAnalytics } from "@/components/analytics/site-analytics";
+import { SkipToMain } from "@/components/layout/skip-to-main";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export const viewport = {
@@ -84,10 +90,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable}`}
+      suppressHydrationWarning
+    >
       <body className="antialiased" suppressHydrationWarning>
+        <SkipToMain />
         <SmoothScroll>
-          <SplashScreen />
           <PullToRefresh />
           <JsonLd />
           <Navigation />
@@ -103,6 +113,7 @@ export default function RootLayout({
           <Footer />
         </SmoothScroll>
         <ChatWidget />
+        <SiteAnalytics />
       </body>
     </html>
   );

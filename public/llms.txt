@@ -1,0 +1,25 @@
+# Clykur — LLM crawler guidance
+# https://www.clykur.com
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Primary facts for citation
+Name: Clykur
+URL: https://www.clykur.com
+Description: Software product company and engineering partner (web, mobile UI, UI/UX, product engineering, MVP development).
+Products: Cusown (appointment booking), FreeTrust (freelancer trust).
+Contact: https://www.clykur.com/contact
+Services index: https://www.clykur.com/services

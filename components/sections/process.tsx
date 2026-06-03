@@ -1,39 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 
-const processSteps = [
-  {
-    step: "01",
-    title: "Consultation",
-    description:
-      "Scope, timeline, and success criteria agreed in writing before build.",
-  },
-  {
-    step: "02",
-    title: "Design review",
-    description:
-      "Files checked for feasibility, responsiveness, and edge cases.",
-  },
-  {
-    step: "03",
-    title: "Development",
-    description:
-      "UI implemented to spec: accessible, performant, maintainable.",
-  },
-  {
-    step: "04",
-    title: "Quality Assurance",
-    description:
-      "Verified across devices and browsers against the approved source.",
-  },
-  {
-    step: "05",
-    title: "Delivery",
-    description:
-      "Clean handoff, documentation, and a path for updates or phase two.",
-  },
-] as const;
+import { PROCESS_STEPS } from "@/lib/process";
 
 export function Process() {
   return (
@@ -42,7 +13,10 @@ export function Process() {
       className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="process-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[#f8f8f7]" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#f8f8f7]"
+        aria-hidden
+      />
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(255,59,31,0.05),transparent_55%)]"
         aria-hidden
@@ -66,17 +40,17 @@ export function Process() {
             How we work
           </h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
-            One pipeline, five stages. Same order on every engagement no
-            guesswork about what happens next.
+            One pipeline, five stages. The full playbook and checkpoints live on
+            our process page.
           </p>
         </header>
 
-        {/* Single “sheet” — full process in one frame */}
+        {/* Single “sheet”: full process in one frame */}
         <div
           data-reveal-item
           className="overflow-hidden rounded-2xl border border-foreground/[0.09] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_48px_-32px_rgba(10,10,10,0.08)]"
         >
-          {/* Title block — reads like a drawing header */}
+          {/* Title block: reads like a drawing header */}
           <div className="flex flex-col gap-1 border-b border-foreground/[0.08] bg-[#fafaf9] px-5 py-4 md:flex-row md:items-center md:justify-between md:px-8 md:py-5">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-foreground/50">
               Delivery pipeline
@@ -86,7 +60,7 @@ export function Process() {
             </p>
           </div>
 
-          {/* Brand rule — single horizontal anchor */}
+          {/* Brand rule: single horizontal anchor */}
           <div
             className="h-[3px] w-full bg-gradient-to-r from-[#ff3b1f]/85 via-[#ff3b1f]/35 to-foreground/[0.12]"
             aria-hidden
@@ -96,7 +70,7 @@ export function Process() {
             className="grid grid-cols-1 divide-y divide-foreground/[0.08] md:grid-cols-5 md:divide-x md:divide-y-0"
             aria-label="Process steps from consultation through delivery"
           >
-            {processSteps.map((item) => (
+            {PROCESS_STEPS.map((item) => (
               <li
                 key={item.step}
                 className="flex flex-col bg-white px-5 py-7 md:min-h-[260px] md:px-4 md:py-8 lg:min-h-[272px] lg:px-5"
@@ -120,6 +94,16 @@ export function Process() {
               begins scope, quality, or sign-off.
             </p>
           </div>
+        </div>
+
+        <div data-reveal-item className="mt-10 flex justify-center">
+          <Link
+            href="/process"
+            className="inline-flex items-center gap-2 rounded-xl border border-foreground/[0.1] bg-white px-6 py-3 text-[13px] font-semibold text-foreground/70 transition-colors hover:border-[#ff3b1f]/30 hover:text-[#ff3b1f]"
+          >
+            See full process
+            <ArrowUpRight className="h-4 w-4" strokeWidth={1.85} aria-hidden />
+          </Link>
         </div>
       </ScrollReveal>
     </section>
