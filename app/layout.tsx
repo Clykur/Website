@@ -5,7 +5,6 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SmoothScroll } from "@/components/landing/smooth-scroll";
-import { PullToRefresh } from "@/components/landing/pull-to-refresh";
 import {
   SITE_URL,
   SITE_NAME,
@@ -98,7 +97,6 @@ export default function RootLayout({
       <body className="antialiased" suppressHydrationWarning>
         <SkipToMain />
         <SmoothScroll>
-          <PullToRefresh />
           <JsonLd />
           <Navigation />
           <main id="main-content" className="relative z-10 min-h-screen">

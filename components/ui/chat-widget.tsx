@@ -125,16 +125,30 @@ export function ChatWidget() {
     return last ? messageText(last) : "";
   })();
 
-  const scrollMessagesToBottom = useCallback(
-    (behavior: ScrollBehavior = "smooth") => {
-      const el = messagesScrollRef.current;
-      if (!el) return;
-      requestAnimationFrame(() => {
-        el.scrollTo({ top: el.scrollHeight, behavior });
-      });
-    },
-    [],
-  );
+  const scrollMessagesToBottom = useCallback((instant = false) => {
+    const el = messagesScrollRef.current;
+    if (!el) return;
+    const useInstant =
+      instant ||
+      (typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 639px)").matches);
+
+    const apply = () => {
+      const top = el.scrollHeight - el.clientHeight;
+      if (useInstant) {
+        el.scrollTop = top > 0 ? top : 0;
+      } else {
+        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+      }
+    };
+
+    requestAnimationFrame(() => {
+      apply();
+      if (useInstant) {
+        requestAnimationFrame(apply);
+      }
+    });
+  }, []);
 
   const scrollMessagesToTop = useCallback(() => {
     const el = messagesScrollRef.current;
@@ -212,7 +226,7 @@ export function ChatWidget() {
       scrollMessagesToTop();
       return;
     }
-    scrollMessagesToBottom(isLoading ? "auto" : "smooth");
+    scrollMessagesToBottom(isLoading);
   }, [
     messages,
     lastAssistantText,
@@ -221,14 +235,6 @@ export function ChatWidget() {
     scrollMessagesToBottom,
     scrollMessagesToTop,
   ]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const onlyWelcome =
-      messages.length === 1 && messages[0]?.role === "assistant";
-    if (onlyWelcome) scrollMessagesToTop();
-    else scrollMessagesToBottom("auto");
-  }, [isOpen, messages, scrollMessagesToBottom, scrollMessagesToTop]);
 
   useEffect(() => {
     if (prevStatus.current !== "ready" && status === "ready") {
@@ -338,7 +344,7 @@ export function ChatWidget() {
     <div
       ref={chatRef}
       className={cn(
-        "fixed z-[100]",
+        "fixed z-[90]",
         isOpen
           ? cn(
               "inset-x-0 flex items-end justify-end px-3 pt-1",
@@ -428,7 +434,7 @@ export function ChatWidget() {
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
               <div
                 ref={messagesScrollRef}
-                className="min-h-0 flex-1 space-y-4 overflow-y-auto overflow-x-hidden overscroll-y-contain scroll-smooth px-4 pb-4 pt-3 touch-pan-y [-webkit-overflow-scrolling:touch] [scroll-padding-top:0.5rem]"
+                className="min-h-0 flex-1 space-y-4 overflow-y-auto overflow-x-hidden overscroll-y-contain px-4 pb-4 pt-3 [-webkit-overflow-scrolling:touch] [overscroll-behavior-y:contain] touch-pan-y"
                 data-lenis-prevent
               >
                 {messages.length === 0 && !isLoading ? (
