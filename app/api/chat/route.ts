@@ -4,9 +4,10 @@ import { staticAssistantUIMessageResponse } from "@/lib/ai/chat-stream-response"
 import { embedUserQuestion } from "@/lib/ai/embed-query";
 import { isGeminiCircuitOpen } from "@/lib/ai/gemini-circuit";
 import {
-  composeRagFallbackAnswer,
-  getLlmUnavailableReply,
-} from "@/lib/ai/chat-rag-fallback";
+  getIdentityCanonicalResponse,
+  isClykurIdentityQuestion,
+} from "@/lib/ai/chat-identity";
+import { getLlmUnavailableReply } from "@/lib/ai/chat-rag-fallback";
 import {
   getLowConfidenceHelpReply,
   shouldUseLlmAfterRag,
@@ -103,9 +104,14 @@ export async function POST(req: Request) {
           if (supabaseUrl && supabaseKey) {
             const { createClient } = await import("@supabase/supabase-js");
             const supabase = createClient(supabaseUrl, supabaseKey);
-            rag = await retrieveKnowledgeContext({ supabase, embedding });
+            rag = await retrieveKnowledgeContext({
+              supabase,
+              embedding,
+              userQuestion,
+              mode: isClykurIdentityQuestion(userQuestion) ? "identity" : "default",
+            });
             console.log(
-              `[Chat API] RAG band=${rag.confidenceBand} score=${rag.confidenceScore.toFixed(4)} chunks=${rag.topChunks.length}`,
+              `[Chat API] RAG band=${rag.confidenceBand} score=${rag.confidenceScore.toFixed(4)} chunks=${rag.topChunks.length} pages=${rag.sourcePages.join(",")}`,
             );
           }
         }
@@ -120,19 +126,16 @@ export async function POST(req: Request) {
 
     if (rag && userQuestion.trim()) {
       if (!shouldUseLlmAfterRag(userQuestion, rag)) {
-        if (rag.confidenceScore >= 0.52 && rag.topChunks.length > 0) {
-          const composed = composeRagFallbackAnswer(rag);
-          return staticAssistantUIMessageResponse(composed.text);
-        }
         const low = getLowConfidenceHelpReply();
         return staticAssistantUIMessageResponse(low.text);
       }
     }
 
     if (isGeminiCircuitOpen()) {
-      if (rag && rag.topChunks.length > 0) {
-        const composed = composeRagFallbackAnswer(rag);
-        return staticAssistantUIMessageResponse(composed.text);
+      if (isClykurIdentityQuestion(userQuestion)) {
+        return staticAssistantUIMessageResponse(
+          getIdentityCanonicalResponse().text,
+        );
       }
       const busy = getLlmUnavailableReply();
       return staticAssistantUIMessageResponse(busy.text);
@@ -153,9 +156,10 @@ export async function POST(req: Request) {
 
     const llmRate = await limitChatLlmRequest(clientKey);
     if (!llmRate.ok) {
-      if (rag && rag.topChunks.length > 0) {
-        const composed = composeRagFallbackAnswer(rag);
-        return staticAssistantUIMessageResponse(composed.text);
+      if (isClykurIdentityQuestion(userQuestion)) {
+        return staticAssistantUIMessageResponse(
+          getIdentityCanonicalResponse().text,
+        );
       }
       return staticAssistantUIMessageResponse(
         sanitizeAssistantCopy(rateLimitUserMessage(llmRate.reason)),
@@ -168,10 +172,9 @@ export async function POST(req: Request) {
       sourcePages,
     });
 
-    const fallback =
-      rag && rag.topChunks.length > 0
-        ? composeRagFallbackAnswer(rag).text
-        : getLlmUnavailableReply().text;
+    const fallback = isClykurIdentityQuestion(userQuestion)
+      ? getIdentityCanonicalResponse().text
+      : getLlmUnavailableReply().text;
 
     return streamChatLlmResponse({
       apiKey,

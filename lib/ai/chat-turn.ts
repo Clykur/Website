@@ -7,6 +7,10 @@ import {
   getSocialCanonicalChatResponse,
   isClykurSocialQuestion,
 } from "@/lib/ai/chat-grounding";
+import {
+  getIdentityCanonicalResponse,
+  isClykurIdentityQuestion,
+} from "@/lib/ai/chat-identity";
 import { resolvePreLlmTurn } from "@/lib/ai/chat-pre-llm";
 import type { ChatMessageExtras } from "@/lib/ai/chat-types";
 
@@ -52,6 +56,15 @@ export function resolveChatTurn(message: string): ChatTurnResult | null {
       mode: "canonical",
       text: social.text,
       extras: social.extras,
+    };
+  }
+
+  if (isClykurIdentityQuestion(trimmed)) {
+    const identity = getIdentityCanonicalResponse();
+    return {
+      mode: "canonical",
+      text: identity.text,
+      extras: identity.extras,
     };
   }
 

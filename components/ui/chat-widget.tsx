@@ -25,9 +25,9 @@ import {
 } from "@/lib/ai/chat-scope";
 import {
   getDefaultQuickPrompts,
-  getDefaultAssistantExtras,
   getWelcomeExtras,
 } from "@/lib/ai/chat-suggestions";
+import { buildExtrasForTopic } from "@/lib/ai/chat-response-extras";
 import {
   getAutoOpenDelayMs,
   shouldAutoOpenOnPath,
@@ -236,9 +236,17 @@ export function ChatWidget() {
         .reverse()
         .find((m) => m.role === "assistant");
       if (lastAssistant && !metaByMessageId[lastAssistant.id]) {
+        const lastUser = [...messages]
+          .reverse()
+          .find((m) => m.role === "user");
+        const userQ = lastUser ? messageText(lastUser) : "";
+        const assistantText = messageText(lastAssistant);
         setMetaByMessageId((prev) => ({
           ...prev,
-          [lastAssistant.id]: getDefaultAssistantExtras(),
+          [lastAssistant.id]: buildExtrasForTopic({
+            userQuestion: userQ,
+            assistantText,
+          }),
         }));
       }
     }

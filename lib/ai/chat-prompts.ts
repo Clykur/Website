@@ -1,14 +1,10 @@
 import type { RagConfidenceBand } from "@/lib/ai/rag-retrieval";
-import { getChatCanonicalFactsBlock } from "@/lib/ai/chat-grounding";
+import {
+  getChatCanonicalFactsBlock,
+} from "@/lib/ai/chat-grounding";
+import { getClykurAboutSummaryHint } from "@/lib/ai/chat-identity";
 
-const DEFAULT_LINKS = [
-  "/services",
-  "/products",
-  "/case-studies",
-  "/contact",
-  "/about",
-  "/faq",
-];
+const DEFAULT_LINKS = ["/about", "/services", "/products", "/contact"];
 
 export function buildSystemPrompt(input: {
   confidenceBand: RagConfidenceBand;
@@ -20,32 +16,26 @@ export function buildSystemPrompt(input: {
   const linkBlock = links.map((u) => `- ${u}`).join("\n");
 
   const contextBlock = input.contextStr.trim()
-    ? `CONTEXT (use first; do not repeat verbatim):\n${input.contextStr}`
-    : "CONTEXT: (none retrieved — use careful general Clykur positioning only; do not invent facts.)";
+    ? `CONTEXT (primary source — answer from this only; do not mix unrelated pages):\n${input.contextStr}`
+    : `CONTEXT: (none retrieved)\n${getClykurAboutSummaryHint()}`;
 
   const confidenceHint =
-    input.confidenceBand === "strong"
-      ? "Retrieval confidence: strong. Ground answers in CONTEXT."
-      : input.confidenceBand === "medium"
-        ? "Retrieval confidence: medium. Prefer CONTEXT; fill gaps with cautious reasoning and page links."
-        : "Retrieval confidence: weak. Answer briefly from general Clykur positioning, suggest relevant pages, never refuse if the question is about Clykur.";
+    input.confidenceBand === "weak"
+      ? "Retrieval confidence: weak. Use the company summary and stay aligned with Clykur services. Guide to a relevant page if needed. Never refuse a Clykur-related question."
+      : "Retrieval confidence: sufficient. Ground the answer in CONTEXT only.";
 
-  return `You are the Clykur website assistant on clykur.com.
+  return `You are Clykur's official website assistant.
 
 Rules:
-- Use provided CONTEXT first.
-- If CONTEXT is partial, answer using reasoning but stay aligned with Clykur services, products, and public site content.
-- Never invent pricing, client names, legal claims, or policies not supported by CONTEXT.
-- If unsure, guide the user to relevant pages instead of refusing (when the topic is Clykur-related).
-- Be concise and accurate. Prefer clarity over verbosity.
+- Always use provided context when available.
+- If context is weak, use reasoning but stay aligned with Clykur services and products.
+- Never mix unrelated pages into one answer (do not combine careers, legal, refund, or hiring copy unless the user asked about those topics).
+- Never show legal or careers content unless the user explicitly asked about it.
+- Be concise and accurate.
+- If unsure, guide the user to the relevant page instead of refusing.
 - Never use the em dash character.
-- Off-site topics (politics, trivia, other companies as main subject): brief apology and link to Clykur pages only.
-- For LinkedIn, Instagram, email, or WhatsApp: use CANONICAL FACTS below.
-
-Response structure:
-1. Direct answer (short)
-2. Supporting detail (from CONTEXT when available)
-3. Optional CTA only if relevant (e.g. [Start a project](/contact) or [View services](/services))
+- Off-site topics: brief apology and link to Clykur pages only.
+- For social or contact details: use CANONICAL FACTS below.
 
 ${confidenceHint}
 

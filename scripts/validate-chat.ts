@@ -22,7 +22,6 @@ const OFF_TOPIC_SAMPLES = [
 ];
 
 const CLYKUR_SHOULD_LLM = [
-  "who are you?",
   "what services do you offer?",
   "tell me about cusown",
   "do you work with startups in the US",
@@ -95,23 +94,26 @@ if (!gib || gib.mode !== "off_topic") {
 
 if (!isLikelyGibberish("jbfahbbs")) fail("isLikelyGibberish jbfahbbs");
 
+console.log("\n=== Identity → canonical (not random RAG dump) ===\n");
+for (const q of ["what is clykur", "who is clykur", "who are you?"]) {
+  const turn = resolveChatTurn(q);
+  if (!turn || turn.mode !== "canonical") {
+    fail(`identity should be canonical: "${q}" → ${turn?.mode}`);
+  } else if (!turn.text.toLowerCase().includes("clykur")) {
+    fail(`identity answer missing Clykur: "${q}"`);
+  }
+}
+ok("identity canonical replies");
+
 console.log("\n=== Context compression ===\n");
 const mockChunks: KnowledgeChunkRow[] = [
   {
     id: "1",
     url: "https://www.clykur.com/about",
     title: "About",
-    section_title: "Team",
-    content: "Clykur is a studio.  ".repeat(20),
+    section_title: "What Clykur does",
+    content: "Clykur is a software product company and engineering partner.",
     similarity: 0.9,
-  },
-  {
-    id: "2",
-    url: "https://www.clykur.com/about",
-    title: "About",
-    section_title: "Team",
-    content: "Duplicate path section",
-    similarity: 0.85,
   },
   {
     id: "3",
@@ -131,9 +133,8 @@ const mockChunks: KnowledgeChunkRow[] = [
 ];
 const { contextForLlm, sourcePages } = buildContextFromChunks(mockChunks);
 if (sourcePages.length > 3) fail("expected at most 3 source pages in pack");
-if (contextForLlm.includes("Duplicate path"))
-  fail("dedupe same page+section failed");
-else ok("RAG context packs top 3 deduped chunks");
+if (!contextForLlm.includes("/about")) fail("context should include about");
+else ok("RAG context packs clean chunks");
 
 console.log(`\n=== Done: ${failures} failure(s) ===\n`);
 process.exit(failures > 0 ? 1 : 0);

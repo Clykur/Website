@@ -6,7 +6,6 @@ import {
 import { getDefaultAssistantExtras } from "@/lib/ai/chat-suggestions";
 import type { ChatMessageExtras } from "@/lib/ai/chat-types";
 import type { RagRetrievalResult } from "@/lib/ai/rag-retrieval";
-import { MEDIUM_MIN } from "@/lib/ai/rag-retrieval";
 
 const CLYKUR_INTENT =
   /\b(clykur|cusown|freetrust|service|product|mvp|web dev|mobile|case stud|portfolio|client work|contact|pricing|quote|discovery|project|engineer|software|design|ui\/ux|faq|about|career|hire|team|process|industr|blog|work with)\b/i;
@@ -86,23 +85,17 @@ export function resolvePreLlmTurn(message: string): PreLlmTurn | null {
   return null;
 }
 
-/** After RAG: skip Gemini when retrieval is good enough or input is not on-topic. */
+/** Always synthesize with LLM — never dump raw chunks (low confidence included). */
 export function shouldUseLlmAfterRag(
   message: string,
   rag: RagRetrievalResult,
 ): boolean {
-  const score = rag.confidenceScore;
-  if (rag.confidenceBand === "strong" || score >= MEDIUM_MIN) {
-    return false;
-  }
-
+  void rag;
   if (isLikelyGibberish(message)) return false;
-
-  if (score < 0.55 && !isLikelyClykurQuestion(message)) {
-    return false;
+  if (!isLikelyClykurQuestion(message) && rag.confidenceBand === "weak") {
+    return (rag.topChunks[0]?.similarity ?? 0) >= 0.52;
   }
-
-  return isLikelyClykurQuestion(message) || score >= 0.52;
+  return isLikelyClykurQuestion(message) || rag.confidenceScore > 0;
 }
 
 export function getLowConfidenceHelpReply(): {

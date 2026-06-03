@@ -5,6 +5,7 @@ import * as cheerio from "cheerio";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@supabase/supabase-js";
 import { getAllSitemapPaths } from "../lib/seo/pages";
+import { getCanonicalAboutIngestContent } from "../lib/ai/chat-identity";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
@@ -134,7 +135,7 @@ function inferPageMeta(
     return { page_type: "blog", slug, priority_score: 0.65 };
   }
   if (pathname.startsWith("/careers")) {
-    return { page_type: "careers", slug, priority_score: 0.82 };
+    return { page_type: "careers", slug, priority_score: 0.2 };
   }
   if (pathname.startsWith("/industries")) {
     return { page_type: "industry", slug, priority_score: 0.84 };
@@ -144,10 +145,12 @@ function inferPageMeta(
       pathname,
     )
   ) {
-    return { page_type: "legal", slug, priority_score: 0.72 };
+    return { page_type: "legal", slug, priority_score: 0.2 };
   }
   if (pathname === "/contact" || pathname === "/faq" || pathname === "/about") {
-    return { page_type: "page", slug, priority_score: 0.92 };
+    const score =
+      pathname === "/about" ? 1 : pathname === "/contact" ? 0.85 : 0.82;
+    return { page_type: "page", slug, priority_score: score };
   }
   return { page_type: "page", slug, priority_score: 0.8 };
 }
@@ -467,6 +470,16 @@ async function ingest() {
   }
   chunksGenerated = allChunks.length;
   console.log(`\n${chunksGenerated} chunks from ${pagesCrawled} pages.\n`);
+
+  const canonical = getCanonicalAboutIngestContent(BASE_URL);
+  allChunks.push({
+    ...canonical,
+    content_hash: hashContent(
+      `${canonical.url}|${canonical.section_title}|${canonical.content}`,
+    ),
+  });
+  chunksGenerated = allChunks.length;
+  console.log("Added canonical About Clykur chunk for identity retrieval.");
 
   const { error: deleteError } = await supabase
     .from("knowledge_chunks")
