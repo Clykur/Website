@@ -1,72 +1,26 @@
-import dynamic from "next/dynamic";
+import type { Metadata } from "next";
+import { HomeBelowFold } from "@/components/home/home-below-fold";
 import { Hero } from "@/components/sections/hero";
+import { HeroHeading } from "@/components/sections/hero-heading";
 import { Products } from "@/components/sections/products";
-import { ProductEcosystem } from "@/components/sections/product-ecosystem";
 import { Services } from "@/components/sections/services";
-import { About } from "@/components/sections/about";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { DEFAULT_META } from "@/lib/site-config";
 
-const Process = dynamic(
-  () =>
-    import("@/components/sections/process").then((m) => ({
-      default: m.Process,
-    })),
-  { ssr: true },
-);
-const Portfolio = dynamic(
-  () =>
-    import("@/components/sections/portfolio").then((m) => ({
-      default: m.Portfolio,
-    })),
-  { ssr: true },
-);
-const ClientWorks = dynamic(
-  () =>
-    import("@/components/sections/client-works").then((m) => ({
-      default: m.ClientWorks,
-    })),
-  { ssr: true },
-);
-const CaseStudies = dynamic(
-  () =>
-    import("@/components/sections/case-studies").then((m) => ({
-      default: m.CaseStudies,
-    })),
-  { ssr: true },
-);
-const FAQ = dynamic(
-  () => import("@/components/sections/faq").then((m) => ({ default: m.FAQ })),
-  { ssr: true },
-);
-const TrustVerification = dynamic(
-  () =>
-    import("@/components/sections/trust-verification").then((m) => ({
-      default: m.TrustVerification,
-    })),
-  { ssr: true },
-);
-const Contact = dynamic(
-  () =>
-    import("@/components/sections/contact").then((m) => ({
-      default: m.Contact,
-    })),
-  { ssr: true },
-);
+export const metadata: Metadata = buildPageMetadata({
+  title: DEFAULT_META.title,
+  description: DEFAULT_META.description,
+  path: "/",
+  keywords: DEFAULT_META.keywords.split(", "),
+});
 
 export default function Home() {
   return (
     <>
-      <Hero />
+      <Hero heading={<HeroHeading />} />
+      <Services variant="home" />
       <Products />
-      <ProductEcosystem />
-      <Services />
-      <About />
-      <Process />
-      <Portfolio />
-      <ClientWorks />
-      <CaseStudies />
-      <FAQ />
-      <TrustVerification />
-      <Contact />
+      <HomeBelowFold />
     </>
   );
 }

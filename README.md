@@ -45,7 +45,7 @@ This is the official website for <span style="font-family: 'Calegar', sans-serif
 
 ### Design Philosophy
 
-The website features a clean, minimal design with a neutral color palette and subtle accents. Every element is crafted to showcase our attention to detail and commitment to quality—the same standards we bring to every client project.
+The website features a clean, minimal design with a neutral color palette and subtle accents. Every element is crafted to showcase our attention to detail and commitment to quality, the same standards we bring to every client project.
 
 ### Key Features
 

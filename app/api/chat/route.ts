@@ -1,193 +1,193 @@
-import { streamText } from 'ai';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { GoogleGenAI } from '@google/genai';
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+import { buildSystemPrompt } from "@/lib/ai/chat-prompts";
+import { resolveChatTurn } from "@/lib/ai/chat-turn";
+import { staticAssistantUIMessageResponse } from "@/lib/ai/chat-stream-response";
+import { embedUserQuestion } from "@/lib/ai/embed-query";
+import { isGeminiCircuitOpen } from "@/lib/ai/gemini-circuit";
+import {
+  composeRagFallbackAnswer,
+  getLlmUnavailableReply,
+} from "@/lib/ai/chat-rag-fallback";
+import {
+  getLowConfidenceHelpReply,
+  shouldUseLlmAfterRag,
+} from "@/lib/ai/chat-pre-llm";
+import { streamChatLlmResponse } from "@/lib/ai/chat-llm-stream";
+import {
+  getChatClientKey,
+  limitChatLlmRequest,
+  limitChatRequest,
+  rateLimitUserMessage,
+} from "@/lib/ai/chat-rate-limit";
+import { retrieveKnowledgeContext } from "@/lib/ai/rag-retrieval";
+import { sanitizeAssistantCopy } from "@/lib/ai/chat-scope";
+import { CHAT_SECURITY } from "@/lib/security/chat-config";
+import {
+  formatChatLogLine,
+  isAllowedChatOrigin,
+  looksLikePromptInjection,
+  parseChatRequestBody,
+} from "@/lib/security/chat-guard";
+import { verifyTurnstileToken } from "@/lib/security/turnstile";
 
-// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
+export const runtime = "nodejs";
 
-// Initialize Upstash Redis ratelimit only if env vars are present
-const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
-const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
-const ratelimit = (redisUrl && redisToken)
-  ? new Ratelimit({
-    redis: new Redis({ url: redisUrl, token: redisToken }),
-    limiter: Ratelimit.slidingWindow(10, '10 s'),
-    analytics: true,
-  })
-  : null;
-
-// Simple greeting detection — bypass RAG for openers
-const GREETING_PATTERNS = /^(hi|hey|hello|howdy|greetings|sup|what'?s up|yo|good (morning|afternoon|evening)|hiya)[!.,?]?\s*$/i;
+export async function GET() {
+  return new Response("Method Not Allowed", { status: 405 });
+}
 
 export async function POST(req: Request) {
   try {
+    if (!isAllowedChatOrigin(req)) {
+      return new Response("Forbidden", { status: 403 });
+    }
+
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     if (!apiKey) {
-      console.error('[Chat API] Missing GOOGLE_GENERATIVE_AI_API_KEY environment variable');
-      return new Response('API configuration error', { status: 500 });
+      console.error("[Chat API] Missing GOOGLE_GENERATIVE_AI_API_KEY");
+      return new Response("API configuration error", { status: 500 });
     }
 
-    // Rate Limiting
-    if (ratelimit) {
-      const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
-      const { success } = await ratelimit.limit(ip);
-      if (!success) {
-        console.warn(`[Chat API] Rate limit exceeded for IP: ${ip}`);
-        return new Response('Too many requests, please try again later.', { status: 429 });
-      }
-    }
-
-    const body = await req.json();
-    const { messages } = body;
-
-    if (!messages || !Array.isArray(messages)) {
-      return new Response('Invalid request payload', { status: 400 });
-    }
-
-    const coreMessages = messages.map((msg: any) => ({
-      role: msg.role,
-      content: msg.text || (msg.parts ? msg.parts.map((p: any) => p.text).join('') : ''),
-    }));
-
-    const startTime = Date.now();
-    console.log(`[Chat API] Processing request with ${messages.length} messages`);
-
-    // Get the user's latest query
-    const latestMessage = coreMessages[coreMessages.length - 1];
-    const userQuestion = latestMessage?.content ?? "";
-    console.log(`[Chat API] User Question: "${userQuestion}"`);
-
-    // --- Greeting Fast Path: skip RAG for conversational openers ---
-    if (GREETING_PATTERNS.test(userQuestion.trim())) {
-      console.log('[Chat API] Detected greeting, skipping RAG.');
-      return new Response(
-        "Hello! 👋 I'm the Clykur AI assistant. I can help you with information about Clykur's services, work, careers, policies, and more. What would you like to know?",
-        { status: 200 }
+    const clientKey = getChatClientKey(req);
+    const rate = await limitChatRequest(clientKey);
+    if (!rate.ok) {
+      return staticAssistantUIMessageResponse(
+        sanitizeAssistantCopy(rateLimitUserMessage(rate.reason)),
       );
     }
 
-    // --- RAG IMPLEMENTATION ---
-    let contextStr = "";
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return new Response("Invalid JSON", { status: 400 });
+    }
 
-    if (latestMessage && latestMessage.role === 'user') {
-      try {
-        console.log('[Chat API] Generating embedding...');
-        const genAI = new GoogleGenAI({
-          apiKey,
-          httpOptions: { headers: { 'Accept-Encoding': 'identity' } }
-        });
+    const parsed = parseChatRequestBody(body);
+    if (!parsed.ok) {
+      return staticAssistantUIMessageResponse(
+        sanitizeAssistantCopy(parsed.publicMessage),
+      );
+    }
 
-        const embedResponse = await genAI.models.embedContent({
-          model: 'gemini-embedding-001',
-          contents: userQuestion,
-          config: { outputDimensionality: 768 }
-        });
+    const coreMessages = parsed.messages;
+    const latestMessage = coreMessages[coreMessages.length - 1];
+    const userQuestion = latestMessage.content;
+    console.log(`[Chat API] User: ${formatChatLogLine(userQuestion)}`);
 
-        const embedding = embedResponse.embeddings?.[0]?.values;
+    if (looksLikePromptInjection(userQuestion)) {
+      return staticAssistantUIMessageResponse(
+        sanitizeAssistantCopy(
+          "I can only answer questions about Clykur. Try [Services](/services), [Products](/products), or [Contact](/contact).",
+        ),
+      );
+    }
 
-        if (!embedding) {
-          throw new Error("Embedding generation failed");
-        }
-
-        console.log('[Chat API] Searching Supabase for relevant chunks...');
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-        if (!supabaseUrl || !supabaseKey) {
-          throw new Error("Supabase credentials missing");
-        }
-
-        const { createClient } = require('@supabase/supabase-js');
-        const supabase = createClient(supabaseUrl, supabaseKey);
-
-        const { data, error } = await supabase.rpc('match_knowledge_chunks', {
-          query_embedding: embedding,
-          match_threshold: 0.65,
-          match_count: 5
-        });
-
-        if (error) {
-          throw new Error(`Supabase RPC error: ${error.message}`);
-        }
-
-        console.log(`[Chat API] Retrieved ${data?.length || 0} chunks.`);
-
-        // Hallucination Protection — require at least one chunk above 0.72 similarity
-        if (!data || data.length === 0 || data[0].similarity < 0.72) {
-          if (data && data.length > 0) {
-            console.log(`[Chat API] Best similarity score (${data[0].similarity}) below threshold (0.72). Refusing.`);
-          } else {
-            console.log(`[Chat API] No relevant chunks found. Refusing.`);
-          }
-
-          return new Response(
-            "I can only assist with information available on the Clykur website. Try asking about our services, work, careers, or company policies!",
-            { status: 200 }
-          );
-        }
-
-        // Build Context
-        contextStr = data.map((chunk: any) => {
-          console.log(`[Chat API] Match: URL=${chunk.url} Similarity=${chunk.similarity.toFixed(4)}`);
-          return `[Source: ${chunk.url}]\n${chunk.content}`;
-        }).join("\n\n---\n\n");
-
-      } catch (err: any) {
-        console.error('[Chat API] RAG retrieval error:', err);
-        return new Response(
-          "Sorry, I'm currently unable to access the Clykur knowledge base.\nPlease try again later.",
-          { status: 200 }
-        );
+    if (userQuestion.trim()) {
+      const turn = resolveChatTurn(userQuestion);
+      if (turn?.mode === "off_topic" || turn?.mode === "canonical") {
+        return staticAssistantUIMessageResponse(turn.text);
       }
     }
 
-    const systemPrompt = `
-You are the official AI assistant for Clykur.
+    let rag = null as Awaited<
+      ReturnType<typeof retrieveKnowledgeContext>
+    > | null;
 
-You must answer ONLY using the provided CONTEXT.
+    if (userQuestion.trim()) {
+      try {
+        const embedding = await embedUserQuestion(apiKey, userQuestion);
+        if (embedding) {
+          const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+          const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+          if (supabaseUrl && supabaseKey) {
+            const { createClient } = await import("@supabase/supabase-js");
+            const supabase = createClient(supabaseUrl, supabaseKey);
+            rag = await retrieveKnowledgeContext({ supabase, embedding });
+            console.log(
+              `[Chat API] RAG band=${rag.confidenceBand} score=${rag.confidenceScore.toFixed(4)} chunks=${rag.topChunks.length}`,
+            );
+          }
+        }
+      } catch (err) {
+        console.error("[Chat API] RAG retrieval error:", err);
+      }
+    }
 
-RULES:
+    const confidenceBand = rag?.confidenceBand ?? "weak";
+    const contextStr = rag?.contextForLlm ?? "";
+    const sourcePages = rag?.sourcePages ?? [];
 
-1. Use only information from CONTEXT.
-2. Do not invent services, pricing, timelines, features, policies, or company information.
-3. If the answer is not contained in CONTEXT, respond exactly:
+    if (rag && userQuestion.trim()) {
+      if (!shouldUseLlmAfterRag(userQuestion, rag)) {
+        if (rag.confidenceScore >= 0.52 && rag.topChunks.length > 0) {
+          const composed = composeRagFallbackAnswer(rag);
+          return staticAssistantUIMessageResponse(composed.text);
+        }
+        const low = getLowConfidenceHelpReply();
+        return staticAssistantUIMessageResponse(low.text);
+      }
+    }
 
-"I can only assist with information available on the Clykur website."
+    if (isGeminiCircuitOpen()) {
+      if (rag && rag.topChunks.length > 0) {
+        const composed = composeRagFallbackAnswer(rag);
+        return staticAssistantUIMessageResponse(composed.text);
+      }
+      const busy = getLlmUnavailableReply();
+      return staticAssistantUIMessageResponse(busy.text);
+    }
 
-4. Keep responses concise and professional.
-5. Use bullet points when appropriate.
-6. Never answer unrelated questions.
-7. Never use outside knowledge.
+    if (CHAT_SECURITY.requireTurnstile) {
+      const token = parsed.turnstileToken;
+      if (!token || !(await verifyTurnstileToken(token))) {
+        return staticAssistantUIMessageResponse(
+          sanitizeAssistantCopy(
+            "Please verify you are human (refresh the chat panel) or use [Contact](/contact).",
+          ),
+        );
+      }
+    } else if (parsed.turnstileToken) {
+      await verifyTurnstileToken(parsed.turnstileToken);
+    }
 
-CONTEXT:
+    const llmRate = await limitChatLlmRequest(clientKey);
+    if (!llmRate.ok) {
+      if (rag && rag.topChunks.length > 0) {
+        const composed = composeRagFallbackAnswer(rag);
+        return staticAssistantUIMessageResponse(composed.text);
+      }
+      return staticAssistantUIMessageResponse(
+        sanitizeAssistantCopy(rateLimitUserMessage(llmRate.reason)),
+      );
+    }
 
-${contextStr}
-`;
+    const systemPrompt = buildSystemPrompt({
+      confidenceBand,
+      contextStr,
+      sourcePages,
+    });
 
-    console.log('[Chat API] Calling Gemini for completion...');
-    const customGoogle = createGoogleGenerativeAI({
+    const fallback =
+      rag && rag.topChunks.length > 0
+        ? composeRagFallbackAnswer(rag).text
+        : getLlmUnavailableReply().text;
+
+    return streamChatLlmResponse({
       apiKey,
-      headers: { 'Accept-Encoding': 'identity' }
-    });
-
-    // gemini-2.5-flash-lite: confirmed working on this API key
-    const result = streamText({
-      model: customGoogle('gemini-2.5-flash-lite'),
       system: systemPrompt,
-      messages: coreMessages,
+      messages: coreMessages.map((m) => ({
+        role: m.role,
+        content: m.content,
+      })),
+      fallbackText: fallback,
     });
-
-    console.log(`[Chat API] Response streaming started in ${Date.now() - startTime}ms`);
-    return result.toUIMessageStreamResponse();
-
   } catch (error) {
-    console.error('[Chat API] Internal Error:', error);
-    return new Response(
-      "Sorry, I'm currently unable to access the Clykur knowledge base.\nPlease try again later.",
-      { status: 200 }
+    console.error("[Chat API] Internal Error:", error);
+    return staticAssistantUIMessageResponse(
+      sanitizeAssistantCopy(
+        "Sorry, I am having trouble responding right now. Try our [services](/services) or [contact](/contact) page.",
+      ),
     );
   }
 }
-

@@ -34,8 +34,8 @@ export function TrustVerification() {
               Trust & Verification
             </h2>
             <p className="text-[15px] leading-relaxed text-foreground/48 md:text-base">
-              We publish our MSME (UDYAM) registration so you can verify it yourself on the official
-              government site no extra steps.
+              We publish our MSME (UDYAM) registration so you can verify it
+              yourself on the official government site no extra steps.
             </p>
             <a
               href={UDYAM_VERIFICATION_URL}
@@ -44,7 +44,11 @@ export function TrustVerification() {
               className="inline-flex w-fit items-center gap-1.5 text-[14px] font-medium text-[#ff3b1f] transition-opacity hover:opacity-85"
             >
               udyamregistration.gov.in
-              <ArrowUpRight className="h-4 w-4 opacity-80" strokeWidth={1.75} aria-hidden />
+              <ArrowUpRight
+                className="h-4 w-4 opacity-80"
+                strokeWidth={1.75}
+                aria-hidden
+              />
             </a>
           </div>
 
@@ -56,7 +60,7 @@ export function TrustVerification() {
             aria-label="Open official MSME UDYAM verification"
           >
             <div className="relative">
-              {/* Orange L-shaped corner marks — drafting / verification frame */}
+              {/* Orange L-shaped corner marks: drafting / verification frame */}
               <span
                 className="pointer-events-none absolute -left-px -top-px z-[1] h-8 w-8 border-l-2 border-t-2 border-[#ff3b1f] md:h-9 md:w-9"
                 aria-hidden

@@ -1,6 +1,11 @@
+import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import Image from "next/image";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { primaryGradientCtaClassName } from "@/lib/cta-styles";
+import { cn } from "@/lib/utils";
+
+const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
 export function Contact() {
   const whatsappNumber = "8179299096";
@@ -33,16 +38,44 @@ Best regards`;
           >
             Get in touch
           </h2>
-          <p className="mx-auto mb-10 max-w-xl text-[15px] leading-relaxed text-foreground/55 md:text-lg md:leading-relaxed">
-            Building a product or need an engineering partner? We&apos;d like to
-            hear from you.
+          <p className="mx-auto mb-8 max-w-xl text-[15px] leading-relaxed text-foreground/55 md:text-lg md:leading-relaxed">
+            Building a product or need an engineering partner? Start with a
+            short brief, we respond with a clear next step.
           </p>
+          <div className="mx-auto mb-8 flex max-w-md flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            <Link
+              href="/contact"
+              className={cn(
+                primaryGradientCtaClassName,
+                "w-full justify-center sm:w-auto",
+              )}
+            >
+              Start a project
+            </Link>
+            {calendlyUrl ? (
+              <a
+                href={calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold tracking-[-0.01em] text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f] sm:w-auto"
+              >
+                Book discovery call
+              </a>
+            ) : (
+              <Link
+                href="/contact"
+                className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold tracking-[-0.01em] text-foreground/75 sm:w-auto"
+              >
+                Contact us
+              </Link>
+            )}
+          </div>
           <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/35">
             Remote-first · Global · Responsive
           </p>
         </header>
 
-        {/* Editorial channels — no card boxes; hairline separation only */}
+        {/* Editorial channels: no card boxes; hairline separation only */}
         <div data-reveal-item className="mx-auto max-w-2xl">
           <a
             href={whatsappUrl}
@@ -55,7 +88,7 @@ Best regards`;
                 <div className="flex items-center gap-3">
                   <Image
                     src="/whatsapp.svg"
-                    alt=""
+                    alt="WhatsApp"
                     width={22}
                     height={22}
                     className="h-[22px] w-[22px] opacity-90"
@@ -71,7 +104,11 @@ Best regards`;
               </div>
               <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors group-hover:text-[#ff3b1f]">
                 Send a message
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} aria-hidden />
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
               </span>
             </div>
           </a>
@@ -80,7 +117,11 @@ Best regards`;
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
               <div className="min-w-0 flex-1 space-y-3">
                 <div className="flex items-center gap-3">
-                  <Mail className="h-[22px] w-[22px] text-foreground/70" strokeWidth={1.35} aria-hidden />
+                  <Mail
+                    className="h-[22px] w-[22px] text-foreground/70"
+                    strokeWidth={1.35}
+                    aria-hidden
+                  />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ff3b1f]/90">
                     Email
                   </span>
@@ -94,7 +135,11 @@ Best regards`;
               </div>
               <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors group-hover:text-[#ff3b1f]">
                 Write us
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.75} aria-hidden />
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
               </span>
             </div>
           </a>

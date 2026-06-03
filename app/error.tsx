@@ -29,19 +29,21 @@ export default function Error({
         <button
           type="button"
           onClick={() => reset()}
-          className="rounded-full border border-foreground/15 bg-foreground/[0.03] px-5 py-2.5 text-[13px] font-medium text-foreground transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
+          className="rounded-xl border border-foreground/15 bg-foreground/[0.03] px-5 py-2.5 text-[13px] font-medium text-foreground transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="rounded-full bg-[#ff3b1f] px-5 py-2.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
+          className="rounded-xl bg-[#ff3b1f] px-5 py-2.5 text-[13px] font-medium text-white transition-opacity hover:opacity-90"
         >
           Back to home
         </Link>
       </div>
       {error.digest ? (
-        <p className="mt-10 font-mono text-[10px] text-foreground/30">Ref: {error.digest}</p>
+        <p className="mt-10 font-mono text-[10px] text-foreground/30">
+          Ref: {error.digest}
+        </p>
       ) : null}
     </div>
   );

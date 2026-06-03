@@ -2,7 +2,11 @@
 
 import { ScrollToTop } from "@/components/landing/scroll-to-top";
 
-export default function WorkTemplate({ children }: { children: React.ReactNode }) {
+export default function WorkTemplate({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <ScrollToTop />

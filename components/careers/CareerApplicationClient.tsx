@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const ApplicationForm = dynamic(
   () =>
-    import('@/components/careers/ApplicationForm').then((m) => ({
+    import("@/components/careers/ApplicationForm").then((m) => ({
       default: m.ApplicationForm,
     })),
   {
@@ -26,7 +26,13 @@ const ApplicationForm = dynamic(
   },
 );
 
-export function CareerApplicationClient({ roleSlug }: { roleSlug: string }) {
+export function CareerApplicationClient({
+  roleSlug,
+  roleTitle,
+}: {
+  roleSlug: string;
+  roleTitle?: string;
+}) {
   return (
     <Suspense
       fallback={
@@ -43,7 +49,7 @@ export function CareerApplicationClient({ roleSlug }: { roleSlug: string }) {
         </div>
       }
     >
-      <ApplicationForm roleSlug={roleSlug} roleTitle={''} />
+      <ApplicationForm roleSlug={roleSlug} roleTitle={roleTitle ?? ""} />
     </Suspense>
   );
 }

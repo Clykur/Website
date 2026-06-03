@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: `Milestones, communication, client responsibilities, and delivery expectations for ${SITE_NAME} engineering engagements.`,
   openGraph: {
     title: `Engagement Terms | ${SITE_NAME}`,
-    description: `How ${SITE_NAME} scopes and delivers client work — milestones, acceptance, revisions, and outcome disclaimers.`,
+    description: `How ${SITE_NAME} scopes and delivers client work: milestones, acceptance, revisions, and outcome disclaimers.`,
   },
 };
 

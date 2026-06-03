@@ -33,13 +33,13 @@ const portfolioLabels = [
 ];
 
 const SLIDE_MS = 5200;
-/** Slower auto-advance on touch — fewer state updates, still feels alive. */
+/** Slower auto-advance on touch: fewer state updates, still feels alive. */
 const SLIDE_MS_MOBILE = 8500;
 const SLIDE_MS_MOBILE_ULTRA = 11_000;
 const easeLux = [0.22, 1, 0.28, 1] as const;
 
 const sceneCaptions = [
-  "How engagements flow — input, core build, shipped UI",
+  "How engagements flow: input, core build, shipped UI",
   `${diagramLabels.automation} · ${diagramLabels.trust}`,
   `${diagramLabels.infrastructure} · ${diagramLabels.saas}`,
   `${portfolioLabels[0]} · ${portfolioLabels[1]}`,
@@ -78,9 +78,12 @@ export function HeroVisual() {
   const sceneCount = 6;
   const [slide, setSlide] = useState(0);
 
-  const autoSlideMs =
-    reduce ? SLIDE_MS : isMobile
-      ? ultraLiteMode ? SLIDE_MS_MOBILE_ULTRA : SLIDE_MS_MOBILE
+  const autoSlideMs = reduce
+    ? SLIDE_MS
+    : isMobile
+      ? ultraLiteMode
+        ? SLIDE_MS_MOBILE_ULTRA
+        : SLIDE_MS_MOBILE
       : SLIDE_MS;
 
   useEffect(() => {
@@ -116,7 +119,10 @@ export function HeroVisual() {
     switch (index) {
       case 0:
         return (
-          <div key="s0" className="flex h-full w-full items-center justify-center">
+          <div
+            key="s0"
+            className="flex h-full w-full items-center justify-center"
+          >
             <ServicesScene stripDeco={ultraLiteMode && isMobile} />
           </div>
         );
@@ -132,7 +138,12 @@ export function HeroVisual() {
               />
             </div>
             <div className="flex justify-center">
-              <EcosystemVisual type="trust" idPrefix="hero-b" density="compact" presentation="minimal" />
+              <EcosystemVisual
+                type="trust"
+                idPrefix="hero-b"
+                density="compact"
+                presentation="minimal"
+              />
             </div>
           </div>
         );
@@ -148,7 +159,12 @@ export function HeroVisual() {
               />
             </div>
             <div className="flex justify-center">
-              <EcosystemVisual type="saas" idPrefix="hero-d" density="compact" presentation="minimal" />
+              <EcosystemVisual
+                type="saas"
+                idPrefix="hero-d"
+                density="compact"
+                presentation="minimal"
+              />
             </div>
           </div>
         );
@@ -183,7 +199,7 @@ export function HeroVisual() {
   const logoMark = (
     <Image
       src="/Clykur Logo.svg"
-      alt=""
+      alt="Clykur logo"
       width={44}
       height={44}
       className="h-10 w-10 object-contain md:h-11 md:w-11"
@@ -223,7 +239,7 @@ export function HeroVisual() {
             ease: "easeInOut",
           }}
         >
-          <img src="/Clykur Logo.svg" alt="" className="h-10 w-10 object-contain md:h-11 md:w-11" />
+          {logoMark}
         </motion.div>
       </div>
 

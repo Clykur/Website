@@ -11,7 +11,9 @@ export async function verifyTurnstileToken(token: string): Promise<boolean> {
   const secretKey = env.TURNSTILE_SECRET_KEY;
   if (!secretKey) {
     if (process.env.NODE_ENV === "development") {
-      console.warn("⚠️ Turnstile verification is disabled. TURNSTILE_SECRET_KEY is not set.");
+      console.warn(
+        "⚠️ Turnstile verification is disabled. TURNSTILE_SECRET_KEY is not set.",
+      );
       return true;
     }
     // In production, if we require Turnstile but lack the key, we should fail closed.
@@ -28,7 +30,7 @@ export async function verifyTurnstileToken(token: string): Promise<boolean> {
       {
         body: formData,
         method: "POST",
-      }
+      },
     );
 
     const outcome = (await result.json()) as TurnstileResponse;

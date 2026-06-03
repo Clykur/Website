@@ -1,68 +1,16 @@
-import { Compass, Lock, Sparkles, Target } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Compass, Lock, Sparkles, Target } from "lucide-react";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { getAllCaseStudies } from "@/lib/case-studies";
 
-const caseStudies = [
-  {
-    category: "Web App Frontend",
-    title: "Enterprise SaaS Platform",
-    challenge:
-      "Complex design system with multiple components needed to be converted into a scalable React application.",
-    approach:
-      "Analyzed the design system, created a component library, and implemented a responsive interface with optimized performance.",
-    result:
-      "Delivered a fully responsive, production-ready frontend that matched the design specifications with 100% accuracy. The codebase was maintainable and scalable for future updates.",
-  },
-  {
-    category: "Website Frontend",
-    title: "E-Commerce Marketplace",
-    challenge:
-      "Large-scale e-commerce design with complex product listings, filters, and checkout flows required pixel-perfect implementation.",
-    approach:
-      "Built responsive components with smooth animations, optimized for performance, and ensured accessibility standards were met throughout.",
-    result:
-      "Successfully launched with seamless user experience across all devices. The frontend handled high traffic efficiently and received positive user feedback.",
-  },
-  {
-    category: "Web App Frontend",
-    title: "Mobile-First Dashboard",
-    challenge:
-      "Data-heavy dashboard design needed to be converted into an interactive, mobile-responsive interface with real-time updates.",
-    approach:
-      "Implemented a mobile-first approach, created reusable chart components, and optimized data visualization for various screen sizes.",
-    result:
-      "Delivered a highly responsive dashboard that works flawlessly on mobile, tablet, and desktop. Users reported improved usability and faster load times.",
-  },
-  {
-    category: "Fintech & Data",
-    title: "Secure Banking Portal",
-    challenge:
-      "Regulatory-grade portal with strict accessibility and security requirements, multi-step flows, and real-time balance updates.",
-    approach:
-      "Structured the app around clear state machines, implemented WCAG 2.1 AA patterns, and integrated with existing auth and API layers without exposing sensitive data in the client.",
-    result:
-      "Shipped an auditable, accessible portal that passed compliance review. Zero client-side security findings and strong feedback from internal QA and users.",
-  },
-  {
-    category: "Design Systems",
-    title: "Component Library Migration",
-    challenge:
-      "Legacy UI built with mixed patterns and inline styles had to be replaced by a single design system without breaking existing product surfaces.",
-    approach:
-      "Defined tokens and components in phases, introduced the new library behind feature flags, and migrated screens incrementally with visual regression coverage.",
-    result:
-      "Unified design system rolled out across the product. Consistency improved, and the team cut new feature UI time by an estimated 40%.",
-  },
-  {
-    category: "Real-Time Collaboration",
-    title: "Live Editing Workspace",
-    challenge:
-      "Collaborative workspace with presence, cursors, and conflict-free updates needed to feel instant and reliable at scale.",
-    approach:
-      "Chose a sync strategy (CRDT-backed), optimized payloads and batching, and added clear loading and conflict states so users always knew the state of their work.",
-    result:
-      "Launched with sub-second updates and no data loss in testing. Support tickets related to sync dropped sharply after rollout.",
-  },
-];
+const caseStudies = getAllCaseStudies().map((study) => ({
+  slug: study.slug,
+  category: study.industry,
+  title: study.title,
+  challenge: study.challenge,
+  approach: study.implementation[0] ?? study.solution,
+  result: study.results,
+}));
 
 const bodyClass =
   "text-[13.5px] leading-[1.82] text-foreground/55 md:text-[14.5px] md:leading-[1.84]";
@@ -70,7 +18,14 @@ const bodyClass =
 const labelClass =
   "mb-3 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/38";
 
-export function CaseStudies() {
+type CaseStudiesProps = {
+  /** Homepage teaser: show fewer stories + link to full index */
+  limit?: number;
+};
+
+export function CaseStudies({ limit }: CaseStudiesProps) {
+  const visible = limit ? caseStudies.slice(0, limit) : caseStudies;
+
   return (
     <section
       id="case-studies"
@@ -137,9 +92,9 @@ export function CaseStudies() {
         </header>
 
         <div>
-          {caseStudies.map((study, index) => (
+          {visible.map((study, index) => (
             <article
-              key={index}
+              key={study.slug}
               data-reveal-item
               className="group border-t border-foreground/[0.07] py-16 first:border-t-0 first:pt-0 md:py-[4.5rem] lg:py-24"
             >
@@ -163,7 +118,12 @@ export function CaseStudies() {
                         </span>
                       </div>
                       <h3 className="max-w-2xl font-poppins text-[1.5rem] font-medium leading-[1.15] tracking-[-0.02em] text-foreground md:text-[1.75rem] lg:text-[2rem]">
-                        {study.title}
+                        <Link
+                          href={`/case-studies/${study.slug}`}
+                          className="transition-colors hover:text-[#ff3b1f]"
+                        >
+                          {study.title}
+                        </Link>
                       </h3>
                     </div>
                   </div>
@@ -212,10 +172,38 @@ export function CaseStudies() {
                     </div>
                   </div>
                 </div>
+                <p className="mt-8">
+                  <Link
+                    href={`/case-studies/${study.slug}`}
+                    className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#ff3b1f] hover:underline"
+                  >
+                    Read full case study
+                    <ArrowUpRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                </p>
               </div>
             </article>
           ))}
         </div>
+
+        {limit ? (
+          <div
+            data-reveal-item
+            className="mt-12 flex justify-center border-t border-foreground/[0.06] pt-12"
+          >
+            <Link
+              href="/case-studies"
+              className="inline-flex items-center gap-2 rounded-xl border border-foreground/[0.1] bg-white px-7 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/55 transition-colors hover:border-[#ff3b1f]/28 hover:text-[#ff3b1f]"
+            >
+              View all case studies
+              <ArrowUpRight
+                className="h-4 w-4"
+                strokeWidth={1.85}
+                aria-hidden
+              />
+            </Link>
+          </div>
+        ) : null}
       </ScrollReveal>
     </section>
   );

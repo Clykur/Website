@@ -29,7 +29,11 @@ const pillars = [
       "Scalable products built for growth from scheduling to trust to the next category we define.",
     visual: "saas" as const,
   },
-] as const satisfies { title: string; description: string; visual: EcosystemVisualType }[];
+] as const satisfies {
+  title: string;
+  description: string;
+  visual: EcosystemVisualType;
+}[];
 
 export function ProductEcosystem() {
   return (
@@ -38,7 +42,10 @@ export function ProductEcosystem() {
       className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="ecosystem-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-white" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-white"
+        aria-hidden
+      />
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_50%_-18%,rgba(255,59,31,0.05),transparent_58%)]"
         aria-hidden
@@ -67,8 +74,8 @@ export function ProductEcosystem() {
           </h2>
           <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
             We&apos;re building a coherent suite of products that improve how
-            businesses operate automation, trust, productivity, and modern
-            SaaS workflows. More is in development; the direction is deliberate.
+            businesses operate automation, trust, productivity, and modern SaaS
+            workflows. More is in development; the direction is deliberate.
           </p>
         </header>
 
@@ -79,7 +86,11 @@ export function ProductEcosystem() {
               data-reveal-item
               className="group flex flex-col overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_22px_50px_-34px_rgba(10,10,10,0.1)] transition-shadow duration-300 hover:border-foreground/[0.11] hover:shadow-[0_24px_56px_-30px_rgba(255,59,31,0.1)]"
             >
-              <EcosystemVisual type={pillar.visual} idPrefix="page-ecosystem" density="card" />
+              <EcosystemVisual
+                type={pillar.visual}
+                idPrefix="page-ecosystem"
+                density="card"
+              />
               <div className="flex flex-1 flex-col border-t border-foreground/[0.06] bg-white px-5 py-6 md:px-6 md:py-7">
                 <h3 className="font-poppins text-lg font-medium leading-snug tracking-[-0.02em] text-foreground md:text-[1.125rem]">
                   {pillar.title}

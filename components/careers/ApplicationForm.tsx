@@ -11,6 +11,10 @@ import {
   type ApplyFormState,
 } from "@/lib/careers/apply-actions";
 import { primaryGradientCtaClassName } from "@/lib/cta-styles";
+import {
+  careersCoralRuleClass,
+  careersSurfaceClass,
+} from "@/components/careers/careers-ui";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Loader2, Upload, X } from "lucide-react";
 import { useFormStatus } from "react-dom";
@@ -160,7 +164,7 @@ function ResumeUpload() {
               Upload your resume
             </span>
             <span className="mt-1 text-xs text-foreground/45">
-              PDF, DOC, or DOCX — max 5MB
+              PDF, DOC, or DOCX: max 5MB
             </span>
           </>
         )}
@@ -209,9 +213,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
     }
   }, [state?.success, roleSlug]);
 
-  const showSuccess =
-    !submitAgain &&
-    (submitted || alreadyApplied);
+  const showSuccess = !submitAgain && (submitted || alreadyApplied);
   const handleSubmitAnother = () => {
     try {
       localStorage.removeItem(getStorageKey(roleSlug));
@@ -262,16 +264,8 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-[720px] overflow-hidden rounded-2xl border border-foreground/[0.09] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_64px_-40px_rgba(10,10,10,0.1)]">
-      <div className="relative border-b border-foreground/[0.07] px-6 py-9 md:px-10 md:py-11">
-        <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_80%_at_100%_0%,rgba(255,59,31,0.07),transparent_55%)]"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#fafaf9]/98 via-white/90 to-white"
-          aria-hidden
-        />
+    <div className={cn(careersSurfaceClass, "w-full overflow-hidden")}>
+      <div className="relative border-b border-foreground/[0.08] bg-gradient-to-r from-[#fafaf9] via-white to-[#fafaf9] px-6 py-8 md:px-8 md:py-9">
         <div className="relative">
           <div className="mb-4 flex items-center gap-3 md:mb-5">
             <span
@@ -289,7 +283,9 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
             Apply for {roleTitle}
           </h2>
           <p className="mt-4 max-w-[34rem] text-[15px] leading-[1.65] text-foreground/52 md:text-[15.5px]">
-            Share a few details along with your resume. Every application is carefully reviewed by our team, and we respond personally when there is a strong alignment with the role.
+            Share a few details along with your resume. Every application is
+            carefully reviewed by our team, and we respond personally when there
+            is a strong alignment with the role.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-foreground/[0.07] pt-6 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-foreground/36">
             <span className="text-[#ff3b1f]/85">Human review</span>
@@ -300,6 +296,7 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
           </div>
         </div>
       </div>
+      <div className={careersCoralRuleClass} aria-hidden />
 
       <form action={formAction} className="px-6 py-8 md:px-10 md:py-10">
         <input type="hidden" name="role_slug" value={roleSlug} />
@@ -307,7 +304,13 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
         {/* Honeypot field - hidden from real users */}
         <div style={{ display: "none" }} aria-hidden="true">
           <label htmlFor="site_url_reference">Leave this empty</label>
-          <input type="text" id="site_url_reference" name="site_url_reference" tabIndex={-1} autoComplete="off" />
+          <input
+            type="text"
+            id="site_url_reference"
+            name="site_url_reference"
+            tabIndex={-1}
+            autoComplete="off"
+          />
         </div>
 
         <div className="space-y-10">

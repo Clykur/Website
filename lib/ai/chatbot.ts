@@ -1,5 +1,5 @@
-import { buildKnowledgeContext } from './knowledge';
-import { SYSTEM_RULES } from './prompts';
+import { buildKnowledgeContext } from "./knowledge";
+import { SYSTEM_RULES } from "./prompts";
 
 export function getSystemPrompt(dynamicContext: string = ""): string {
   // We use the dynamic context from RAG, fallback to empty string if not provided

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -24,7 +25,7 @@ const sectionClassName =
 const scrollRevealRowClassName =
   "flex w-full flex-col items-stretch gap-14 lg:flex-row lg:items-center lg:justify-center lg:gap-14 xl:gap-16";
 
-function HeroMarketingContent() {
+function HeroMarketingContent({ heading }: { heading: React.ReactNode }) {
   return (
     <div className="relative w-full">
       <div className="flex items-stretch gap-3.5 sm:gap-5">
@@ -32,112 +33,48 @@ function HeroMarketingContent() {
           className="mt-1 w-[2.5px] shrink-0 rounded-full bg-gradient-to-b from-[#ff3b1f] via-[#ff3b1f]/50 to-[#ff3b1f]/8 sm:mt-1.5 sm:w-[3px]"
           aria-hidden
         />
-        <h1
-          id="hero-heading"
-          className="min-w-0 max-w-[min(100%,28rem)] font-poppins text-foreground"
-        >
-          <span className="block text-balance text-[clamp(1.9375rem,5.5vw+0.5rem,3.35rem)] font-medium leading-[1.04] tracking-[-0.042em] sm:leading-[1.06] sm:tracking-[-0.04em]">
-            We build products and engineer systems that{" "}
-            <span className="bg-gradient-to-br from-[#ff6a4d] via-[#ff3b1f] to-[#e62e18] bg-clip-text font-semibold text-transparent">
-              scale
-            </span>
-            <span className="text-foreground/90">.</span>
-          </span>
-          <span
-            className="mt-5 block h-px max-w-[3.5rem] bg-gradient-to-r from-[#ff3b1f]/80 via-[#ff3b1f]/25 to-transparent sm:mt-6"
-            aria-hidden
-          />
-          <span className="mt-5 block text-balance text-[clamp(1.0625rem,2.6vw+0.45rem,1.4375rem)] font-normal leading-[1.35] tracking-[-0.028em] text-foreground/58 sm:mt-6">
-            Clykur operates as a{" "}
-            <span className="relative inline-block font-semibold tracking-[-0.03em] text-foreground">
-              dual system
-              <span
-                className="absolute -bottom-0.5 left-0 right-0 h-px bg-gradient-to-r from-[#ff3b1f]/0 via-[#ff3b1f]/45 to-[#ff3b1f]/0"
-                aria-hidden
-              />
-            </span>
-            <span className="text-foreground/35">.</span>
-          </span>
-        </h1>
+        {heading}
       </div>
 
-      <div
-        data-reveal-item
-        className="mt-8 border-t border-foreground/[0.08] pt-7 text-left max-md:mt-9 max-md:rounded-2xl max-md:border max-md:border-foreground/[0.07] max-md:bg-gradient-to-b max-md:from-white/85 max-md:to-[#fafaf9]/95 max-md:p-5 max-md:pt-6 max-md:shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_24px_80px_-48px_rgba(10,10,10,0.14)] max-md:backdrop-blur-[2px]"
-      >
-        <div className="flex gap-3.5 sm:gap-5">
-          <div
-            className="w-px shrink-0 self-stretch rounded-full bg-gradient-to-b from-[#ff3b1f]/55 via-foreground/12 to-transparent"
-            aria-hidden
-          />
-          <dl className="grid min-w-0 flex-1 grid-cols-1 gap-0 text-left md:grid-cols-2 md:items-start md:gap-6 lg:gap-8">
-            <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 border-b border-foreground/[0.06] pb-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-6 md:border-b-0 md:pb-0 md:pr-4 lg:pr-5">
-              <dt className="pt-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ff3b1f]">
-                01
-              </dt>
-              <dd>
-                <p className="font-poppins text-[1.03125rem] font-semibold tracking-[-0.024em] text-foreground md:text-[1.0625rem]">
-                  Own IP
-                </p>
-                <p className="mt-1.5 text-[14.5px] leading-snug text-foreground/44 md:text-[15px]">
-                  Products we design, build, and scale.
-                </p>
-              </dd>
-            </div>
-            <div className="grid grid-cols-[2.25rem_1fr] items-start gap-x-3 gap-y-1 border-t border-foreground/[0.06] pt-5 sm:grid-cols-[2.75rem_1fr] sm:gap-x-6 md:border-l md:border-t-0 md:pl-6 md:pt-0 lg:pl-8">
-              <dt className="pt-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground/30">
-                02
-              </dt>
-              <dd>
-                <p className="font-poppins text-[1.03125rem] font-semibold tracking-[-0.024em] text-foreground md:text-[1.0625rem]">
-                  Client Systems
-                </p>
-                <p className="mt-1.5 text-[14.5px] leading-snug text-foreground/44 md:text-[15px]">
-                  Engineering and delivery for teams that need execution done right.
-                </p>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-
-      <p
-        data-reveal-item
-        className="mt-6 max-w-lg text-left font-mono text-[10px] font-medium uppercase leading-relaxed tracking-[0.14em] text-foreground/38 sm:mt-6 sm:text-[11px] sm:leading-normal sm:tracking-[0.16em]"
-      >
-        <span className="text-foreground/38">From strategy to production</span>
-        <span className="mx-2 text-foreground/15" aria-hidden>
-          ·
-        </span>
-        <span className="text-foreground/38">One studio · Global by default</span>
-      </p>
-
-      <div
-        data-reveal-item
-        className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-start sm:gap-4"
-      >
+      <div className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-start sm:gap-4">
         <Link
-          href="#products"
-          className={cn(primaryGradientCtaClassName, "w-full justify-center sm:w-fit")}
+          href="/contact"
+          className={cn(
+            primaryGradientCtaClassName,
+            "w-full justify-center sm:w-fit",
+          )}
         >
-          Explore products
+          Start a project
         </Link>
         <Link
           href="#services"
           className="inline-flex w-full items-center justify-center rounded-xl border border-foreground/[0.11] bg-white/70 px-6 py-2.5 text-[13px] font-semibold tracking-[-0.01em] text-foreground/88 shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] backdrop-blur-sm transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/[0.18] hover:bg-white hover:text-foreground active:translate-y-0 sm:w-fit"
         >
-          Work with us
+          View services
         </Link>
       </div>
+
+      <p
+        data-reveal-item
+        className="mt-6 max-w-lg text-left font-mono text-[10px] font-medium uppercase leading-relaxed tracking-[0.14em] text-foreground/38 sm:mt-8 sm:text-[11px] sm:leading-normal sm:tracking-[0.16em]"
+      >
+        <span className="text-foreground/38">From strategy to production</span>
+        <span className="mx-2 text-foreground/15" aria-hidden>
+          ·
+        </span>
+        <span className="text-foreground/38">
+          One studio · Global by default
+        </span>
+      </p>
     </div>
   );
 }
 
 /**
  * Mobile hero: no scroll-linked `useScroll` (saves per-frame work). Uses one-shot
- * entrance + ambient background pulse — same premium cues as desktop, lighter math.
+ * entrance + ambient background pulse: same premium cues as desktop, lighter math.
  */
-function HeroMobileLite() {
+function HeroMobileLite({ heading }: { heading: ReactNode }) {
   const reduce = useReducedMotion();
   const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -148,11 +85,7 @@ function HeroMobileLite() {
         aria-hidden
       />
       <motion.div
-        animate={
-          reduce
-            ? undefined
-            : { opacity: [0.22, 0.32, 0.22] }
-        }
+        animate={reduce ? undefined : { opacity: [0.22, 0.32, 0.22] }}
         transition={{
           duration: 10,
           repeat: reduce ? 0 : Infinity,
@@ -173,7 +106,7 @@ function HeroMobileLite() {
             }}
             className="will-change-transform w-full max-w-2xl text-left lg:max-w-[min(100%,40rem)]"
           >
-            <HeroMarketingContent />
+            <HeroMarketingContent heading={heading} />
           </motion.div>
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 22 }}
@@ -193,7 +126,7 @@ function HeroMobileLite() {
   );
 }
 
-function HeroDesktopParallax() {
+function HeroDesktopParallax({ heading }: { heading: ReactNode }) {
   const { scrollYProgress } = useScroll();
 
   const bgScale = useTransform(scrollYProgress, (v) => {
@@ -232,7 +165,7 @@ function HeroDesktopParallax() {
             style={{ y: textY }}
             className="will-change-transform w-full max-w-2xl text-left lg:max-w-[min(100%,40rem)]"
           >
-            <HeroMarketingContent />
+            <HeroMarketingContent heading={heading} />
           </motion.div>
 
           <motion.div
@@ -247,7 +180,11 @@ function HeroDesktopParallax() {
   );
 }
 
-export function Hero() {
+export function Hero({ heading }: { heading: ReactNode }) {
   const { isMobile } = useMobileViewport();
-  return isMobile ? <HeroMobileLite /> : <HeroDesktopParallax />;
+  return isMobile ? (
+    <HeroMobileLite heading={heading} />
+  ) : (
+    <HeroDesktopParallax heading={heading} />
+  );
 }

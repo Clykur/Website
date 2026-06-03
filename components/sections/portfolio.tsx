@@ -21,8 +21,7 @@ const portfolioItems = [
   },
   {
     title: "Mobile App Interface",
-    description:
-      "Native-feeling UI from mockups gestures, motion, and polish.",
+    description: "Native-feeling UI from mockups gestures, motion, and polish.",
     category: "Mobile App Frontend",
   },
   {
@@ -39,14 +38,12 @@ const portfolioItems = [
   },
   {
     title: "E-Commerce Frontend",
-    description:
-      "Catalog, cart, checkout pixel fidelity under real traffic.",
+    description: "Catalog, cart, checkout pixel fidelity under real traffic.",
     category: "Website Frontend",
   },
   {
     title: "Dashboard Interface",
-    description:
-      "Data-dense views that stay legible on every screen size.",
+    description: "Data-dense views that stay legible on every screen size.",
     category: "Web App Frontend",
   },
 ] as const;
@@ -59,7 +56,7 @@ const archAccent = "rgba(255,59,31,0.45)";
 const archInkFill = (a: number) => `rgba(10,10,10,${a})`;
 
 /**
- * One diagram per tile — wireframe metaphors for that project type (stroke-only).
+ * One diagram per tile: wireframe metaphors for that project type (stroke-only).
  */
 function PortfolioArchitectureLines({ index }: { index: number }) {
   const common =
@@ -129,10 +126,41 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
                 strokeWidth="0.6"
                 strokeDasharray="3 3"
               />
-              <rect x="16" y="92" width="64" height="28" rx="1" stroke={archInk} strokeWidth="0.75" />
-              <rect x="88" y="92" width="64" height="28" rx="1" stroke={archInk} strokeWidth="0.75" />
-              <rect x="160" y="92" width="64" height="28" rx="1" stroke={archInk} strokeWidth="0.75" />
-              <line x1="120" y1="92" x2="120" y2="120" stroke={archInkFaint} strokeWidth="0.5" />
+              <rect
+                x="16"
+                y="92"
+                width="64"
+                height="28"
+                rx="1"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="88"
+                y="92"
+                width="64"
+                height="28"
+                rx="1"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="160"
+                y="92"
+                width="64"
+                height="28"
+                rx="1"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <line
+                x1="120"
+                y1="92"
+                x2="120"
+                y2="120"
+                stroke={archInkFaint}
+                strokeWidth="0.5"
+              />
             </>,
           )}
         </div>
@@ -161,10 +189,42 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
                 strokeWidth="2"
                 strokeLinecap="round"
               />
-              <rect x="82" y="34" width="76" height="8" rx="2" stroke={archAccent} strokeWidth="0.7" />
-              <rect x="82" y="48" width="76" height="22" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <rect x="82" y="76" width="76" height="22" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <rect x="82" y="104" width="76" height="18" rx="2" stroke={archInkFaint} strokeWidth="0.65" />
+              <rect
+                x="82"
+                y="34"
+                width="76"
+                height="8"
+                rx="2"
+                stroke={archAccent}
+                strokeWidth="0.7"
+              />
+              <rect
+                x="82"
+                y="48"
+                width="76"
+                height="22"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="82"
+                y="76"
+                width="76"
+                height="22"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="82"
+                y="104"
+                width="76"
+                height="18"
+                rx="2"
+                stroke={archInkFaint}
+                strokeWidth="0.65"
+              />
               <path
                 d="M 112 128 Q 120 132 128 128"
                 stroke={archInkFaint}
@@ -181,16 +241,86 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
         <div className={common}>
           {svg(
             <>
-              <rect x="12" y="16" width="44" height="108" rx="2" stroke={archInk} strokeWidth="0.8" />
-              <line x1="20" y1="28" x2="48" y2="28" stroke={archAccent} strokeWidth="0.7" />
-              <line x1="20" y1="40" x2="44" y2="40" stroke={archInkFaint} strokeWidth="0.55" />
-              <line x1="20" y1="50" x2="42" y2="50" stroke={archInkFaint} strokeWidth="0.55" />
-              <line x1="20" y1="60" x2="46" y2="60" stroke={archInkFaint} strokeWidth="0.55" />
-              <rect x="64" y="16" width="164" height="24" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <rect x="64" y="46" width="164" height="78" rx="2" stroke={archInk} strokeWidth="0.8" />
-              <circle cx="96" cy="86" r="5" stroke={archAccent} strokeWidth="0.75" />
-              <circle cx="132" cy="72" r="5" stroke={archInk} strokeWidth="0.75" />
-              <circle cx="168" cy="98" r="5" stroke={archInk} strokeWidth="0.75" />
+              <rect
+                x="12"
+                y="16"
+                width="44"
+                height="108"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.8"
+              />
+              <line
+                x1="20"
+                y1="28"
+                x2="48"
+                y2="28"
+                stroke={archAccent}
+                strokeWidth="0.7"
+              />
+              <line
+                x1="20"
+                y1="40"
+                x2="44"
+                y2="40"
+                stroke={archInkFaint}
+                strokeWidth="0.55"
+              />
+              <line
+                x1="20"
+                y1="50"
+                x2="42"
+                y2="50"
+                stroke={archInkFaint}
+                strokeWidth="0.55"
+              />
+              <line
+                x1="20"
+                y1="60"
+                x2="46"
+                y2="60"
+                stroke={archInkFaint}
+                strokeWidth="0.55"
+              />
+              <rect
+                x="64"
+                y="16"
+                width="164"
+                height="24"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="64"
+                y="46"
+                width="164"
+                height="78"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.8"
+              />
+              <circle
+                cx="96"
+                cy="86"
+                r="5"
+                stroke={archAccent}
+                strokeWidth="0.75"
+              />
+              <circle
+                cx="132"
+                cy="72"
+                r="5"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <circle
+                cx="168"
+                cy="98"
+                r="5"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
               <path
                 d="M 101 86 L 127 74 M 137 72 L 163 93"
                 stroke={archInkFaint}
@@ -212,15 +342,87 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
         <div className={common}>
           {svg(
             <>
-              <rect x="20" y="20" width="200" height="100" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <rect x="28" y="28" width="88" height="40" rx="1.5" stroke={archAccent} strokeWidth="0.8" />
-              <rect x="124" y="28" width="88" height="40" rx="1.5" stroke={archInk} strokeWidth="0.75" />
-              <rect x="28" y="76" width="40" height="36" rx="1" stroke={archInkFaint} strokeWidth="0.65" />
-              <rect x="76" y="76" width="40" height="36" rx="1" stroke={archInkFaint} strokeWidth="0.65" />
-              <rect x="124" y="76" width="40" height="36" rx="1" stroke={archInk} strokeWidth="0.7" />
-              <rect x="172" y="76" width="40" height="36" rx="1" stroke={archInk} strokeWidth="0.7" />
-              <line x1="68" y1="48" x2="124" y2="48" stroke={archInkFaint} strokeWidth="0.5" strokeDasharray="2 3" />
-              <line x1="48" y1="68" x2="48" y2="76" stroke={archAccent} strokeWidth="0.5" opacity="0.7" />
+              <rect
+                x="20"
+                y="20"
+                width="200"
+                height="100"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="28"
+                y="28"
+                width="88"
+                height="40"
+                rx="1.5"
+                stroke={archAccent}
+                strokeWidth="0.8"
+              />
+              <rect
+                x="124"
+                y="28"
+                width="88"
+                height="40"
+                rx="1.5"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="28"
+                y="76"
+                width="40"
+                height="36"
+                rx="1"
+                stroke={archInkFaint}
+                strokeWidth="0.65"
+              />
+              <rect
+                x="76"
+                y="76"
+                width="40"
+                height="36"
+                rx="1"
+                stroke={archInkFaint}
+                strokeWidth="0.65"
+              />
+              <rect
+                x="124"
+                y="76"
+                width="40"
+                height="36"
+                rx="1"
+                stroke={archInk}
+                strokeWidth="0.7"
+              />
+              <rect
+                x="172"
+                y="76"
+                width="40"
+                height="36"
+                rx="1"
+                stroke={archInk}
+                strokeWidth="0.7"
+              />
+              <line
+                x1="68"
+                y1="48"
+                x2="124"
+                y2="48"
+                stroke={archInkFaint}
+                strokeWidth="0.5"
+                strokeDasharray="2 3"
+              />
+              <line
+                x1="48"
+                y1="68"
+                x2="48"
+                y2="76"
+                stroke={archAccent}
+                strokeWidth="0.5"
+                opacity="0.7"
+              />
             </>,
           )}
         </div>
@@ -231,16 +433,89 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
         <div className={common}>
           {svg(
             <>
-              <rect x="16" y="18" width="92" height="72" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <rect x="116" y="18" width="92" height="72" rx="2" stroke={archInk} strokeWidth="0.75" />
-              <line x1="64" y1="18" x2="64" y2="90" stroke={archInkFaint} strokeWidth="0.5" />
-              <line x1="16" y1="54" x2="108" y2="54" stroke={archInkFaint} strokeWidth="0.5" />
-              <line x1="116" y1="54" x2="208" y2="54" stroke={archInkFaint} strokeWidth="0.5" />
-              <rect x="116" y="18" width="46" height="36" stroke={archAccent} strokeWidth="0.65" opacity="0.85" />
-              <rect x="16" y="100" width="208" height="22" rx="2" stroke={archAccent} strokeWidth="0.85" />
-              <line x1="28" y1="108" x2="100" y2="108" stroke={archInk} strokeWidth="0.6" />
-              <line x1="28" y1="114" x2="80" y2="114" stroke={archInkFaint} strokeWidth="0.55" />
-              <circle cx="208" cy="111" r="6" stroke={archInk} strokeWidth="0.7" />
+              <rect
+                x="16"
+                y="18"
+                width="92"
+                height="72"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="116"
+                y="18"
+                width="92"
+                height="72"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <line
+                x1="64"
+                y1="18"
+                x2="64"
+                y2="90"
+                stroke={archInkFaint}
+                strokeWidth="0.5"
+              />
+              <line
+                x1="16"
+                y1="54"
+                x2="108"
+                y2="54"
+                stroke={archInkFaint}
+                strokeWidth="0.5"
+              />
+              <line
+                x1="116"
+                y1="54"
+                x2="208"
+                y2="54"
+                stroke={archInkFaint}
+                strokeWidth="0.5"
+              />
+              <rect
+                x="116"
+                y="18"
+                width="46"
+                height="36"
+                stroke={archAccent}
+                strokeWidth="0.65"
+                opacity="0.85"
+              />
+              <rect
+                x="16"
+                y="100"
+                width="208"
+                height="22"
+                rx="2"
+                stroke={archAccent}
+                strokeWidth="0.85"
+              />
+              <line
+                x1="28"
+                y1="108"
+                x2="100"
+                y2="108"
+                stroke={archInk}
+                strokeWidth="0.6"
+              />
+              <line
+                x1="28"
+                y1="114"
+                x2="80"
+                y2="114"
+                stroke={archInkFaint}
+                strokeWidth="0.55"
+              />
+              <circle
+                cx="208"
+                cy="111"
+                r="6"
+                stroke={archInk}
+                strokeWidth="0.7"
+              />
             </>,
           )}
         </div>
@@ -251,15 +526,81 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
         <div className={common}>
           {svg(
             <>
-              <rect x="150" y="18" width="78" height="22" rx="2" stroke={archInk} strokeWidth="0.7" />
-              <rect x="150" y="46" width="78" height="22" rx="2" stroke={archInkFaint} strokeWidth="0.65" />
-              <line x1="24" y1="118" x2="212" y2="118" stroke={archInk} strokeWidth="0.8" />
-              <line x1="24" y1="32" x2="24" y2="118" stroke={archInk} strokeWidth="0.8" />
-              <rect x="40" y="92" width="14" height="26" stroke={archAccent} strokeWidth="0.75" />
-              <rect x="62" y="84" width="14" height="34" stroke={archInk} strokeWidth="0.75" />
-              <rect x="84" y="72" width="14" height="46" stroke={archAccent} strokeWidth="0.75" opacity="0.85" />
-              <rect x="106" y="88" width="14" height="30" stroke={archInk} strokeWidth="0.75" />
-              <rect x="128" y="96" width="14" height="22" stroke={archInkFaint} strokeWidth="0.65" />
+              <rect
+                x="150"
+                y="18"
+                width="78"
+                height="22"
+                rx="2"
+                stroke={archInk}
+                strokeWidth="0.7"
+              />
+              <rect
+                x="150"
+                y="46"
+                width="78"
+                height="22"
+                rx="2"
+                stroke={archInkFaint}
+                strokeWidth="0.65"
+              />
+              <line
+                x1="24"
+                y1="118"
+                x2="212"
+                y2="118"
+                stroke={archInk}
+                strokeWidth="0.8"
+              />
+              <line
+                x1="24"
+                y1="32"
+                x2="24"
+                y2="118"
+                stroke={archInk}
+                strokeWidth="0.8"
+              />
+              <rect
+                x="40"
+                y="92"
+                width="14"
+                height="26"
+                stroke={archAccent}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="62"
+                y="84"
+                width="14"
+                height="34"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="84"
+                y="72"
+                width="14"
+                height="46"
+                stroke={archAccent}
+                strokeWidth="0.75"
+                opacity="0.85"
+              />
+              <rect
+                x="106"
+                y="88"
+                width="14"
+                height="30"
+                stroke={archInk}
+                strokeWidth="0.75"
+              />
+              <rect
+                x="128"
+                y="96"
+                width="14"
+                height="22"
+                stroke={archInkFaint}
+                strokeWidth="0.65"
+              />
               <path
                 d="M 38 68 L 54 76 L 70 58 L 86 64 L 102 48 L 118 52"
                 stroke={archAccent}
@@ -276,7 +617,7 @@ function PortfolioArchitectureLines({ index }: { index: number }) {
   }
 }
 
-/** Abstract “preview” art — expands with the card; layers fill dead space. */
+/** Abstract “preview” art: expands with the card; layers fill dead space. */
 function PortfolioVisual({ index }: { index: number }) {
   const reduceMotion = useReducedMotion();
   const { liteMode } = usePerformanceMode();
@@ -334,18 +675,14 @@ function PortfolioVisual({ index }: { index: number }) {
         aria-hidden
       />
 
-      {/* Slow diagonal light sweep — fills perceived gaps */}
+      {/* Slow diagonal light sweep: fills perceived gaps */}
       <motion.div
         className="pointer-events-none absolute -inset-[40%] opacity-[0.55]"
         style={{
           background:
             "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.5) 48%, rgba(255,59,31,0.06) 52%, transparent 65%)",
         }}
-        animate={
-          staticAmbient
-            ? { x: "0%" }
-            : { x: ["-20%", "25%", "-20%"] }
-        }
+        animate={staticAmbient ? { x: "0%" } : { x: ["-20%", "25%", "-20%"] }}
         transition={{
           duration: sweepDur,
           repeat: Infinity,
@@ -378,10 +715,10 @@ function PortfolioVisual({ index }: { index: number }) {
         aria-hidden
       />
 
-      {/* Themed line architecture — one diagram per project type */}
+      {/* Themed line architecture: one diagram per project type */}
       <PortfolioArchitectureLines index={index} />
 
-      {/* Faint arc — decorative, reads “designed” even in tall cells */}
+      {/* Faint arc: decorative, reads “designed” even in tall cells */}
       <div
         className="absolute -right-[20%] bottom-0 h-[85%] w-[90%] rounded-tl-[100%] border border-foreground/[0.06] opacity-40"
         aria-hidden
@@ -457,32 +794,27 @@ function PortfolioCardContent({
   );
 }
 
-const PortfolioInteractiveCardLite = memo(function PortfolioInteractiveCardLite({
-  item,
-  index,
-  featured,
-  gridClassName,
-}: {
-  item: Item;
-  index: number;
-  featured?: boolean;
-  gridClassName?: string;
-}) {
-  return (
-    <div className={cn("[perspective:1100px] h-full min-h-0", gridClassName)}>
-      <article
-        data-reveal-item
-        className={portfolioArticleClass(featured)}
-      >
-        <PortfolioCardContent
-          item={item}
-          index={index}
-          featured={featured}
-        />
-      </article>
-    </div>
-  );
-});
+const PortfolioInteractiveCardLite = memo(
+  function PortfolioInteractiveCardLite({
+    item,
+    index,
+    featured,
+    gridClassName,
+  }: {
+    item: Item;
+    index: number;
+    featured?: boolean;
+    gridClassName?: string;
+  }) {
+    return (
+      <div className={cn("[perspective:1100px] h-full min-h-0", gridClassName)}>
+        <article data-reveal-item className={portfolioArticleClass(featured)}>
+          <PortfolioCardContent item={item} index={index} featured={featured} />
+        </article>
+      </div>
+    );
+  },
+);
 
 const PortfolioInteractiveCardDesktop = memo(
   function PortfolioInteractiveCardDesktop({
@@ -549,25 +881,19 @@ const PortfolioInteractiveCardDesktop = memo(
             style={reduceMotion ? undefined : { background: spotlight }}
             aria-hidden
           />
-          <PortfolioCardContent
-            item={item}
-            index={index}
-            featured={featured}
-          />
+          <PortfolioCardContent item={item} index={index} featured={featured} />
         </motion.article>
       </div>
     );
   },
 );
 
-const PortfolioInteractiveCard = memo(function PortfolioInteractiveCard(
-  props: {
-    item: Item;
-    index: number;
-    featured?: boolean;
-    gridClassName?: string;
-  },
-) {
+const PortfolioInteractiveCard = memo(function PortfolioInteractiveCard(props: {
+  item: Item;
+  index: number;
+  featured?: boolean;
+  gridClassName?: string;
+}) {
   const { liteMode } = usePerformanceMode();
   if (liteMode) {
     return <PortfolioInteractiveCardLite {...props} />;
@@ -621,8 +947,8 @@ export function Portfolio() {
               </h2>
               <p className="mt-5 max-w-xl text-[15px] leading-[1.75] text-foreground/48 md:text-base">
                 Motion, light, and depth do the heavy lifting. You get the feel
-                of our craft first. Copy stays tight because the work speaks
-                for itself.
+                of our craft first. Copy stays tight because the work speaks for
+                itself.
               </p>
             </div>
             <div className="shrink-0 border border-foreground/[0.08] bg-white/60 px-5 py-4 shadow-[0_20px_40px_-28px_rgba(10,10,10,0.1)] backdrop-blur-sm lg:max-w-sm">

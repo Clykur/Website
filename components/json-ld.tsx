@@ -1,18 +1,6 @@
+import { organizationSchema } from "@/lib/seo/schemas";
 import { SITE_URL, SITE_NAME } from "@/lib/site-config";
 import { PRODUCTS } from "@/lib/products";
-
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
-  url: SITE_URL,
-  description:
-    "Clykur builds software products that power modern businesses and partners with companies to deliver high-quality engineering solutions.",
-  sameAs: [
-    "https://github.com/chinnuk0521",
-    "https://linkedin.com/in/chandu-kalluru",
-  ],
-};
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -50,13 +38,14 @@ function productToSoftwareApplication(product: {
 
 export function JsonLd() {
   const productSchemas = PRODUCTS.map((p) => productToSoftwareApplication(p));
+  const org = organizationSchema();
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
+          __html: JSON.stringify(org),
         }}
       />
       <script

@@ -7,7 +7,7 @@ export async function uploadResume(
   filename: string,
   contentType: string,
   roleSlug: string,
-  applicationId: string
+  applicationId: string,
 ): Promise<{ path?: string; error?: string }> {
   try {
     const supabase = createServerSupabaseClient();
@@ -35,22 +35,22 @@ export async function uploadResume(
 }
 
 export async function getResumeSignedUrl(path: string): Promise<string | null> {
-    try {
-        const supabase = createServerSupabaseClient();
-        const { data, error } = await supabase.storage
-            .from(RESUMES_BUCKET)
-            .createSignedUrl(path, 60 * 60 * 24 * 7); // 7 days
+  try {
+    const supabase = createServerSupabaseClient();
+    const { data, error } = await supabase.storage
+      .from(RESUMES_BUCKET)
+      .createSignedUrl(path, 60 * 60 * 24 * 7); // 7 days
 
-        if (error || !data) {
-            console.error("Failed to generate signed URL:", error);
-            return null;
-        }
-
-        return data.signedUrl;
-    } catch(err) {
-        console.error("Unexpected error generating signed URL:", err);
-        return null;
+    if (error || !data) {
+      console.error("Failed to generate signed URL:", error);
+      return null;
     }
+
+    return data.signedUrl;
+  } catch (err) {
+    console.error("Unexpected error generating signed URL:", err);
+    return null;
+  }
 }
 
 function getExtension(name: string): string {

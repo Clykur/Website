@@ -42,7 +42,10 @@ export function About() {
       className="clykur-story-section relative overflow-hidden border-t border-foreground/[0.05]"
       aria-labelledby="about-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-white" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-white"
+        aria-hidden
+      />
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_-20%,rgba(255,59,31,0.045),transparent_55%)]"
         aria-hidden
@@ -63,11 +66,11 @@ export function About() {
             id="about-heading"
             className="font-poppins text-[clamp(2rem,4.5vw,3.25rem)] font-medium leading-[1.06] tracking-[-0.03em] text-foreground"
           >
-            Why Clykur
+            Why clients choose Clykur
           </h2>
         </header>
 
-        {/* Single panel — pillars read as one system */}
+        {/* Single panel: pillars read as one system */}
         <div
           data-reveal-item
           className="mb-16 overflow-hidden rounded-2xl border border-foreground/[0.08] bg-white/90 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_20px_48px_-36px_rgba(10,10,10,0.07)] md:mb-20"
@@ -87,7 +90,10 @@ export function About() {
                   aria-hidden
                 />
                 <div
-                  className={cn("min-w-0", index === 4 && "max-w-3xl md:mx-auto")}
+                  className={cn(
+                    "min-w-0",
+                    index === 4 && "max-w-3xl md:mx-auto",
+                  )}
                 >
                   <h3 className="font-poppins text-base font-medium leading-snug tracking-[-0.02em] text-foreground md:text-[17px]">
                     {title}
@@ -101,7 +107,7 @@ export function About() {
           </div>
         </div>
 
-        {/* Story — calm band, no full-bleed break */}
+        {/* Story: calm band, no full-bleed break */}
         <div
           data-reveal-item
           className="rounded-2xl border border-foreground/[0.06] bg-gradient-to-b from-[#fafaf9] to-[#f5f5f4]/80 px-6 py-10 md:px-10 md:py-12 lg:px-12"
@@ -114,16 +120,16 @@ export function About() {
           </h3>
           <div className="mt-8 w-full space-y-6 text-justify text-[15px] leading-[1.75] text-foreground/55 md:text-base">
             <p>
-              Clykur exists to ship software that matters products that solve real
-              problems and partnerships that hit dates, specs, and quality bars
-              without excuses. Craft, clarity, and measurable impact are the
-              standard, not talking points.
+              Clykur exists to ship software that matters products that solve
+              real problems and partnerships that hit dates, specs, and quality
+              bars without excuses. Craft, clarity, and measurable impact are
+              the standard, not talking points.
             </p>
             <p>
               Cusown and FreeTrust are not demos on a slide: we build them to
               compete in-market and to hold ourselves to the same rigor we bring
-              to client work. Alongside that, we partner with companies to deliver
-              production-grade systems one playbook: strong engineering,
+              to client work. Alongside that, we partner with companies to
+              deliver production-grade systems one playbook: strong engineering,
               product-led judgment, and execution you can build a roadmap on.
             </p>
           </div>
