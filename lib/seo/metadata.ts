@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site-config";
-import type { SeoLandingPage } from "@/lib/seo/types";
+
+const TWITTER_SITE = "@Clykur";
 
 export function buildPageMetadata(input: {
   title: string;
@@ -10,14 +11,25 @@ export function buildPageMetadata(input: {
   noIndex?: boolean;
 }): Metadata {
   const canonical = `${SITE_URL}${input.path}`;
+
   return {
     title: input.title,
     description: input.description,
     keywords: input.keywords?.join(", "),
     alternates: { canonical },
     robots: input.noIndex
-      ? { index: false, follow: false }
-      : { index: true, follow: true },
+      ? { index: false, follow: false, nocache: true }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -36,6 +48,7 @@ export function buildPageMetadata(input: {
     },
     twitter: {
       card: "summary_large_image",
+      site: TWITTER_SITE,
       title: input.title,
       description: input.description,
       images: [DEFAULT_OG_IMAGE],
@@ -43,7 +56,12 @@ export function buildPageMetadata(input: {
   };
 }
 
-export function landingMetadata(page: SeoLandingPage): Metadata {
+export function landingMetadata(page: {
+  title: string;
+  description: string;
+  path: string;
+  keywords?: string[];
+}): Metadata {
   return buildPageMetadata({
     title: page.title,
     description: page.description,

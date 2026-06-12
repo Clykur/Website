@@ -70,6 +70,8 @@ export default async function JobPage({ params }: PageProps) {
           titleId="job-page-heading"
           title={role.title}
           eyebrow={role.industry}
+          contentWidth="wide"
+          showSectionDivider={false}
           breadcrumbs={[
             { label: "Home", href: "/" },
             { label: "Careers", href: "/careers" },
@@ -101,7 +103,7 @@ export default async function JobPage({ params }: PageProps) {
         />
 
         <StoryPageMain as="article" width="default" className="!pt-0">
-          <div className="mx-auto max-w-3xl space-y-8 md:space-y-10">
+          <div className="flex w-full min-w-0 flex-col gap-12 md:gap-14 lg:gap-16">
             <CareerSectionCard
               id="job-description"
               title="Job description"

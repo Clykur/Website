@@ -190,18 +190,6 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
   const [state, formAction] = useActionState(submitApplication, INITIAL_STATE);
   const [alreadyApplied, setAlreadyApplied] = useState(false);
   const [submitAgain, setSubmitAgain] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  useEffect(() => {
-    if (state?.success) {
-      setSubmitted(true);
-
-      try {
-        localStorage.setItem(getStorageKey(roleSlug), "true");
-      } catch {
-        // ignore
-      }
-    }
-  }, [state?.success, roleSlug]);
 
   useEffect(() => {
     if (state?.success) {
@@ -213,7 +201,8 @@ export function ApplicationForm({ roleSlug, roleTitle }: ApplicationFormProps) {
     }
   }, [state?.success, roleSlug]);
 
-  const showSuccess = !submitAgain && (submitted || alreadyApplied);
+  const showSuccess =
+    !submitAgain && (Boolean(state?.success) || alreadyApplied);
   const handleSubmitAnother = () => {
     try {
       localStorage.removeItem(getStorageKey(roleSlug));

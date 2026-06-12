@@ -8,12 +8,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import type Lenis from "lenis";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -42,11 +38,19 @@ export function SmoothScroll({ children }: { children?: ReactNode }) {
       const loadToken = loadTokenRef.current;
 
       if (mq.matches) {
-        ScrollTrigger.refresh();
+        void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+          ScrollTrigger.refresh();
+        });
         return;
       }
 
       void (async () => {
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+          import("gsap"),
+          import("gsap/ScrollTrigger"),
+        ]);
+        gsap.registerPlugin(ScrollTrigger);
+
         await import("lenis/dist/lenis.css");
         const { default: LenisCtor } = await import("lenis");
         if (cancelled || mq.matches || loadToken !== loadTokenRef.current)

@@ -3,7 +3,7 @@ import { createClient } from "@/lib/db/supabase";
 import { sendEmail } from "@/lib/email/resend";
 import { EmailSchema } from "@/lib/types/email";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const supabase = createClient();
 

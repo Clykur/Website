@@ -1,4 +1,5 @@
 import { HubPageView } from "@/components/seo/hub-page";
+import { FoundingTeamSection } from "@/components/about/founding-team-section";
 import { ABOUT_HUB } from "@/lib/seo/hubs";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -9,5 +10,9 @@ export const metadata = buildPageMetadata({
 });
 
 export default function AboutPage() {
-  return <HubPageView page={ABOUT_HUB} />;
+  return (
+    <HubPageView page={ABOUT_HUB}>
+      <FoundingTeamSection />
+    </HubPageView>
+  );
 }

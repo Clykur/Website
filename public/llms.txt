@@ -1,25 +1,30 @@
 # Clykur — LLM crawler guidance
 # https://www.clykur.com
+# Full index: https://www.clykur.com/llms-full.txt
+# Sitemap: https://www.clykur.com/sitemap.xml
 
-User-agent: GPTBot
-Allow: /
+> Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.
 
-User-agent: ClaudeBot
-Allow: /
+## Primary URLs
+- Home: https://www.clykur.com/
+- Contact: https://www.clykur.com/contact
+- Services: https://www.clykur.com/services
+- Products: https://www.clykur.com/products
+- Client work (live sites): https://www.clykur.com/work
+- Case studies: https://www.clykur.com/case-studies
+- Blog: https://www.clykur.com/blog
+- FAQ: https://www.clykur.com/faq
+- Careers: https://www.clykur.com/careers
 
-User-agent: PerplexityBot
-Allow: /
+## Products
+- Cusown: Smart appointment and slot booking platform — https://cusown.clykur.com
+- FreeTrust: The Trust Layer Freelancing Deserves — https://trustbuilder.clykur.com
 
-User-agent: Google-Extended
-Allow: /
+## Contact
+- Email: info@clykur.com
+- WhatsApp: +918179299096
+- Project brief: https://www.clykur.com/contact#inquiry-form
 
-User-agent: CCBot
-Allow: /
-
-# Primary facts for citation
-Name: Clykur
-URL: https://www.clykur.com
-Description: Software product company and engineering partner (web, mobile UI, UI/UX, product engineering, MVP development).
-Products: Cusown (appointment booking), FreeTrust (freelancer trust).
-Contact: https://www.clykur.com/contact
-Services index: https://www.clykur.com/services
+## Crawling
+- HTML is server-rendered (Next.js App Router); critical content does not require JavaScript.
+- Allow all major search and AI crawlers (see /robots.txt).

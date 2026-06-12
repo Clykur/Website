@@ -1,7 +1,5 @@
 import type { RagConfidenceBand } from "@/lib/ai/rag-retrieval";
-import {
-  getChatCanonicalFactsBlock,
-} from "@/lib/ai/chat-grounding";
+import { getChatCanonicalFactsBlock } from "@/lib/ai/chat-grounding";
 import { getClykurAboutSummaryHint } from "@/lib/ai/chat-identity";
 
 const DEFAULT_LINKS = ["/about", "/services", "/products", "/contact"];
@@ -16,7 +14,7 @@ export function buildSystemPrompt(input: {
   const linkBlock = links.map((u) => `- ${u}`).join("\n");
 
   const contextBlock = input.contextStr.trim()
-    ? `CONTEXT (primary source — answer from this only; do not mix unrelated pages):\n${input.contextStr}`
+    ? `CONTEXT (primary source, answer from this only; do not mix unrelated pages):\n${input.contextStr}`
     : `CONTEXT: (none retrieved)\n${getClykurAboutSummaryHint()}`;
 
   const confidenceHint =

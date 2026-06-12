@@ -8,6 +8,14 @@ import {
   isClykurSocialQuestion,
 } from "@/lib/ai/chat-grounding";
 import {
+  getBlogListCanonicalResponse,
+  getDiscoveryCallCanonicalResponse,
+  getLeadershipCanonicalResponse,
+  isBlogListQuestion,
+  isDiscoveryCallQuestion,
+  isLeadershipQuestion,
+} from "@/lib/ai/chat-canonical-site";
+import {
   getIdentityCanonicalResponse,
   isClykurIdentityQuestion,
 } from "@/lib/ai/chat-identity";
@@ -56,6 +64,33 @@ export function resolveChatTurn(message: string): ChatTurnResult | null {
       mode: "canonical",
       text: social.text,
       extras: social.extras,
+    };
+  }
+
+  if (isBlogListQuestion(trimmed)) {
+    const blog = getBlogListCanonicalResponse();
+    return {
+      mode: "canonical",
+      text: blog.text,
+      extras: blog.extras,
+    };
+  }
+
+  if (isLeadershipQuestion(trimmed)) {
+    const leaders = getLeadershipCanonicalResponse();
+    return {
+      mode: "canonical",
+      text: leaders.text,
+      extras: leaders.extras,
+    };
+  }
+
+  if (isDiscoveryCallQuestion(trimmed)) {
+    const call = getDiscoveryCallCanonicalResponse();
+    return {
+      mode: "canonical",
+      text: call.text,
+      extras: call.extras,
     };
   }
 

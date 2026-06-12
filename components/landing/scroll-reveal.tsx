@@ -1,15 +1,11 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   MOBILE_VIEWPORT_MQ,
   ULTRA_SMALL_VIEWPORT_MQ,
 } from "@/hooks/use-performance-mode";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const MOBILE_MAX_REVEAL_ITEMS = 8;
 
@@ -24,6 +20,9 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
   useLayoutEffect(() => {
     const element = ref.current;
     if (!element) return;
+
+    let cancelled = false;
+    let ctxRevert: (() => void) | undefined;
 
     const all = Array.from(element.querySelectorAll("[data-reveal-item]"));
     const mobile = window.matchMedia(MOBILE_VIEWPORT_MQ).matches;
@@ -55,43 +54,57 @@ export function ScrollReveal({ children, className }: ScrollRevealProps) {
         ? all.slice(0, MOBILE_MAX_REVEAL_ITEMS)
         : all;
 
-    const ctx = gsap.context(() => {
-      childrenToAnimate.forEach((child: Element) => {
-        const rect = child.getBoundingClientRect();
-        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+    void (async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled || !ref.current) return;
+      gsap.registerPlugin(ScrollTrigger);
 
-        gsap.set(
-          child,
-          isInViewport
-            ? { opacity: 1, y: 0, scale: 1 }
-            : mobile
-              ? { y: 22, opacity: 1 }
-              : { y: 40, opacity: 1, scale: 0.95 },
-        );
-      });
+      const ctx = gsap.context(() => {
+        childrenToAnimate.forEach((child: Element) => {
+          const rect = child.getBoundingClientRect();
+          const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
-      gsap.to(childrenToAnimate, {
-        y: 0,
-        ...(!mobile ? { scale: 1 } : {}),
-        ease: "power2.out",
-        duration: mobile ? 0.55 : 0.9,
-        stagger: mobile ? 0.06 : 0.14,
-        scrollTrigger: mobile
-          ? {
-              trigger: element,
-              start: "top 90%",
-              once: true,
-            }
-          : {
-              trigger: element,
-              start: "top 82%",
-              end: "bottom 20%",
-              scrub: 0.8,
-            },
-      });
-    }, element);
+          gsap.set(
+            child,
+            isInViewport
+              ? { opacity: 1, y: 0, scale: 1 }
+              : mobile
+                ? { y: 22, opacity: 1 }
+                : { y: 40, opacity: 1, scale: 0.95 },
+          );
+        });
 
-    return () => ctx.revert();
+        gsap.to(childrenToAnimate, {
+          y: 0,
+          ...(!mobile ? { scale: 1 } : {}),
+          ease: "power2.out",
+          duration: mobile ? 0.55 : 0.9,
+          stagger: mobile ? 0.06 : 0.14,
+          scrollTrigger: mobile
+            ? {
+                trigger: element,
+                start: "top 90%",
+                once: true,
+              }
+            : {
+                trigger: element,
+                start: "top 82%",
+                end: "bottom 20%",
+                scrub: 0.8,
+              },
+        });
+      }, element);
+
+      ctxRevert = () => ctx.revert();
+    })();
+
+    return () => {
+      cancelled = true;
+      ctxRevert?.();
+    };
   }, []);
 
   return (

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X, type LucideIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,8 +15,6 @@ import {
   type NavItem,
 } from "@/lib/site-navigation";
 import { cn } from "@/lib/utils";
-
-const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
 const PAGE_SECTION_ORDER = [
   "products",
@@ -228,6 +227,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const navActiveSection = pathname === "/" ? activeSection : "";
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpenGroup, setMobileOpenGroup] = useState<string | null>(null);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
@@ -277,10 +277,7 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    if (pathname !== "/") {
-      setActiveSection("");
-      return;
-    }
+    if (pathname !== "/") return;
 
     const NAV_OFFSET = 140;
 
@@ -349,13 +346,13 @@ export function Navigation() {
             className="relative z-[102] flex shrink-0 items-center"
             aria-label="Clykur home"
           >
-            <img
+            <Image
               src="/Clykur Logo.svg"
               alt="Clykur"
               width={176}
               height={176}
               className="h-36 w-auto md:h-44"
-              fetchPriority="high"
+              priority
             />
           </Link>
 
@@ -376,7 +373,7 @@ export function Navigation() {
                         icon: Menu,
                       },
                       pathname,
-                      activeSection,
+                      navActiveSection,
                     );
 
                     return (
@@ -408,7 +405,7 @@ export function Navigation() {
 
                   const groupActive = groupContainsActive(
                     block,
-                    activeSection,
+                    navActiveSection,
                     pathname ?? "",
                   );
                   return (
@@ -471,7 +468,7 @@ export function Navigation() {
                     >
                       <NavProcessSheet
                         group={openNavGroup}
-                        activeSection={activeSection}
+                        activeSection={navActiveSection}
                         pathname={pathname ?? ""}
                         onPick={() => setOpenDropdown(null)}
                       />
@@ -483,16 +480,6 @@ export function Navigation() {
           </div>
 
           <div className="relative z-[102] ml-auto flex shrink-0 items-center gap-2">
-            {calendlyUrl ? (
-              <a
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden min-h-[40px] items-center justify-center rounded-xl border border-foreground/15 px-3 py-2 text-[11px] font-semibold tracking-[-0.01em] text-foreground/72 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/25 xl:inline-flex xl:px-4 xl:text-[12px]"
-              >
-                Book discovery call
-              </a>
-            ) : null}
             <Link
               href="/contact"
               className={cn(
@@ -585,7 +572,7 @@ export function Navigation() {
                   const expanded = mobileOpenGroup === block.id;
                   const groupActive = groupContainsActive(
                     block,
-                    activeSection,
+                    navActiveSection,
                     pathname ?? "",
                   );
 
@@ -640,7 +627,7 @@ export function Navigation() {
                                 const itemActive = isNavItemActive(
                                   item,
                                   pathname ?? "",
-                                  activeSection,
+                                  navActiveSection,
                                 );
                                 return (
                                   <Link
@@ -679,25 +666,13 @@ export function Navigation() {
                 >
                   Start a project
                 </Link>
-                {calendlyUrl ? (
-                  <a
-                    href={calendlyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex min-h-[44px] w-full items-center justify-center rounded-xl border border-foreground/15 text-[13px] font-semibold text-foreground/75"
-                  >
-                    Book discovery call
-                  </a>
-                ) : (
-                  <Link
-                    href="/contact"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex min-h-[44px] w-full items-center justify-center rounded-xl border border-foreground/15 text-[13px] font-semibold text-foreground/75"
-                  >
-                    Contact us
-                  </Link>
-                )}
+                <Link
+                  href="/contact#inquiry-form"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex min-h-[44px] w-full items-center justify-center rounded-xl border border-foreground/15 text-[13px] font-semibold text-foreground/75"
+                >
+                  Project brief form
+                </Link>
               </div>
             </motion.div>
           </>

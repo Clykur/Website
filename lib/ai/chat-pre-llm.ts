@@ -58,7 +58,7 @@ export function resolvePreLlmTurn(message: string): PreLlmTurn | null {
     return {
       mode: "canonical",
       text: sanitizeAssistantCopy(
-        `Good to meet you. I am the Clykur Assistant — ask about our **services**, **products** (Cusown, FreeTrust), **case studies**, or [starting a project](/contact).`,
+        `Good to meet you. I am the Clykur Assistant. Ask about our **services**, **products** (Cusown, FreeTrust), **case studies**, or [starting a project](/contact).`,
       ),
       extras: getDefaultAssistantExtras(),
     };
@@ -68,7 +68,7 @@ export function resolvePreLlmTurn(message: string): PreLlmTurn | null {
     return {
       mode: "canonical",
       text: sanitizeAssistantCopy(
-        `I appreciate the chat — I am here for Clykur questions only. Try **What services do you offer?** or [Contact](/contact) to talk with our team.`,
+        `I appreciate the chat. I am here for Clykur questions only. Try **What services do you offer?** or [Contact](/contact) to talk with our team.`,
       ),
       extras: getDefaultAssistantExtras(),
     };
@@ -85,7 +85,7 @@ export function resolvePreLlmTurn(message: string): PreLlmTurn | null {
   return null;
 }
 
-/** Always synthesize with LLM — never dump raw chunks (low confidence included). */
+/** Always synthesize with LLM, never dump raw chunks (low confidence included). */
 export function shouldUseLlmAfterRag(
   message: string,
   rag: RagRetrievalResult,

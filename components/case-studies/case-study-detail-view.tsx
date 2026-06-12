@@ -5,7 +5,6 @@ import {
   StoryPageBackdrop,
   StoryPageHero,
   StoryPageMain,
-  storySectionH2Class,
 } from "@/components/layout/story-page-shell";
 import { LandingHeroCta } from "@/components/seo/landing-hero-cta";
 import { SeoCta } from "@/components/seo/seo-cta";
@@ -16,9 +15,6 @@ import {
   type CaseStudy,
 } from "@/lib/case-studies";
 import { primaryGradientCtaClassName } from "@/lib/cta-styles";
-import { cn } from "@/lib/utils";
-
-const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
 type CaseStudyDetailViewProps = {
   study: CaseStudy;
@@ -27,26 +23,18 @@ type CaseStudyDetailViewProps = {
 function MidConversionBlock() {
   return (
     <div className="flex flex-wrap gap-3">
-      <Link href="/contact" className={primaryGradientCtaClassName}>
+      <Link
+        href="/contact#inquiry-form"
+        className={primaryGradientCtaClassName}
+      >
         Start a project
       </Link>
-      {calendlyUrl ? (
-        <a
-          href={calendlyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold tracking-[-0.01em] text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
-        >
-          Book discovery call
-        </a>
-      ) : (
-        <Link
-          href="/contact"
-          className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold text-foreground/75"
-        >
-          Contact us
-        </Link>
-      )}
+      <Link
+        href="/case-studies"
+        className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
+      >
+        More case studies
+      </Link>
     </div>
   );
 }

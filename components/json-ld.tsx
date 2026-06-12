@@ -1,18 +1,28 @@
-import { organizationSchema } from "@/lib/seo/schemas";
+import {
+  organizationSchema,
+  ORGANIZATION_ID,
+  WEBSITE_ID,
+} from "@/lib/seo/schemas";
 import { SITE_URL, SITE_NAME } from "@/lib/site-config";
 import { PRODUCTS } from "@/lib/products";
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": WEBSITE_ID,
   name: SITE_NAME,
   url: SITE_URL,
   description:
     "Clykur builds scalable software products and offers engineering services for companies worldwide.",
-  publisher: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
+  publisher: { "@id": ORGANIZATION_ID },
+  inLanguage: "en",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/faq?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
   },
 };
 
@@ -28,11 +38,14 @@ function productToSoftwareApplication(product: {
     description: product.description,
     url: product.url,
     applicationCategory: "BusinessApplication",
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
+    operatingSystem: "Web",
+    offers: {
+      "@type": "Offer",
+      url: `${SITE_URL}/contact`,
+      availability: "https://schema.org/OnlineOnly",
+      description: "Commercial and enterprise pricing available on request.",
     },
+    publisher: { "@id": ORGANIZATION_ID },
   };
 }
 
@@ -40,29 +53,17 @@ export function JsonLd() {
   const productSchemas = PRODUCTS.map((p) => productToSoftwareApplication(p));
   const org = organizationSchema();
 
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [org, websiteSchema, ...productSchemas],
+  };
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(org),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteSchema),
-        }}
-      />
-      {productSchemas.map((schema, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema),
-          }}
-        />
-      ))}
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(graph),
+      }}
+    />
   );
 }

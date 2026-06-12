@@ -105,6 +105,21 @@ export const FAQ_HUB: HubPageContent = {
       question: "How do I contact Clykur?",
       answer: "Visit /contact for WhatsApp, email, and project inquiries.",
     },
+    {
+      question: "Who owns the code and IP?",
+      answer:
+        "Clients own deliverables per the statement of work. See /engagement-terms for IP and confidentiality.",
+    },
+    {
+      question: "How does Clykur quote projects?",
+      answer:
+        "Discovery, written milestones, and budget alignment. Use /contact with timeline and budget band fields.",
+    },
+    {
+      question: "Do you work with US and EU startups?",
+      answer:
+        "Yes. Remote-first delivery with overlap hours and English as the primary language.",
+    },
   ],
 };
 

@@ -18,6 +18,11 @@ export const CLYKUR_SOCIAL_LINKS: ClykurSocialLink[] = [
     href: "https://www.instagram.com/clykur",
   },
   {
+    id: "x",
+    label: "X",
+    href: "https://x.com/Clykur",
+  },
+  {
     id: "clutch",
     label: "Clutch",
     href: "https://clutch.co/profile/clykur",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   LegalSection,
   legalDividerClass,
@@ -147,8 +148,14 @@ export default function CompliancePage() {
             product, and regions involved.
           </p>
           <p className={legalPClass}>
-            See also our <a href="/security">Security</a> page for operational
-            security practices.
+            See also our{" "}
+            <Link
+              href="/security"
+              className="font-medium text-[#ff3b1f] hover:underline"
+            >
+              Security
+            </Link>{" "}
+            page for operational security practices.
           </p>
         </LegalSection>
 

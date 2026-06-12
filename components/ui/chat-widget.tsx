@@ -6,12 +6,14 @@ import {
   useEffect,
   useCallback,
   useLayoutEffect,
-  useMemo,
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useChat, type UIMessage } from "@ai-sdk/react";
-import { createClykurChatTransport } from "@/lib/ai/chat-client-transport";
+import {
+  clykurChatTransport,
+  setChatTurnstileToken,
+} from "@/lib/ai/chat-client-transport";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { motion, AnimatePresence } from "framer-motion";
@@ -107,15 +109,10 @@ export function ChatWidget() {
   const [openEnterVariant, setOpenEnterVariant] = useState<"manual" | "auto">(
     "manual",
   );
-  const turnstileTokenRef = useRef<string | null>(null);
-  const chatTransport = useMemo(
-    () => createClykurChatTransport({ turnstileTokenRef }),
-    [],
-  );
 
   const { messages, setMessages, sendMessage, status, error } = useChat({
     id: "clykur-chat",
-    transport: chatTransport,
+    transport: clykurChatTransport,
   });
 
   const isLoading = status === "submitted" || status === "streaming";
@@ -161,17 +158,20 @@ export function ChatWidget() {
   useEffect(() => {
     if (initDone.current) return;
     initDone.current = true;
-    setIsClient(true);
 
     const state = loadChatState();
-    if (hasPersistedChatState()) {
-      setMessages(state.messages as UIMessage[]);
-      setMetaByMessageId(state.metaByMessageId ?? {});
-    } else {
-      const seed = createWelcomeSeed();
-      setMessages(seed.messages);
-      setMetaByMessageId(seed.metaByMessageId);
-    }
+    const persisted = hasPersistedChatState();
+    queueMicrotask(() => {
+      setIsClient(true);
+      if (persisted) {
+        setMessages(state.messages as UIMessage[]);
+        setMetaByMessageId(state.metaByMessageId ?? {});
+      } else {
+        const seed = createWelcomeSeed();
+        setMessages(seed.messages);
+        setMetaByMessageId(seed.metaByMessageId);
+      }
+    });
   }, [setMessages]);
 
   useEffect(() => installChatAttentionUnlock(), []);
@@ -242,18 +242,20 @@ export function ChatWidget() {
         .reverse()
         .find((m) => m.role === "assistant");
       if (lastAssistant && !metaByMessageId[lastAssistant.id]) {
-        const lastUser = [...messages]
-          .reverse()
-          .find((m) => m.role === "user");
+        const lastUser = [...messages].reverse().find((m) => m.role === "user");
         const userQ = lastUser ? messageText(lastUser) : "";
         const assistantText = messageText(lastAssistant);
-        setMetaByMessageId((prev) => ({
-          ...prev,
-          [lastAssistant.id]: buildExtrasForTopic({
-            userQuestion: userQ,
-            assistantText,
-          }),
-        }));
+        const assistantId = lastAssistant.id;
+        const extras = buildExtrasForTopic({
+          userQuestion: userQ,
+          assistantText,
+        });
+        queueMicrotask(() => {
+          setMetaByMessageId((prev) => ({
+            ...prev,
+            [assistantId]: extras,
+          }));
+        });
       }
     }
     prevStatus.current = status;
@@ -556,7 +558,7 @@ export function ChatWidget() {
                       ? "You're sending messages quickly. Please wait a moment."
                       : error.message.includes("quota") ||
                           error.message.includes("429")
-                        ? "High demand right now — answers may come from our site index. Try again in a minute or use the links below."
+                        ? "High demand right now. Answers may come from our site index. Try again in a minute or use the links below."
                         : "Connection issue. Try again or visit our contact page."}
                     <button
                       type="button"
@@ -616,10 +618,10 @@ export function ChatWidget() {
                         siteKey={turnstileSiteKey}
                         options={{ size: "invisible" }}
                         onSuccess={(token) => {
-                          turnstileTokenRef.current = token;
+                          setChatTurnstileToken(token);
                         }}
                         onExpire={() => {
-                          turnstileTokenRef.current = null;
+                          setChatTurnstileToken(null);
                         }}
                       />
                     </div>

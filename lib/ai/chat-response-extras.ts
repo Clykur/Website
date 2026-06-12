@@ -15,7 +15,8 @@ export function buildExtrasForTopic(input: {
   const t = input.assistantText.toLowerCase();
   const paths = (input.sourcePages ?? []).map((p) => p.toLowerCase());
 
-  const mentions = (re: RegExp) => re.test(q) || re.test(t) || paths.some((p) => re.test(p));
+  const mentions = (re: RegExp) =>
+    re.test(q) || re.test(t) || paths.some((p) => re.test(p));
 
   if (mentions(/\b(service|mvp|web dev|mobile app|ui\/ux|engineering)\b/)) {
     return {

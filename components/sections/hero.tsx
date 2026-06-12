@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
   motion,
@@ -11,8 +10,7 @@ import {
 } from "framer-motion";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
 import { useMobileViewport } from "@/hooks/use-performance-mode";
-import { primaryGradientCtaClassName } from "@/lib/cta-styles";
-import { cn } from "@/lib/utils";
+import { DiscoveryCta } from "@/components/marketing/discovery-cta";
 
 const HeroVisual = dynamic(
   () => import("@/components/landing/hero-visual").then((m) => m.HeroVisual),
@@ -36,23 +34,7 @@ function HeroMarketingContent({ heading }: { heading: React.ReactNode }) {
         {heading}
       </div>
 
-      <div className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-start sm:gap-4">
-        <Link
-          href="/contact"
-          className={cn(
-            primaryGradientCtaClassName,
-            "w-full justify-center sm:w-fit",
-          )}
-        >
-          Start a project
-        </Link>
-        <Link
-          href="#services"
-          className="inline-flex w-full items-center justify-center rounded-xl border border-foreground/[0.11] bg-white/70 px-6 py-2.5 text-[13px] font-semibold tracking-[-0.01em] text-foreground/88 shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] backdrop-blur-sm transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/[0.18] hover:bg-white hover:text-foreground active:translate-y-0 sm:w-fit"
-        >
-          View services
-        </Link>
-      </div>
+      <DiscoveryCta className="mt-8 w-full max-w-md sm:mt-9" />
 
       <p
         data-reveal-item

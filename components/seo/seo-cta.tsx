@@ -1,8 +1,5 @@
-import Link from "next/link";
-import { primaryGradientCtaClassName } from "@/lib/cta-styles";
+import { DiscoveryCta } from "@/components/marketing/discovery-cta";
 import { cn } from "@/lib/utils";
-
-const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
 type SeoCtaProps = {
   className?: string;
@@ -30,36 +27,14 @@ export function SeoCta({
       </h2>
       <p className="mb-6 max-w-2xl text-[15px] leading-relaxed text-foreground/60 md:text-base">
         Tell us about your product, timeline, and team. We respond quickly with
-        a clear next step, usually a short discovery call and written scope.
+        a clear next step, usually a short call and written scope after we
+        review your brief.
       </p>
-      <div className="flex flex-wrap gap-3">
-        <Link href="/contact" className={primaryGradientCtaClassName}>
-          Start a project
-        </Link>
-        {calendlyUrl ? (
-          <a
-            href={calendlyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/25"
-          >
-            Book discovery call
-          </a>
-        ) : (
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-foreground/75 transition-colors hover:border-foreground/25 hover:text-foreground"
-          >
-            Request consultation
-          </Link>
-        )}
-        <Link
-          href="/services"
-          className="inline-flex min-h-[44px] items-center justify-center rounded-xl px-4 text-[13px] font-medium text-foreground/55 underline-offset-2 hover:text-[#ff3b1f] hover:underline"
-        >
-          View all services
-        </Link>
-      </div>
+      <DiscoveryCta
+        fullWidthMobile={false}
+        secondaryHref="/services"
+        secondaryLabel="View all services"
+      />
     </section>
   );
 }

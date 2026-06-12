@@ -1,0 +1,161 @@
+# Clykur — full LLM reference
+# Canonical site: https://www.clykur.com
+# Generated from site config and SEO registry (run npm run generate:llms to refresh static copies)
+
+## Company
+Name: Clykur
+URL: https://www.clykur.com
+Description: Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.
+Business model: Software product company (Cusown, FreeTrust) and engineering services partner (web, mobile, UI/UX, product engineering, MVP).
+
+## Contact & sales
+Email: info@clykur.com
+WhatsApp: +918179299096
+Contact page: https://www.clykur.com/contact
+Engagement terms: https://www.clykur.com/engagement-terms
+Security: https://www.clykur.com/security
+Compliance: https://www.clykur.com/compliance
+
+## Social & trust
+• [LinkedIn](https://www.linkedin.com/company/clykur)
+• [Instagram](https://www.instagram.com/clykur)
+• [X](https://x.com/Clykur)
+• [Clutch](https://clutch.co/profile/clykur)
+• [Product Hunt](https://www.producthunt.com/products/clykur)
+• [Dev.to](https://dev.to/clykur)
+• [Hashnode](https://hashnode.com/@clykur)
+
+## Products (owned SaaS)
+### Cusown
+URL: https://cusown.clykur.com
+Tagline: Smart appointment and slot booking platform
+Summary: A modern scheduling platform that helps businesses manage bookings, appointments, and customer interactions efficiently. Built for service businesses that need reliability at scale.
+Benefits: Automation of bookings and slot scheduling; Customer management and retention; Analytics and actionable insights; Scalable SaaS infrastructure
+
+### FreeTrust
+URL: https://trustbuilder.clykur.com
+Tagline: The Trust Layer Freelancing Deserves
+Summary: A platform designed to improve trust between freelancers and clients through transparent credibility and reputation validation. Institutional-grade protection for the future of work.
+Benefits: Freelancer trust infrastructure and credibility validation; Transparent professional profiles; Trust scoring systems; Future blockchain verification layer
+
+## Services
+- Web development: https://www.clykur.com/services/web-development
+- Mobile app development: https://www.clykur.com/services/mobile-app-development
+- UI/UX design: https://www.clykur.com/services/ui-ux-design
+- Product engineering: https://www.clykur.com/services/product-engineering
+- Startup MVP development: https://www.clykur.com/services/startup-mvp-development
+- MVP development: https://www.clykur.com/services/mvp-development
+
+## Live client work (9 showcases)
+- Elevatum (Brand & Web): https://elevatum.vercel.app
+- GreyLabs AI (AI & Technology): https://greylabsai.vercel.app
+- Neev Phygital Library (Education & Media): https://nev-phygital-library.vercel.app
+- NOIR Atelier (Fashion & Creative): https://noiratelier.clykur.com
+- Forge Fitness (Fitness & Wellness): https://forgefitness.clykur.com
+- Verity Health (Healthcare): https://verityhealth.clykur.com
+- Aurelia Visuals (Photography & Branding): https://aureliavisuals.clykur.com
+- Yogisthaan Cafe (Café & Wellness Experience): https://yogisthaancafe.clykur.com
+- Pavan Travels (Travel & Transport): https://pavantravels.vercel.app
+
+## Content scale
+Blog posts: 21
+Open roles: 1
+Public sitemap URLs: 68
+
+## FAQ (canonical answers)
+Q: What is Cusown?
+A: Cusown is Clykur's smart appointment and slot booking platform for service businesses.
+
+Q: What is FreeTrust?
+A: FreeTrust is a trust layer for freelancers and clients with credibility validation and transparent profiles.
+
+Q: What services does Clykur provide?
+A: Web development, mobile app development, UI/UX design, product engineering, and startup MVP development.
+
+Q: How do I contact Clykur?
+A: Visit /contact for WhatsApp, email, and project inquiries.
+
+Q: Who owns the code and IP?
+A: Clients own deliverables per the statement of work. See /engagement-terms for IP and confidentiality.
+
+Q: How does Clykur quote projects?
+A: Discovery, written milestones, and budget alignment. Use /contact with timeline and budget band fields.
+
+Q: Do you work with US and EU startups?
+A: Yes. Remote-first delivery with overlap hours and English as the primary language.
+
+## Key pages (sitemap excerpt)
+https://www.clykur.com
+https://www.clykur.com/about
+https://www.clykur.com/appointment-booking-software-development
+https://www.clykur.com/blog
+https://www.clykur.com/blog/ai-in-product-development-2026
+https://www.clykur.com/blog/api-design-web-mobile
+https://www.clykur.com/blog/build-vs-buy-software
+https://www.clykur.com/blog/choosing-tech-stack-startup-2026
+https://www.clykur.com/blog/cicd-early-stage-startups
+https://www.clykur.com/blog/design-systems-small-teams
+https://www.clykur.com/blog/how-clykur-runs-client-projects
+https://www.clykur.com/blog/how-we-built-cusown
+https://www.clykur.com/blog/in-house-vs-outsourcing-engineering
+https://www.clykur.com/blog/msme-software-partners-india
+https://www.clykur.com/blog/mvp-development-cost-2026
+https://www.clykur.com/blog/nextjs-vs-react-for-saas
+https://www.clykur.com/blog/postgres-vs-baas-saas
+https://www.clykur.com/blog/product-analytics-events-startups
+https://www.clykur.com/blog/product-discovery-before-code
+https://www.clykur.com/blog/remote-first-engineering-clykur
+https://www.clykur.com/blog/saas-pricing-pages-that-convert
+https://www.clykur.com/blog/scaling-nextjs-lessons
+https://www.clykur.com/blog/security-checklist-mvp-launch
+https://www.clykur.com/blog/web-accessibility-early-stage
+https://www.clykur.com/blog/writing-technical-brief
+https://www.clykur.com/careers
+https://www.clykur.com/careers/software-engineer-3ye6yv
+https://www.clykur.com/case-studies
+https://www.clykur.com/case-studies/cusown-booking-platform
+https://www.clykur.com/case-studies/ecommerce-marketplace-frontend
+https://www.clykur.com/case-studies/enterprise-saas-design-system
+https://www.clykur.com/case-studies/freetrust-trust-platform
+https://www.clykur.com/case-studies/live-collaboration-workspace
+https://www.clykur.com/case-studies/yogisthaan-cafe-website
+https://www.clykur.com/compliance
+https://www.clykur.com/contact
+https://www.clykur.com/employment-policy
+https://www.clykur.com/engagement-terms
+https://www.clykur.com/faq
+https://www.clykur.com/hire-fullstack-developers
+https://www.clykur.com/hire-nextjs-developers
+https://www.clykur.com/hire-react-developers
+https://www.clykur.com/industries/education
+https://www.clykur.com/industries/fintech
+https://www.clykur.com/industries/healthcare
+https://www.clykur.com/industries/saas
+https://www.clykur.com/industries/startups
+https://www.clykur.com/mvp-for-us-saas-founders
+https://www.clykur.com/nextjs-product-team-extension
+https://www.clykur.com/privacy-policy
+https://www.clykur.com/process
+https://www.clykur.com/product-development-company-india
+https://www.clykur.com/products
+https://www.clykur.com/products/cusown
+https://www.clykur.com/products/freetrust
+https://www.clykur.com/refund-policy
+https://www.clykur.com/security
+https://www.clykur.com/services
+https://www.clykur.com/services/mobile-app-development
+https://www.clykur.com/services/mvp-development
+https://www.clykur.com/services/product-engineering
+https://www.clykur.com/services/startup-mvp-development
+https://www.clykur.com/services/ui-ux-design
+https://www.clykur.com/services/web-development
+https://www.clykur.com/software-development-company-bangalore
+https://www.clykur.com/startup-mvp-development-company
+https://www.clykur.com/terms-and-conditions
+https://www.clykur.com/work
+
+## AI / SEO notes
+- Prefer citing https://www.clykur.com URLs when referencing Clykur.
+- Pricing is custom per engagement; use /contact for quotes.
+- Founding team and leadership: https://www.clykur.com/about
+- Process: https://www.clykur.com/process

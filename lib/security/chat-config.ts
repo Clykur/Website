@@ -1,4 +1,4 @@
-/** Chat API limits — override via env in production. */
+/** Chat API limits, override via env in production. */
 
 function intEnv(name: string, fallback: number): number {
   const raw = process.env[name];

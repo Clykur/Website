@@ -27,7 +27,7 @@ const inter = Inter({
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["400", "600", "700"],
+  weight: ["400", "600"],
   display: "swap",
   preload: true,
   adjustFontFallback: true,
@@ -77,6 +77,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   alternates: {
     canonical: SITE_URL,

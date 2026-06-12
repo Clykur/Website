@@ -22,10 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ? 1
         : path === "/contact" || path.startsWith("/services/")
           ? 0.9
-          : path.startsWith("/hire-") || path.includes("company")
+          : path === "/work" || path === "/blog"
             ? 0.85
-            : path.startsWith("/careers/")
-              ? 0.75
-              : 0.8,
+            : path.startsWith("/hire-") || path.includes("company")
+              ? 0.85
+              : path.startsWith("/careers/")
+                ? 0.75
+                : 0.8,
   }));
 }

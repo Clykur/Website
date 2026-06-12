@@ -874,6 +874,192 @@ const programmaticPages: SeoLandingPage[] = [
     relatedLinks: CORE_INTERNAL_LINKS,
     faqs: SHARED_SERVICE_FAQ,
   }),
+  buildLandingPage({
+    kind: "programmatic",
+    slug: "mvp-for-us-saas-founders",
+    path: "/mvp-for-us-saas-founders",
+    title: "MVP Development for US SaaS Founders",
+    description:
+      "Clykur helps US SaaS founders ship an MVP in 4-8 weeks with Next.js, clear milestones, and founder-led discovery.",
+    h1: "MVP development for US SaaS founders",
+    eyebrow: "For founders",
+    lede: "Remote-first product engineering with overlap for US time zones, phased delivery, and budget bands from low five figures USD for a focused vertical slice.",
+    keywords: [
+      "mvp development us startup",
+      "saas mvp development company",
+      "hire mvp developers",
+    ],
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      { label: "MVP for US SaaS founders", href: "/mvp-for-us-saas-founders" },
+    ],
+    topic: "US SaaS MVP delivery",
+    audience:
+      "Pre-seed and seed founders who need a credible product for pilots, design partners, or fundraising.",
+    deliverables: [
+      "Discovery workshop and written scope",
+      "4-8 week MVP milestone (typical)",
+      "Auth, core workflow, and admin basics",
+      "Analytics hooks and launch checklist",
+      "Handoff documentation",
+    ],
+    outcomes: [
+      "A demo-ready product story backed by production code, not slideware.",
+      "Typical focused MVPs are quoted after discovery; many founders budget low five figures USD for the first slice.",
+    ],
+    relatedLinks: [
+      {
+        href: "/services/startup-mvp-development",
+        label: "Startup MVP service",
+        description: "Full service detail.",
+      },
+      {
+        href: "/blog/mvp-development-cost-2026",
+        label: "MVP cost guide",
+        description: "What drives budget.",
+      },
+      {
+        href: "/case-studies/cusown-booking-platform",
+        label: "Cusown case study",
+        description: "Product we shipped.",
+      },
+      { href: "/contact", label: "Contact", description: "Book discovery." },
+    ],
+    faqs: SHARED_SERVICE_FAQ,
+    caseStudy: {
+      title: "Cusown booking platform",
+      challenge:
+        "Service businesses needed reliable scheduling without no-show chaos.",
+      approach:
+        "Mobile-first booking, reminders, and owner dashboards on Next.js.",
+      result:
+        "Live Clykur product validating scheduling UX before client rollouts.",
+      metric: "Live in market",
+    },
+  }),
+  buildLandingPage({
+    kind: "programmatic",
+    slug: "appointment-booking-software-development",
+    path: "/appointment-booking-software-development",
+    title: "Appointment Booking Software Development",
+    description:
+      "Custom appointment and scheduling software development. Clykur builds Cusown and partners on booking products.",
+    h1: "Appointment booking software development",
+    eyebrow: "Scheduling",
+    lede: "From salon and clinic workflows to B2B scheduling APIs, we ship booking systems with clear slot logic, notifications, and operator tools.",
+    keywords: [
+      "appointment booking software development",
+      "scheduling software company",
+      "custom booking platform",
+    ],
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      {
+        label: "Booking software development",
+        href: "/appointment-booking-software-development",
+      },
+    ],
+    topic: "Scheduling and booking products",
+    audience:
+      "Operators outgrowing spreadsheets, or startups building scheduling into their platform.",
+    deliverables: [
+      "Staff, service, and availability models",
+      "Customer booking flows and reminders",
+      "Admin and reporting surfaces",
+      "Payments or calendar integrations as needed",
+      "Performance and accessibility baseline",
+    ],
+    outcomes: [
+      "Fewer double bookings and manual reconciliation; professional customer experience on every device.",
+    ],
+    relatedLinks: [
+      {
+        href: "/products/cusown",
+        label: "Cusown product",
+        description: "Our booking platform.",
+      },
+      {
+        href: "/case-studies/cusown-booking-platform",
+        label: "Cusown case study",
+        description: "How we built it.",
+      },
+      {
+        href: "/blog/how-we-built-cusown",
+        label: "How we built Cusown",
+        description: "Product decisions.",
+      },
+      {
+        href: "/contact",
+        label: "Contact",
+        description: "Discuss your build.",
+      },
+    ],
+    faqs: SHARED_SERVICE_FAQ,
+    caseStudy: {
+      title: "Cusown appointment platform",
+      challenge: "No-shows and manual scheduling across channels.",
+      approach: "Focused booking UX with automation and analytics.",
+      result: "Production scheduling product operated by Clykur.",
+      metric: "Service businesses",
+    },
+  }),
+  buildLandingPage({
+    kind: "programmatic",
+    slug: "nextjs-product-team-extension",
+    path: "/nextjs-product-team-extension",
+    title: "Next.js Product Team Extension",
+    description:
+      "Extend your product team with Clykur Next.js engineers: App Router, SSR, design systems, and shipping discipline.",
+    h1: "Next.js product team extension",
+    eyebrow: "Team extension",
+    lede: "Add senior capacity without hiring lag. We embed in your rituals, ship feature slices, and document patterns your team keeps.",
+    keywords: [
+      "nextjs development team extension",
+      "react team augmentation",
+      "product engineering partner",
+    ],
+    breadcrumbs: [
+      { label: "Home", href: "/" },
+      {
+        label: "Next.js team extension",
+        href: "/nextjs-product-team-extension",
+      },
+    ],
+    topic: "Next.js team augmentation",
+    audience:
+      "SaaS teams with roadmap pressure and an existing React/Next.js codebase.",
+    deliverables: [
+      "Feature slices with PR review standards",
+      "App Router and RSC boundaries",
+      "Design system alignment",
+      "Performance and SEO fixes on critical routes",
+      "Knowledge transfer and docs",
+    ],
+    outcomes: [
+      "Faster shipping with fewer hydration and metadata regressions.",
+    ],
+    relatedLinks: [
+      {
+        href: "/hire-nextjs-developers",
+        label: "Hire Next.js developers",
+        description: "Hiring page.",
+      },
+      {
+        href: "/case-studies/enterprise-saas-design-system",
+        label: "Design system case study",
+        description: "Enterprise rollout.",
+      },
+      { href: "/contact", label: "Contact", description: "Add capacity." },
+    ],
+    faqs: SHARED_SERVICE_FAQ,
+    caseStudy: {
+      title: "Enterprise SaaS design system",
+      challenge: "Visual drift and slow UI delivery across squads.",
+      approach: "Token-backed components and phased migration.",
+      result: "Faster feature UI with consistent branding.",
+      metric: "~40% faster feature UI",
+    },
+  }),
 ];
 
 export const ALL_LANDING_PAGES: SeoLandingPage[] = [

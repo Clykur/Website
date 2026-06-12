@@ -6,6 +6,9 @@ import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@supabase/supabase-js";
 import { getAllSitemapPaths } from "../lib/seo/pages";
 import { getCanonicalAboutIngestContent } from "../lib/ai/chat-identity";
+import { getCanonicalSiteFactsIngestLines } from "../lib/ai/chat-canonical-site";
+import { getBlogIngestChunks } from "../lib/blog/blog-ingest-chunks";
+import { getBlogSlugs } from "../lib/blog/posts";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
@@ -37,8 +40,9 @@ const TARGET_CHARS_MIN = 1200;
 const TARGET_CHARS_MAX = 2000;
 const OVERLAP_RATIO = 0.1;
 const SCRAPE_CONCURRENCY = 3;
-const UPSERT_BATCH = 20;
-const EMBED_DELAY_MS = 150;
+const UPSERT_BATCH = 15;
+const EMBED_DELAY_MS = Number(process.env.INGEST_EMBED_DELAY_MS ?? 700);
+const EMBED_MAX_RETRIES = Number(process.env.INGEST_EMBED_MAX_RETRIES ?? 12);
 
 type PageType =
   | "homepage"
@@ -71,6 +75,21 @@ let failures = 0;
 
 async function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+function embedRetryDelayMs(err: unknown): number | null {
+  const raw = err instanceof Error ? err.message : String(err);
+  const retrySec = raw.match(/retry in (\d+(?:\.\d+)?)s/i);
+  if (retrySec) {
+    return Math.ceil(parseFloat(retrySec[1]) * 1000) + 1000;
+  }
+  if (/429|RESOURCE_EXHAUSTED|quota/i.test(raw)) {
+    return 55_000;
+  }
+  if (/503|UNAVAILABLE/i.test(raw)) {
+    return 8_000;
+  }
+  return null;
 }
 
 function hashContent(text: string): string {
@@ -401,11 +420,8 @@ async function scrapePage(url: string): Promise<DocumentChunk[]> {
   }
 }
 
-async function generateEmbedding(
-  text: string,
-  retries = 3,
-): Promise<number[] | null> {
-  for (let attempt = 1; attempt <= retries; attempt++) {
+async function generateEmbedding(text: string): Promise<number[] | null> {
+  for (let attempt = 1; attempt <= EMBED_MAX_RETRIES; attempt++) {
     try {
       const response = await ai.models.embedContent({
         model: EMBEDDING_MODEL,
@@ -415,11 +431,19 @@ async function generateEmbedding(
       const values = response.embeddings?.[0]?.values;
       if (values?.length) return values;
     } catch (err) {
+      const rateWait = embedRetryDelayMs(err);
+      if (rateWait != null && attempt < EMBED_MAX_RETRIES) {
+        console.warn(
+          `Embed rate limited (attempt ${attempt}/${EMBED_MAX_RETRIES}); waiting ${Math.round(rateWait / 1000)}s…`,
+        );
+        await sleep(rateWait);
+        continue;
+      }
       console.error(
         `Embed attempt ${attempt}:`,
-        err instanceof Error ? err.message : err,
+        err instanceof Error ? err.message.slice(0, 280) : err,
       );
-      await sleep(400 * attempt);
+      await sleep(800 * attempt);
     }
   }
   return null;
@@ -457,41 +481,70 @@ async function runPool<T, R>(
 async function ingest() {
   console.log("Starting full-site RAG ingestion...");
   console.log(`Base URL: ${BASE_URL}`);
+  console.log(
+    `Embed pacing: ${EMBED_DELAY_MS}ms between requests (set INGEST_EMBED_DELAY_MS to tune).`,
+  );
 
   const dimensions = await verifyEmbeddingModel();
   const urls = await discoverAllUrls();
   routesDiscovered = urls.length;
 
-  const allChunks: DocumentChunk[] = [];
+  let allChunks: DocumentChunk[] = [];
   const chunkLists = await runPool(urls, SCRAPE_CONCURRENCY, scrapePage);
   for (const list of chunkLists) {
     if (list.length > 0) pagesCrawled++;
     allChunks.push(...list);
   }
   chunksGenerated = allChunks.length;
-  console.log(`\n${chunksGenerated} chunks from ${pagesCrawled} pages.\n`);
+  console.log(
+    `\n${chunksGenerated} chunks from ${pagesCrawled} pages (before blog merge).\n`,
+  );
+
+  const blogPostUrls = new Set(
+    getBlogSlugs().map((slug) => `${BASE_URL}/blog/${slug}`),
+  );
+  allChunks = allChunks.filter((c) => !blogPostUrls.has(c.url));
+  const blogFromSource = getBlogIngestChunks(BASE_URL);
+  allChunks.push(...blogFromSource);
+  console.log(
+    `Merged ${blogFromSource.length} blog chunks from repo source (${blogPostUrls.size} posts; production scrape may 404 until deploy).`,
+  );
+
+  const byHash = new Map<string, DocumentChunk>();
+  for (const c of allChunks) {
+    byHash.set(c.content_hash, c);
+  }
+  allChunks = [...byHash.values()];
 
   const canonical = getCanonicalAboutIngestContent(BASE_URL);
+  const siteFacts = getCanonicalSiteFactsIngestLines().join("\n\n");
+  const canonicalContent = `${canonical.content}\n\n${siteFacts}`;
   allChunks.push({
     ...canonical,
+    content: canonicalContent,
     content_hash: hashContent(
-      `${canonical.url}|${canonical.section_title}|${canonical.content}`,
+      `${canonical.url}|${canonical.section_title}|${canonicalContent}`,
     ),
   });
   chunksGenerated = allChunks.length;
   console.log("Added canonical About Clykur chunk for identity retrieval.");
 
-  const { error: deleteError } = await supabase
+  const { error: deleteError, count: deletedCount } = await supabase
     .from("knowledge_chunks")
-    .delete()
+    .delete({ count: "exact" })
     .neq("id", "00000000-0000-0000-0000-000000000000");
 
   if (deleteError) {
-    console.warn(
-      "Could not clear old chunks (table may need migration):",
+    console.error(
+      "Could not clear knowledge_chunks before ingest:",
       deleteError.message,
     );
+    console.error(
+      "Run in Supabase SQL: DELETE FROM public.knowledge_chunks; then re-run ingest.",
+    );
+    process.exit(1);
   }
+  console.log(`Cleared ${deletedCount ?? 0} existing knowledge chunk(s).`);
 
   type Row = DocumentChunk & { embedding: number[] };
   const pending: Row[] = [];
@@ -499,22 +552,33 @@ async function ingest() {
   async function flushBatch() {
     if (pending.length === 0) return;
     const batch = pending.splice(0, pending.length);
-    const { error } = await supabase.from("knowledge_chunks").insert(
-      batch.map((c) => ({
-        url: c.url,
-        title: c.title,
-        section_title: c.section_title,
-        content: c.content,
-        page_type: c.page_type,
-        slug: c.slug,
-        priority_score: c.priority_score,
-        content_hash: c.content_hash,
-        embedding: c.embedding,
-      })),
-    );
+    const rows = batch.map((c) => ({
+      url: c.url,
+      title: c.title,
+      section_title: c.section_title,
+      content: c.content,
+      page_type: c.page_type,
+      slug: c.slug,
+      priority_score: c.priority_score,
+      content_hash: c.content_hash,
+      embedding: c.embedding,
+    }));
+
+    const { error } = await supabase.from("knowledge_chunks").insert(rows);
+
     if (error) {
       console.error("Batch insert error:", error.message);
-      failures += batch.length;
+      for (const row of rows) {
+        const { error: oneErr } = await supabase
+          .from("knowledge_chunks")
+          .insert(row);
+        if (oneErr) {
+          console.error("Row insert error:", oneErr.message);
+          failures++;
+        } else {
+          chunksInserted++;
+        }
+      }
     } else {
       chunksInserted += batch.length;
     }

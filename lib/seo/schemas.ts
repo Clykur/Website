@@ -14,11 +14,14 @@ import type {
 } from "@/lib/seo/types";
 
 const LOGO_URL = `${SITE_URL}/ClykurLogo.webp`;
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": ORGANIZATION_ID,
     name: SITE_NAME,
     legalName: LEGAL_ENTITY.legalName,
     url: SITE_URL,
