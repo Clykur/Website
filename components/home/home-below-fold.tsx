@@ -52,6 +52,13 @@ const Contact = dynamic(
     })),
   { ssr: false, loading: BelowFoldPlaceholder },
 );
+const SocialProofStrip = dynamic(
+  () =>
+    import("@/components/marketing/social-proof-strip").then((m) => ({
+      default: m.SocialProofStrip,
+    })),
+  { ssr: false, loading: BelowFoldPlaceholder },
+);
 
 /** Homepage sales journey below products: proof, value, process, trust, FAQ, contact. */
 export function HomeBelowFold() {
@@ -61,6 +68,11 @@ export function HomeBelowFold() {
       <About />
       <Process />
       <CaseStudies limit={2} />
+      <section className="clykur-story-section border-t border-foreground/[0.05] py-10 md:py-14">
+        <div className="clykur-story-shell max-w-6xl">
+          <SocialProofStrip />
+        </div>
+      </section>
       <TrustVerification />
       <FAQ variant="home" />
       <Contact />

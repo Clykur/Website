@@ -19,7 +19,6 @@ import {
   Presentation,
   Rocket,
   Route,
-  ShieldCheck,
   Smartphone,
   Sparkles,
   UserRound,

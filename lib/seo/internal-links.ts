@@ -15,6 +15,7 @@ const SERVICE_EXTRA: Record<string, SeoRelatedLink[]> = {
   ],
   "startup-mvp-development": [
     { href: "/blog/mvp-development-cost-2026", label: "MVP cost guide 2026" },
+    { href: "/mvp-for-us-saas-founders", label: "MVP for US SaaS founders" },
     { href: "/services/mvp-development", label: "MVP development" },
   ],
   "mvp-development": [
@@ -34,6 +35,10 @@ const SERVICE_EXTRA: Record<string, SeoRelatedLink[]> = {
 const PRODUCT_EXTRA: Record<string, SeoRelatedLink[]> = {
   cusown: [
     { href: "/blog/how-we-built-cusown", label: "How we built Cusown" },
+    {
+      href: "/appointment-booking-software-development",
+      label: "Booking software development",
+    },
     { href: "/industries/healthcare", label: "Healthcare software" },
   ],
   freetrust: [

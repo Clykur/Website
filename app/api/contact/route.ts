@@ -8,6 +8,8 @@ const ContactSchema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email().max(200),
   company: z.string().max(200).optional(),
+  timeline: z.string().max(120).optional(),
+  budget_band: z.string().max(120).optional(),
   message: z.string().min(20).max(5000),
 });
 
@@ -37,7 +39,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { name, email, company, message } = parsed.data;
+    const { name, email, company, timeline, budget_band, message } =
+      parsed.data;
 
     if (!process.env.RESEND_API_KEY || !process.env.DOMAIN) {
       return NextResponse.json(
@@ -54,10 +57,12 @@ export async function POST(req: NextRequest) {
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       ${company ? `<p><strong>Company:</strong> ${company}</p>` : ""}
+      ${timeline ? `<p><strong>Timeline:</strong> ${timeline}</p>` : ""}
+      ${budget_band ? `<p><strong>Budget band:</strong> ${budget_band}</p>` : ""}
       <p><strong>Message:</strong></p>
       <p>${message.replace(/\n/g, "<br/>")}</p>
     `;
-    const text = `Name: ${name}\nEmail: ${email}\n${company ? `Company: ${company}\n` : ""}\n${message}`;
+    const text = `Name: ${name}\nEmail: ${email}\n${company ? `Company: ${company}\n` : ""}${timeline ? `Timeline: ${timeline}\n` : ""}${budget_band ? `Budget: ${budget_band}\n` : ""}\n${message}`;
 
     await sendEmail({
       to: CONTACT_EMAIL,

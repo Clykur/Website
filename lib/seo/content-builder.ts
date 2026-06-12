@@ -35,7 +35,7 @@ function section(
   return { id, title, paragraphs };
 }
 
-/** Expands a landing page with long-form, crawlable copy (~1.2k–1.8k words). */
+/** Expands a landing page with long-form, crawlable copy (~1.2k to 1.8k words). */
 const DEFAULT_TECHNOLOGIES = [
   "React",
   "Next.js",
@@ -109,6 +109,29 @@ export function buildLandingPage(input: BuildLandingInput): SeoLandingPage {
   };
 }
 
+export const PROCUREMENT_FAQ: SeoFaqItem[] = [
+  {
+    question: "Who owns the code and IP?",
+    answer:
+      "By default, clients own deliverables created for their engagement as described in our engagement terms and statement of work. We retain rights only to pre-existing tools, libraries, and general know-how.",
+  },
+  {
+    question: "How does Clykur quote and invoice?",
+    answer:
+      "We quote after discovery using phased milestones. Invoices align to accepted deliverables; payment terms are stated in your agreement. Share a budget band on the contact form to speed routing.",
+  },
+  {
+    question: "Do you work remote with US and EU teams?",
+    answer:
+      "Yes. We are remote-first with overlap hours for standups and reviews. English is our primary delivery language.",
+  },
+  {
+    question: "Typical MVP budget bands?",
+    answer:
+      "Focused MVP slices often start in the low five figures USD depending on surfaces, integrations, and design depth. We publish a detailed cost discussion on our blog and scope honestly in discovery.",
+  },
+];
+
 export const SHARED_SERVICE_FAQ: SeoFaqItem[] = [
   {
     question: "How long does a typical engagement take?",
@@ -125,6 +148,7 @@ export const SHARED_SERVICE_FAQ: SeoFaqItem[] = [
     answer:
       "Yes. We embed with in-house product and engineering teams, join your rituals, and hand off code that matches your conventions.",
   },
+  ...PROCUREMENT_FAQ,
 ];
 
 export const CORE_INTERNAL_LINKS: SeoRelatedLink[] = [

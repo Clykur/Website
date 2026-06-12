@@ -10,6 +10,9 @@ const caseStudies = getAllCaseStudies().map((study) => ({
   challenge: study.challenge,
   approach: study.implementation[0] ?? study.solution,
   result: study.results,
+  headlineMetric: study.metrics[0],
+  testimonial: study.testimonial,
+  datePublished: study.datePublished,
 }));
 
 const bodyClass =
@@ -125,6 +128,17 @@ export function CaseStudies({ limit }: CaseStudiesProps) {
                           {study.title}
                         </Link>
                       </h3>
+                      {study.headlineMetric ? (
+                        <p className="mt-3 inline-flex rounded-lg border border-[#ff3b1f]/20 bg-[#ff3b1f]/[0.06] px-3 py-1.5 text-[12px] font-semibold text-foreground/75">
+                          {study.headlineMetric.label}:{" "}
+                          <span className="text-foreground">
+                            {study.headlineMetric.value}
+                          </span>
+                        </p>
+                      ) : null}
+                      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/35">
+                        Updated {study.datePublished}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -169,6 +183,14 @@ export function CaseStudies({ limit }: CaseStudiesProps) {
                       <p className="text-[14px] font-medium leading-[1.82] text-foreground/72 md:text-[15px] md:leading-[1.84]">
                         {study.result}
                       </p>
+                      {study.testimonial ? (
+                        <blockquote className="mt-5 border-t border-foreground/[0.08] pt-4 text-[13px] italic leading-relaxed text-foreground/55">
+                          &ldquo;{study.testimonial.quote}&rdquo;
+                          <footer className="mt-2 text-[11px] not-italic font-semibold uppercase tracking-[0.12em] text-foreground/40">
+                            {study.testimonial.attribution}
+                          </footer>
+                        </blockquote>
+                      ) : null}
                     </div>
                   </div>
                 </div>

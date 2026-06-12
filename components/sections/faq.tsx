@@ -37,15 +37,30 @@ const allFaqs = [
     answer:
       "Yes, we include 2 rounds of revisions so the result matches your vision. On tech: we’re fluent in React, Next.js, TypeScript, and Tailwind, but we can stick to your stack if you prefer. You’re never locked in; we adapt to what you need.",
   },
+  {
+    question: "Who owns the code and IP?",
+    answer:
+      "Clients own engagement deliverables per our statement of work and engagement terms. We retain pre-existing tools and general know-how only.",
+  },
+  {
+    question: "How do you quote an MVP or project?",
+    answer:
+      "We run a short discovery, then propose phased milestones with clear scope. Budget bands on the contact form help us match you to the right plan. See our MVP cost article on the blog for typical drivers.",
+  },
+  {
+    question: "Can we book a call this week?",
+    answer:
+      "Yes. Submit the [contact form](/contact#inquiry-form) with timeline and budget band, or WhatsApp or email info@clykur.com. We reply with times for a short call.",
+  },
 ];
 
 /** Homepage: decision-stage questions only (full list on /faq). */
 const homeFaqs = allFaqs.filter((f) =>
   [
     "How long does a typical project take?",
-    "Do you provide revisions and what tech do you use?",
-    "What is Cusown?",
-    "What is FreeTrust?",
+    "How do you quote an MVP or project?",
+    "Who owns the code and IP?",
+    "Can we book a call this week?",
   ].includes(f.question),
 );
 

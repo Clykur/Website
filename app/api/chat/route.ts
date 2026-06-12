@@ -108,7 +108,9 @@ export async function POST(req: Request) {
               supabase,
               embedding,
               userQuestion,
-              mode: isClykurIdentityQuestion(userQuestion) ? "identity" : "default",
+              mode: isClykurIdentityQuestion(userQuestion)
+                ? "identity"
+                : "default",
             });
             console.log(
               `[Chat API] RAG band=${rag.confidenceBand} score=${rag.confidenceScore.toFixed(4)} chunks=${rag.topChunks.length} pages=${rag.sourcePages.join(",")}`,

@@ -1,4 +1,4 @@
-/** Clykur company identity — canonical answers and retrieval hints. */
+/** Clykur company identity, canonical answers and retrieval hints. */
 
 import { ABOUT_HUB } from "@/lib/seo/hubs";
 import { sanitizeAssistantCopy } from "@/lib/ai/chat-scope";
@@ -78,6 +78,7 @@ export function getCanonicalAboutIngestContent(baseUrl: string): {
       ABOUT_HUB.description,
       ABOUT_HUB.lede,
       what,
+      "Founders: Chandu Kalluru (Founder), Karthik Naramala (Co-founder).",
     ].join("\n\n"),
     page_type: "page",
     slug: "about",

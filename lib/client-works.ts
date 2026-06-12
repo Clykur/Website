@@ -22,11 +22,18 @@ export const CLIENT_WORKS: readonly ClientWork[] = [
     image: "/client-works/greylabs-ai.webp",
   },
   {
-    name: "Phygitall Library",
-    href: "https://phygitallibrary.vercel.app",
+    name: "Neev Phygital Library",
+    href: "https://nev-phygital-library.vercel.app",
     tagline: "Library and learning experiences brought online.",
     category: "Education & Media",
-    image: "/client-works/phygitall-library.webp",
+    image: "/client-works/nev-phygital-library.webp",
+  },
+  {
+    name: "NOIR Atelier",
+    href: "https://noiratelier.clykur.com",
+    tagline: "Editorial fashion and atelier presence on the web.",
+    category: "Fashion & Creative",
+    image: "/client-works/noir-atelier.webp",
   },
   {
     name: "Forge Fitness",
@@ -55,13 +62,6 @@ export const CLIENT_WORKS: readonly ClientWork[] = [
     tagline: "A sanctuary in the middle of the city.",
     category: "Café & Wellness Experience",
     image: "/client-works/yogisthaan-cafe.webp",
-  },
-  {
-    name: "TrustBuilder",
-    href: "https://trustbuilder.clykur.com",
-    tagline: "Trust infrastructure for freelancers and clients.",
-    category: "FinTech & Trust",
-    image: "/client-works/trustbuilder.webp",
   },
   {
     name: "Pavan Travels",

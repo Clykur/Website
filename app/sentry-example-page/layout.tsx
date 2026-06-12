@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Sentry example",
-  description: "Internal Sentry test page for Clykur Next.js monitoring.",
-  robots: { index: false, follow: false },
-};
+  description: "Internal Sentry SDK test page.",
+  path: "/sentry-example-page",
+  noIndex: true,
+});
 
 export default function SentryExampleLayout({
   children,

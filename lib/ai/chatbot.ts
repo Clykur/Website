@@ -1,4 +1,3 @@
-import { buildKnowledgeContext } from "./knowledge";
 import { SYSTEM_RULES } from "./prompts";
 
 export function getSystemPrompt(dynamicContext: string = ""): string {

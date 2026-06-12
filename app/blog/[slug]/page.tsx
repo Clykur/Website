@@ -8,6 +8,7 @@ import {
   storySectionH2Class,
   storySurfaceCardClass,
 } from "@/components/layout/story-page-shell";
+import { BlogPostCta } from "@/components/blog/blog-post-cta";
 import { SeoCta } from "@/components/seo/seo-cta";
 import { getBlogPost, getBlogSlugs } from "@/lib/blog/posts";
 import { articleSchema } from "@/lib/seo/schemas";
@@ -58,6 +59,8 @@ export default async function BlogPostPage({ params }: PageProps) {
           title={post.title}
           lede={post.description}
           eyebrow="Blog"
+          contentWidth="wide"
+          showSectionDivider={false}
           breadcrumbs={[
             { label: "Home", href: "/" },
             { label: "Blog", href: "/blog" },
@@ -69,59 +72,65 @@ export default async function BlogPostPage({ params }: PageProps) {
             </p>
           }
         />
-        <StoryPageMain as="article" width="narrow">
-          {post.sections.map((section) => (
-            <section key={section.heading} className="mb-8 md:mb-10">
-              <div className={storySurfaceCardClass + " p-6 md:p-8"}>
-                <h2
-                  className={storySectionH2Class + " mb-4 text-xl md:text-2xl"}
-                >
-                  {section.heading}
-                </h2>
-                {section.paragraphs.map((p, i) => (
-                  <p
-                    key={i}
-                    className={"mb-4 last:mb-0 " + storyBodyProseClass}
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ))}
-          <nav
-            aria-label="Related pages"
-            className={
-              storySurfaceCardClass +
-              " mb-10 flex flex-wrap gap-x-4 gap-y-2 p-5 text-[14px] md:p-6"
-            }
-          >
-            <Link
-              href="/services"
-              className="font-semibold text-[#ff3b1f] hover:underline"
+        <StoryPageMain as="article" width="default" className="!pt-0">
+          <div className="flex w-full min-w-0 flex-col gap-12 md:gap-14 lg:gap-16">
+            {post.sections.map((section) => (
+              <section key={section.heading}>
+                <div className={storySurfaceCardClass + " p-6 md:p-9 lg:p-10"}>
+                  <h2 className={storySectionH2Class + " mb-5 md:mb-6"}>
+                    {section.heading}
+                  </h2>
+                  <div className="max-w-4xl space-y-5">
+                    {section.paragraphs.map((p, i) => (
+                      <p
+                        key={i}
+                        className={
+                          storyBodyProseClass +
+                          " text-[15px] md:text-[17px] md:leading-[1.85]"
+                        }
+                      >
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            ))}
+            <nav
+              aria-label="Related pages"
+              className={
+                storySurfaceCardClass +
+                " flex flex-wrap gap-x-4 gap-y-2 p-6 text-[14px] md:p-8"
+              }
             >
-              Services
-            </Link>
-            <Link
-              href="/products"
-              className="font-semibold text-[#ff3b1f] hover:underline"
-            >
-              Products
-            </Link>
-            <Link
-              href="/case-studies"
-              className="font-semibold text-[#ff3b1f] hover:underline"
-            >
-              Case studies
-            </Link>
-            <Link
-              href="/contact"
-              className="font-semibold text-[#ff3b1f] hover:underline"
-            >
-              Contact
-            </Link>
-          </nav>
-          <SeoCta />
+              <Link
+                href="/services"
+                className="font-semibold text-[#ff3b1f] hover:underline"
+              >
+                Services
+              </Link>
+              <Link
+                href="/products"
+                className="font-semibold text-[#ff3b1f] hover:underline"
+              >
+                Products
+              </Link>
+              <Link
+                href="/case-studies"
+                className="font-semibold text-[#ff3b1f] hover:underline"
+              >
+                Case studies
+              </Link>
+              <Link
+                href="/contact"
+                className="font-semibold text-[#ff3b1f] hover:underline"
+              >
+                Contact
+              </Link>
+            </nav>
+            <BlogPostCta />
+            <SeoCta />
+          </div>
         </StoryPageMain>
       </StoryPageBackdrop>
     </>

@@ -4,21 +4,28 @@ import {
   formatSocialLinksMarkdown,
 } from "@/lib/social-links";
 import type { ChatMessageExtras } from "@/lib/ai/chat-types";
+import { CLYKUR_FOUNDING_TEAM } from "@/lib/site-founding-team";
+import { BLOG_POSTS } from "@/lib/blog/posts";
 
 /** Compact block injected into every chat system prompt (token-light). */
 export function getChatCanonicalFactsBlock(): string {
   const socialLines = CLYKUR_SOCIAL_LINKS.map(
     (s) => `- ${s.label}: ${s.href}`,
   ).join("\n");
-  return `CANONICAL FACTS (always true; use for social/contact questions):
+  const founders = CLYKUR_FOUNDING_TEAM.map(
+    (m) => `${m.name} (${m.role})`,
+  ).join(", ");
+  return `CANONICAL FACTS (always true; use for social/contact/founders/blog questions):
 - Email: ${CONTACT_EMAIL}
 - WhatsApp: +91 8179299096 (also on /contact)
+- Founding team: ${founders}. More on /about
+- Blog: ${BLOG_POSTS.length} articles at /blog (list titles with links when users ask what blogs you have)
 ${socialLines}
-Never say you lack access to these links.`;
+Never say you lack access to these links or that you cannot list blog posts.`;
 }
 
 const SOCIAL_QUESTION =
-  /\b(linkedin|instagram|clutch|product hunt|producthunt|dev\.?to|hashnode|social media|socials?|follow (us|clykur)|on social|profiles?)\b/i;
+  /\b(linkedin|instagram|twitter|x\.com|\bx\b|clutch|product hunt|producthunt|dev\.?to|hashnode|social media|socials?|follow (us|clykur)|on social|profiles?)\b/i;
 
 export function isClykurSocialQuestion(message: string): boolean {
   const q = message.trim();

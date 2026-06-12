@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import {
   StoryPageBackdrop,
   storyHeroH1Class,
+  storyHeroTopPaddingClass,
 } from "@/components/layout/story-page-shell";
 import { LegalEntity } from "@/components/legal/legal-entity";
 import { LegalTrustBanner } from "@/components/legal/legal-trust-banner";
@@ -65,7 +66,12 @@ export function LegalPageShell({
 }: LegalPageShellProps) {
   return (
     <StoryPageBackdrop className="legal-prose-page min-w-0 overflow-x-clip font-poppins">
-      <section className="clykur-story-section border-b border-foreground/[0.05] pb-8 pt-[max(6rem,calc(env(safe-area-inset-top)+4.5rem))] md:pb-10 md:pt-[max(7rem,calc(env(safe-area-inset-top)+5rem))]">
+      <section
+        className={cn(
+          "clykur-story-section border-b border-foreground/[0.05] pb-8 md:pb-10",
+          storyHeroTopPaddingClass,
+        )}
+      >
         <article className="clykur-story-shell mx-auto w-full min-w-0 max-w-4xl px-4 sm:px-6 lg:px-10">
           <Link
             href="/"

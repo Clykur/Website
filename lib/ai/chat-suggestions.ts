@@ -3,9 +3,9 @@ import type { ChatMessageExtras } from "@/lib/ai/chat-types";
 export function getDefaultQuickPrompts(): string[] {
   return [
     "What services do you offer?",
-    "Tell me about Cusown and FreeTrust",
+    "How much does an MVP cost?",
+    "Can we talk this week?",
     "How do I start a project?",
-    "Where can I read case studies?",
   ];
 }
 

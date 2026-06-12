@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LEGAL_MAILTO } from "@/lib/legal-entity";
 import {
   LEGAL_VENUE_CITY,
@@ -222,12 +223,12 @@ export function PrivacyPage() {
           </a>{" "}
           with subject &quot;DPA request&quot; and your company name, product,
           and regions involved. See our{" "}
-          <a
+          <Link
             href="/compliance"
             className="font-medium text-[#ff3b1f] hover:underline"
           >
             Compliance
-          </a>{" "}
+          </Link>{" "}
           page for more procurement information.
         </p>
         <p className={legalPClass}>

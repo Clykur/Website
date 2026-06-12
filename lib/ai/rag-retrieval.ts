@@ -131,9 +131,7 @@ function groupByPageLimit(
   return out;
 }
 
-function selectChunksForContext(
-  scored: ScoredChunk[],
-): KnowledgeChunkRow[] {
+function selectChunksForContext(scored: ScoredChunk[]): KnowledgeChunkRow[] {
   const grouped = groupByPageLimit(scored, MAX_CHUNKS_PER_PAGE);
   const picked: KnowledgeChunkRow[] = [];
   const usedPages = new Set<string>();

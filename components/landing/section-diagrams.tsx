@@ -9,7 +9,6 @@ export const ecosystemVisualTypes = [
 
 export type EcosystemVisualType = (typeof ecosystemVisualTypes)[number];
 
-const ink = "rgba(10,10,10,0.14)";
 const inkM = "rgba(10,10,10,0.22)";
 const accent = "#ff3b1f";
 const accentSoft = "rgba(255,59,31,0.14)";

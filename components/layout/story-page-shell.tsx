@@ -52,6 +52,10 @@ export const storyBodyProseClass =
 export const storySurfaceCardClass =
   "rounded-2xl border border-foreground/[0.08] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_48px_-32px_rgba(10,10,10,0.08)]";
 
+/** Clears fixed nav (h-16 / md:h-20) plus comfortable space before breadcrumbs or title */
+export const storyHeroTopPaddingClass =
+  "pt-[max(7.75rem,calc(env(safe-area-inset-top)+5.75rem))] md:pt-[max(9.25rem,calc(env(safe-area-inset-top)+6.75rem))]";
+
 type StoryPageHeroProps = {
   title: string;
   titleId?: string;
@@ -61,6 +65,10 @@ type StoryPageHeroProps = {
   actions?: ReactNode;
   headerExtra?: ReactNode;
   centered?: boolean;
+  /** default: narrow lede column; wide: use full story shell width */
+  contentWidth?: "default" | "wide";
+  /** Hairline under hero; off for continuous flows (e.g. careers) */
+  showSectionDivider?: boolean;
 };
 
 export function StoryPageHero({
@@ -72,17 +80,23 @@ export function StoryPageHero({
   actions,
   headerExtra,
   centered = false,
+  contentWidth = "default",
+  showSectionDivider = true,
 }: StoryPageHeroProps) {
   return (
     <section
-      className="clykur-story-section border-b border-foreground/[0.05] pb-10 pt-[max(6rem,calc(env(safe-area-inset-top)+4.5rem))] md:pb-14 md:pt-[max(7rem,calc(env(safe-area-inset-top)+5rem))]"
+      className={cn(
+        "clykur-story-section pb-10 md:pb-14",
+        showSectionDivider && "border-b border-foreground/[0.05]",
+        storyHeroTopPaddingClass,
+      )}
       aria-labelledby={titleId}
     >
       <div className="clykur-story-shell mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
         <div
           className={cn(
-            "max-w-3xl",
+            contentWidth === "wide" ? "max-w-none" : "max-w-3xl",
             centered && "mx-auto text-center",
             breadcrumbs?.length ? undefined : "pt-0",
           )}

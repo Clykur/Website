@@ -7,8 +7,6 @@ import {
 } from "@/lib/social-links";
 import { cn } from "@/lib/utils";
 
-const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
-
 const linkClass =
   "inline-block min-h-[44px] py-1 text-[13px] leading-relaxed text-foreground/65 transition-colors duration-300 hover:text-[#ff3b1f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff3b1f]/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f6] rounded-sm";
 
@@ -50,16 +48,6 @@ export function Footer() {
             >
               Start a project
             </Link>
-            {calendlyUrl ? (
-              <a
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-foreground/15 px-5 text-[13px] font-semibold text-foreground/75 transition-colors hover:border-[#ff3b1f]/35 hover:text-[#ff3b1f]"
-              >
-                Book discovery call
-              </a>
-            ) : null}
           </div>
         </div>
 

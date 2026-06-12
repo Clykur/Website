@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
 
 const DURATION_MS = 3000;
 const FADE_IN_MS = 500;
@@ -22,6 +21,11 @@ function getSplashSeen(): boolean {
   }
 }
 
+function initialProgressPercent(): number {
+  if (typeof window === "undefined") return 0;
+  return window.matchMedia("(max-width: 479px)").matches ? 100 : 0;
+}
+
 export function SplashScreen() {
   if (process.env.NODE_ENV !== "development") {
     return null;
@@ -30,29 +34,20 @@ export function SplashScreen() {
 }
 
 function SplashScreenDev() {
-  const [showSplash, setShowSplash] = useState<boolean | null>(null);
-  const [percent, setPercent] = useState(0);
+  const [showSplash] = useState(() => !getSplashSeen());
+  if (!showSplash) return null;
+  return <SplashScreenDevInner />;
+}
+
+function SplashScreenDevInner() {
+  const [percent, setPercent] = useState(initialProgressPercent);
   const [visible, setVisible] = useState(true);
   const [mounted, setMounted] = useState(true);
-  const [fadedIn, setFadedIn] = useState(false);
   const startRef = useRef<number | null>(null);
   const rafRef = useRef(0);
   const intervalRef = useRef<number | null>(null);
 
-  // Only on first visit: decide whether to show splash (client-side check)
   useEffect(() => {
-    setShowSplash(!getSplashSeen());
-  }, []);
-
-  useEffect(() => {
-    if (showSplash !== true) return;
-
-    setFadedIn(true);
-  }, [showSplash]);
-
-  useEffect(() => {
-    if (showSplash !== true) return;
-
     startRef.current = performance.now();
 
     const mobile = window.matchMedia("(max-width: 767px)").matches;
@@ -65,34 +60,34 @@ function SplashScreenDev() {
       intervalRef.current = null;
     };
 
-    if (ultra) {
-      setPercent(100);
-    } else if (mobile) {
-      intervalRef.current = window.setInterval(() => {
-        const start = startRef.current ?? performance.now();
-        const elapsed = performance.now() - start;
-        const progress = Math.min(elapsed / DURATION_MS, 1);
-        const eased = easeOutCubic(progress);
-        setPercent(Math.round(eased * 100));
-        if (progress >= 1 && intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-      }, 140);
-    } else {
-      const tick = (now: number) => {
-        const start = startRef.current ?? now;
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / DURATION_MS, 1);
-        const eased = easeOutCubic(progress);
-        setPercent(Math.round(eased * 100));
+    if (!ultra) {
+      if (mobile) {
+        intervalRef.current = window.setInterval(() => {
+          const start = startRef.current ?? performance.now();
+          const elapsed = performance.now() - start;
+          const progress = Math.min(elapsed / DURATION_MS, 1);
+          const eased = easeOutCubic(progress);
+          setPercent(Math.round(eased * 100));
+          if (progress >= 1 && intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+        }, 140);
+      } else {
+        const tick = (now: number) => {
+          const start = startRef.current ?? now;
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / DURATION_MS, 1);
+          const eased = easeOutCubic(progress);
+          setPercent(Math.round(eased * 100));
 
-        if (progress < 1) {
-          rafRef.current = requestAnimationFrame(tick);
-        }
-      };
+          if (progress < 1) {
+            rafRef.current = requestAnimationFrame(tick);
+          }
+        };
 
-      rafRef.current = requestAnimationFrame(tick);
+        rafRef.current = requestAnimationFrame(tick);
+      }
     }
 
     const hideTimer = setTimeout(() => {
@@ -113,24 +108,22 @@ function SplashScreenDev() {
       clearTimeout(hideTimer);
       clearTimeout(unmountTimer);
     };
-  }, [showSplash]);
+  }, []);
 
-  if (showSplash !== true || !mounted) return null;
+  if (!mounted) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-background"
+      className="fixed inset-0 z-[200] flex animate-in fade-in items-center justify-center bg-background duration-500 fill-mode-both"
       style={{
-        opacity: visible ? (fadedIn ? 1 : 0) : 0,
-        transition: fadedIn
-          ? `opacity ${visible ? FADE_IN_MS : FADE_OUT_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
-          : "none",
+        opacity: visible ? 1 : 0,
+        transition: `opacity ${visible ? FADE_IN_MS : FADE_OUT_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
       }}
       aria-hidden="true"
     >
       <div className="absolute inset-0 flex min-h-0 flex-col">
-        {/* Logo: min-h-0 + overflow so a huge image cannot paint over the percentage row */}
         <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 py-6 sm:p-8">
+          {/* eslint-disable-next-line @next/next/no-img-element -- dev splash SVG */}
           <img
             src="/Clykur Logo.svg"
             alt=""
@@ -138,7 +131,6 @@ function SplashScreenDev() {
           />
         </div>
 
-        {/* Bottom right: percentage (shrink-0 keeps row from being covered by flex overflow) */}
         <div className="relative z-10 flex shrink-0 justify-end bg-background/80 p-8 backdrop-blur-[2px] md:p-12">
           <span className="font-mono text-3xl font-semibold tabular-nums tracking-tight text-[#ff3b1f] drop-shadow-[0_1px_0_rgba(255,255,255,0.6)] md:text-4xl">
             {percent}%

@@ -40,10 +40,17 @@ function ok(msg: string) {
   console.log(`ok: ${msg}`);
 }
 
+const QUICK_PROMPT_CANONICAL = new Set(["Can we talk this week?"]);
+
 console.log("=== Quick prompts → LLM (not off-topic) ===\n");
 for (const phrase of getDefaultQuickPrompts()) {
   const turn = resolveChatTurn(phrase);
-  if (!turn || turn.mode !== "llm") {
+  const expectCanonical = QUICK_PROMPT_CANONICAL.has(phrase);
+  if (!turn) {
+    fail(`quick prompt no turn: "${phrase}"`);
+  } else if (expectCanonical && turn.mode !== "canonical") {
+    fail(`quick prompt should be canonical: "${phrase}" → ${turn.mode}`);
+  } else if (!expectCanonical && turn.mode !== "llm") {
     fail(`quick prompt should use LLM: "${phrase}" → ${turn?.mode}`);
   }
   if (shouldRefuseOutsideClykur(phrase)) {
@@ -104,6 +111,21 @@ for (const q of ["what is clykur", "who is clykur", "who are you?"]) {
   }
 }
 ok("identity canonical replies");
+
+console.log("\n=== Blog list & leadership → canonical ===\n");
+const blogQ = resolveChatTurn("what all the blogs were here in this website");
+if (!blogQ || blogQ.mode !== "canonical" || !blogQ.text.includes("/blog/")) {
+  fail("blog list question should return canonical with links");
+} else ok("blog list canonical");
+
+const ownersQ = resolveChatTurn("whos the owners of this company");
+if (
+  !ownersQ ||
+  ownersQ.mode !== "canonical" ||
+  !/chandu|karthik|founder/i.test(ownersQ.text)
+) {
+  fail("owners question should return founding team canonical");
+} else ok("leadership canonical");
 
 console.log("\n=== Context compression ===\n");
 const mockChunks: KnowledgeChunkRow[] = [

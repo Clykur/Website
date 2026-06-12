@@ -16,9 +16,18 @@ import { cn } from "@/lib/utils";
 type HubPageViewProps = {
   page: HubPageContent;
   children?: React.ReactNode;
+  contentWidth?: "default" | "wide";
+  showSectionDivider?: boolean;
+  mainClassName?: string;
 };
 
-export function HubPageView({ page, children }: HubPageViewProps) {
+export function HubPageView({
+  page,
+  children,
+  contentWidth = "default",
+  showSectionDivider = true,
+  mainClassName,
+}: HubPageViewProps) {
   const breadcrumbs = [
     { label: "Home", href: "/" },
     { label: page.h1, href: page.path },
@@ -64,8 +73,10 @@ export function HubPageView({ page, children }: HubPageViewProps) {
           lede={page.lede}
           eyebrow={eyebrowFromPath(page.path)}
           breadcrumbs={breadcrumbs}
+          contentWidth={contentWidth}
+          showSectionDivider={showSectionDivider}
         />
-        <StoryPageMain as="article">
+        <StoryPageMain as="article" className={mainClassName}>
           {page.sections.map((section) => (
             <section key={section.title} className="mb-8 md:mb-10">
               <div className={cn(storySurfaceCardClass, "p-6 md:p-8")}>

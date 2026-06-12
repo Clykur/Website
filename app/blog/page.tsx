@@ -24,12 +24,15 @@ export default function BlogIndexPage() {
         lede: "Practical guides for founders and product teams, SEO-ready and written for humans and AI search.",
         sections: [],
       }}
+      contentWidth="wide"
+      showSectionDivider={false}
+      mainClassName="!pt-0"
     >
-      <ul className="space-y-4">
+      <ul className="flex w-full min-w-0 flex-col gap-6 md:gap-8 lg:gap-10">
         {BLOG_POSTS.map((post) => (
           <li key={post.slug}>
-            <article className={storySurfaceCardClass + " p-5 md:p-6"}>
-              <h2 className="text-lg font-semibold text-foreground">
+            <article className={storySurfaceCardClass + " p-6 md:p-8 lg:p-10"}>
+              <h2 className="font-poppins text-xl font-medium tracking-[-0.02em] text-foreground md:text-2xl">
                 <Link
                   href={`/blog/${post.slug}`}
                   className="hover:text-[#ff3b1f]"
@@ -37,10 +40,10 @@ export default function BlogIndexPage() {
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-2 text-[14px] text-foreground/55">
+              <p className="mt-3 max-w-4xl text-[15px] leading-relaxed text-foreground/58 md:text-base">
                 {post.description}
               </p>
-              <p className="mt-3 text-[12px] uppercase tracking-[0.14em] text-foreground/40">
+              <p className="mt-4 text-[12px] uppercase tracking-[0.14em] text-foreground/40">
                 {post.datePublished} · {post.readingMinutes} min read
               </p>
             </article>
