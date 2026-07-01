@@ -70,7 +70,7 @@ export function buildLandingPage(input: BuildLandingInput): SeoLandingPage {
     ]),
     section("benefits", "Benefits of working with Clykur", [
       `You get a partner who communicates in writing, demos frequently, and ties UI work to measurable outcomes, not vanity deliverables.`,
-      `Because we also operate products (Cusown and FreeTrust), we bring product instincts to service work: fewer dead-end features, clearer prioritization, and pragmatic tradeoffs.`,
+      `We bring product instincts to service work: fewer dead-end features, clearer prioritization, and pragmatic tradeoffs backed by production experience.`,
       `Teams report faster stakeholder alignment when specs, edge cases, and acceptance criteria are captured early, reducing expensive rework cycles.`,
     ]),
     section("deliverables", "Deliverables you can expect", [
@@ -94,8 +94,8 @@ export function buildLandingPage(input: BuildLandingInput): SeoLandingPage {
       `We honor NDAs on client identities while publishing representative narratives so you can evaluate how we think, not just what we claim.`,
     ]),
     section("why-clykur", "Why teams choose Clykur", [
-      `Clykur operates as both a product company and an engineering studio. We ship our own SaaS properties, Cusown and FreeTrust, which keeps our standards honest on reliability, UX, and go-to-market quality.`,
-      `That dual model means you benefit from patterns battle-tested on real users: observability habits, pragmatic abstractions, and UX details that reduce support load.`,
+      `Clykur is an AI-native product engineering studio focused on client delivery. We combine AI-assisted workflows with experienced engineers who review every release for production quality.`,
+      `That focus means you benefit from patterns battle-tested on real engagements: observability habits, pragmatic abstractions, and UX details that reduce support load.`,
       `When you are ready to move, we make it easy to start: a short discovery call, a written proposal, and a clear first milestone, usually a vertical slice you can demo to stakeholders.`,
     ]),
   ];

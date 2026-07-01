@@ -3,6 +3,10 @@ import { z } from "zod";
 import { sendEmail } from "@/lib/email/resend";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { checkRateLimit } from "@/lib/security/rate-limit";
+import { isOversizedApiBody } from "@/lib/security/api-request-limits";
+
+export const maxDuration = 25;
+export const runtime = "nodejs";
 
 const ContactSchema = z.object({
   name: z.string().min(2).max(120),
@@ -21,6 +25,13 @@ function getClientIp(req: NextRequest): string {
 
 export async function POST(req: NextRequest) {
   try {
+    if (isOversizedApiBody(req)) {
+      return NextResponse.json(
+        { message: "Payload too large" },
+        { status: 413 },
+      );
+    }
+
     const ip = getClientIp(req);
     const rate = await checkRateLimit(`contact:${ip}`);
     if (!rate.success) {

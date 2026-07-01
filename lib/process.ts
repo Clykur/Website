@@ -81,7 +81,7 @@ export const PROCESS_PRINCIPLES = [
   },
   {
     title: "Same pipeline",
-    body: "Products we own and client work follow the same five stages for predictable delivery.",
+    body: "Client work and internal tooling follow the same five stages for predictable delivery.",
   },
 ] as const;
 

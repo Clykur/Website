@@ -7,19 +7,19 @@ const homeCoreServices = [
   {
     title: "Web development",
     description:
-      "Production-ready React and Next.js interfaces, from marketing sites to complex product UI.",
+      "Production-ready React and Next.js interfaces, from marketing sites to complex product UI. AI-assisted engineering for faster delivery without compromising production quality.",
     href: "/services/web-development",
   },
   {
     title: "Product engineering",
     description:
-      "End-to-end delivery partnership for founders and product teams shipping real software.",
+      "End-to-end delivery partnership for founders and product teams shipping real software. AI-native engineering from concept to deployment.",
     href: "/services/product-engineering",
   },
   {
     title: "UI/UX design",
     description:
-      "Research-driven interfaces and design systems before and during build.",
+      "Research-driven interfaces and design systems before and during build. Human creativity accelerated through AI-assisted design.",
     href: "/services/ui-ux-design",
   },
 ] as const;
@@ -225,7 +225,7 @@ export function Services({ variant = "full" }: ServicesProps) {
           <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground/48 md:text-base">
             {isHome
               ? "The engagements we run most often for startups and product teams. Deeper detail lives on each service page."
-              : "We embed with product teams not ad-hoc tickets. Same rigor as our own products: clear scope, steady communication, delivery you can plan around."}
+              : "We embed with product teams not ad-hoc tickets. Same rigor on every engagement: clear scope, steady communication, delivery you can plan around."}
           </p>
         </header>
 

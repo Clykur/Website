@@ -20,13 +20,6 @@ const About = dynamic(
     })),
   { ssr: false, loading: BelowFoldPlaceholder },
 );
-const Process = dynamic(
-  () =>
-    import("@/components/sections/process").then((m) => ({
-      default: m.Process,
-    })),
-  { ssr: false, loading: BelowFoldPlaceholder },
-);
 const CaseStudies = dynamic(
   () =>
     import("@/components/sections/case-studies").then((m) => ({
@@ -60,13 +53,12 @@ const SocialProofStrip = dynamic(
   { ssr: false, loading: BelowFoldPlaceholder },
 );
 
-/** Homepage sales journey below products: proof, value, process, trust, FAQ, contact. */
+/** Homepage sales journey: proof, value, trust, FAQ, contact. */
 export function HomeBelowFold() {
   return (
     <>
       <ClientWorks />
       <About />
-      <Process />
       <CaseStudies limit={2} />
       <section className="clykur-story-section border-t border-foreground/[0.05] py-10 md:py-14">
         <div className="clykur-story-shell max-w-6xl">

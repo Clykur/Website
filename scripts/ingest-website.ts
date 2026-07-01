@@ -144,9 +144,6 @@ function inferPageMeta(
       priority_score: pathname === "/services" ? 0.95 : 0.88,
     };
   }
-  if (pathname.startsWith("/products")) {
-    return { page_type: "product", slug, priority_score: 0.9 };
-  }
   if (pathname.startsWith("/case-studies")) {
     return { page_type: "case-study", slug, priority_score: 0.88 };
   }

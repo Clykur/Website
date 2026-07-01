@@ -320,131 +320,6 @@ const servicePages: SeoLandingPage[] = [
   }),
 ];
 
-const productPages: SeoLandingPage[] = [
-  buildLandingPage({
-    kind: "product",
-    slug: "cusown",
-    path: "/products/cusown",
-    title: "Cusown: Appointment Booking Software",
-    description:
-      "Cusown is Clykur's smart appointment and slot booking platform for service businesses, automation, analytics, and scalable scheduling.",
-    h1: "Cusown: smart appointment and slot booking",
-    eyebrow: "Products",
-    lede: "Reduce no-shows, automate scheduling, and give customers a modern booking experience built for growth.",
-    keywords: [
-      "appointment booking software",
-      "slot booking platform",
-      "Cusown",
-    ],
-    breadcrumbs: [
-      { label: "Home", href: "/" },
-      { label: "Products", href: "/products" },
-      { label: "Cusown", href: "/products/cusown" },
-    ],
-    topic: "Cusown appointment software",
-    audience:
-      "Salons, clinics, consultants, agencies, and any service business that relies on appointments.",
-    deliverables: [
-      "Online booking flows",
-      "Staff and resource scheduling",
-      "Customer notifications",
-      "Analytics dashboards",
-      "SaaS reliability practices",
-    ],
-    outcomes: [
-      "Businesses use Cusown to centralize scheduling, cut manual coordination, and scale locations without spreadsheet chaos.",
-    ],
-    relatedLinks: [
-      {
-        href: "/products/freetrust",
-        label: "FreeTrust",
-        description: "Trust layer for freelancers.",
-      },
-      {
-        href: "/services/product-engineering",
-        label: "Product engineering",
-        description: "Build with Clykur.",
-      },
-      {
-        href: "/contact",
-        label: "Contact",
-        description: "Demos and partnerships.",
-      },
-    ],
-    faqs: [
-      {
-        question: "What is Cusown?",
-        answer:
-          "Cusown is Clykur's appointment and slot booking platform for service businesses, with automation, customer management, and analytics.",
-      },
-      {
-        question: "Who is Cusown for?",
-        answer:
-          "Teams that take appointments and need reliable scheduling, fewer no-shows, and scalable operations.",
-      },
-      ...SHARED_SERVICE_FAQ.slice(0, 2),
-    ],
-  }),
-  buildLandingPage({
-    kind: "product",
-    slug: "freetrust",
-    path: "/products/freetrust",
-    title: "FreeTrust: Freelancer Trust Platform",
-    description:
-      "FreeTrust is Clykur's trust layer for freelancers and clients, credibility validation, transparent profiles, and reputation infrastructure.",
-    h1: "FreeTrust: the trust layer freelancing deserves",
-    eyebrow: "Products",
-    lede: "Help both sides of a gig engage with verified credibility, clearer expectations, and less counterparty risk.",
-    keywords: [
-      "freelancer trust platform",
-      "FreeTrust",
-      "freelance credibility",
-    ],
-    breadcrumbs: [
-      { label: "Home", href: "/" },
-      { label: "Products", href: "/products" },
-      { label: "FreeTrust", href: "/products/freetrust" },
-    ],
-    topic: "FreeTrust",
-    audience:
-      "Freelancers, agencies, and clients who want safer, more transparent engagements.",
-    deliverables: [
-      "Credibility validation flows",
-      "Professional profiles",
-      "Trust scoring",
-      "Roadmap for verification layers",
-    ],
-    outcomes: [
-      "Trust infrastructure reduces wasted discovery calls and helps serious professionals stand out.",
-    ],
-    relatedLinks: [
-      {
-        href: "/products/cusown",
-        label: "Cusown",
-        description: "Scheduling platform.",
-      },
-      {
-        href: "/industries/saas",
-        label: "SaaS industry",
-        description: "How we build B2B software.",
-      },
-      {
-        href: "/contact",
-        label: "Contact",
-        description: "Early access and partnerships.",
-      },
-    ],
-    faqs: [
-      {
-        question: "What is FreeTrust?",
-        answer:
-          "FreeTrust improves trust between freelancers and clients with transparent profiles, credibility signals, and a roadmap toward stronger verification.",
-      },
-      ...SHARED_SERVICE_FAQ.slice(0, 2),
-    ],
-  }),
-];
-
 const industryPages: SeoLandingPage[] = [
   buildLandingPage({
     kind: "industry",
@@ -507,14 +382,7 @@ const industryPages: SeoLandingPage[] = [
     outcomes: [
       "Clear, calm interfaces reduce errors in high-stakes workflows, we validate states, errors, and offline-tolerant messaging.",
     ],
-    relatedLinks: [
-      ...CORE_INTERNAL_LINKS,
-      {
-        href: "/products/cusown",
-        label: "Cusown",
-        description: "Scheduling for clinics and wellness.",
-      },
-    ],
+    relatedLinks: CORE_INTERNAL_LINKS,
     faqs: SHARED_SERVICE_FAQ,
   }),
   buildLandingPage({
@@ -763,7 +631,7 @@ const programmaticPages: SeoLandingPage[] = [
       "Clykur is a startup MVP development company helping founders validate ideas with shippable software.",
     h1: "Startup MVP development company for founders",
     eyebrow: "Company",
-    lede: "Partner with a studio that builds its own products and brings the same rigor to your MVP.",
+    lede: "Partner with a studio that ships client MVPs with the same rigor we apply to every engagement.",
     keywords: ["startup mvp development company", "mvp development agency"],
     breadcrumbs: [
       { label: "Home", href: "/" },
@@ -919,22 +787,21 @@ const programmaticPages: SeoLandingPage[] = [
         description: "What drives budget.",
       },
       {
-        href: "/case-studies/cusown-booking-platform",
-        label: "Cusown case study",
-        description: "Product we shipped.",
+        href: "/case-studies",
+        label: "Case studies",
+        description: "Representative outcomes.",
       },
       { href: "/contact", label: "Contact", description: "Book discovery." },
     ],
     faqs: SHARED_SERVICE_FAQ,
     caseStudy: {
-      title: "Cusown booking platform",
+      title: "E-commerce marketplace frontend",
       challenge:
-        "Service businesses needed reliable scheduling without no-show chaos.",
+        "High-traffic launch needed accessible checkout and stable performance.",
       approach:
-        "Mobile-first booking, reminders, and owner dashboards on Next.js.",
-      result:
-        "Live Clykur product validating scheduling UX before client rollouts.",
-      metric: "Live in market",
+        "Next.js storefront with performance budgets and WCAG patterns.",
+      result: "Launch-ready commerce UI under peak load.",
+      metric: "Stable under peak traffic",
     },
   }),
   buildLandingPage({
@@ -943,7 +810,7 @@ const programmaticPages: SeoLandingPage[] = [
     path: "/appointment-booking-software-development",
     title: "Appointment Booking Software Development",
     description:
-      "Custom appointment and scheduling software development. Clykur builds Cusown and partners on booking products.",
+      "Custom appointment and scheduling software development for service businesses and platforms.",
     h1: "Appointment booking software development",
     eyebrow: "Scheduling",
     lede: "From salon and clinic workflows to B2B scheduling APIs, we ship booking systems with clear slot logic, notifications, and operator tools.",
@@ -974,19 +841,19 @@ const programmaticPages: SeoLandingPage[] = [
     ],
     relatedLinks: [
       {
-        href: "/products/cusown",
-        label: "Cusown product",
-        description: "Our booking platform.",
+        href: "/services/product-engineering",
+        label: "Product engineering",
+        description: "End-to-end delivery.",
       },
       {
-        href: "/case-studies/cusown-booking-platform",
-        label: "Cusown case study",
-        description: "How we built it.",
+        href: "/case-studies",
+        label: "Case studies",
+        description: "Scheduling and SaaS work.",
       },
       {
-        href: "/blog/how-we-built-cusown",
-        label: "How we built Cusown",
-        description: "Product decisions.",
+        href: "/blog/mvp-development-cost-2026",
+        label: "MVP cost guide",
+        description: "Budget drivers.",
       },
       {
         href: "/contact",
@@ -996,11 +863,11 @@ const programmaticPages: SeoLandingPage[] = [
     ],
     faqs: SHARED_SERVICE_FAQ,
     caseStudy: {
-      title: "Cusown appointment platform",
+      title: "Service business scheduling platform",
       challenge: "No-shows and manual scheduling across channels.",
-      approach: "Focused booking UX with automation and analytics.",
-      result: "Production scheduling product operated by Clykur.",
-      metric: "Service businesses",
+      approach: "Focused booking UX with automation and operator dashboards.",
+      result: "Production scheduling software for service operators.",
+      metric: "Fewer manual bookings",
     },
   }),
   buildLandingPage({
@@ -1064,7 +931,6 @@ const programmaticPages: SeoLandingPage[] = [
 
 export const ALL_LANDING_PAGES: SeoLandingPage[] = [
   ...servicePages,
-  ...productPages,
   ...industryPages,
   ...programmaticPages,
 ];
@@ -1079,10 +945,6 @@ export function getServicePage(slug: string) {
   return servicePages.find((p) => p.slug === slug);
 }
 
-export function getProductPage(slug: string) {
-  return productPages.find((p) => p.slug === slug);
-}
-
 export function getIndustryPage(slug: string) {
   return industryPages.find((p) => p.slug === slug);
 }
@@ -1092,7 +954,6 @@ export function getProgrammaticPage(slug: string) {
 }
 
 export const SERVICE_SLUGS = servicePages.map((p) => p.slug);
-export const PRODUCT_SLUGS = productPages.map((p) => p.slug);
 export const INDUSTRY_SLUGS = industryPages.map((p) => p.slug);
 
 /** Every indexable URL: marketing hubs, policy pages, and all child routes. */
@@ -1101,7 +962,6 @@ export function getAllSitemapPaths(): string[] {
     "/",
     "/about",
     "/services",
-    "/products",
     "/process",
     "/faq",
     "/contact",
@@ -1120,7 +980,6 @@ export function getAllSitemapPaths(): string[] {
 
   const childPaths = [
     ...SERVICE_SLUGS.map((slug) => `/services/${slug}`),
-    ...PRODUCT_SLUGS.map((slug) => `/products/${slug}`),
     ...INDUSTRY_SLUGS.map((slug) => `/industries/${slug}`),
     ...PROGRAMMATIC_SLUGS.map((slug) => `/${slug}`),
     ...getBlogSlugs().map((slug) => `/blog/${slug}`),

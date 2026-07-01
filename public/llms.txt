@@ -3,22 +3,17 @@
 # Full index: https://www.clykur.com/llms-full.txt
 # Sitemap: https://www.clykur.com/sitemap.xml
 
-> Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.
+> Clykur is an AI-native product engineering company. We build production-ready software with AI-assisted delivery and experienced engineers who ensure quality, from SaaS products to custom engineering partnerships.
 
 ## Primary URLs
 - Home: https://www.clykur.com/
 - Contact: https://www.clykur.com/contact
 - Services: https://www.clykur.com/services
-- Products: https://www.clykur.com/products
 - Client work (live sites): https://www.clykur.com/work
 - Case studies: https://www.clykur.com/case-studies
 - Blog: https://www.clykur.com/blog
 - FAQ: https://www.clykur.com/faq
 - Careers: https://www.clykur.com/careers
-
-## Products
-- Cusown: Smart appointment and slot booking platform — https://cusown.clykur.com
-- FreeTrust: The Trust Layer Freelancing Deserves — https://trustbuilder.clykur.com
 
 ## Contact
 - Email: info@clykur.com

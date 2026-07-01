@@ -34,7 +34,12 @@ function HeroMarketingContent({ heading }: { heading: React.ReactNode }) {
         {heading}
       </div>
 
-      <DiscoveryCta className="mt-8 w-full max-w-md sm:mt-9" />
+      <DiscoveryCta
+        className="mt-8 w-full max-w-md sm:mt-9"
+        primaryLabel="Start Your Project"
+        secondaryHref="#how-we-build"
+        secondaryLabel="See How We Build"
+      />
 
       <p
         data-reveal-item

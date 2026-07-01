@@ -1,11 +1,9 @@
 import {
   breadcrumbSchema,
   faqPageSchema,
-  productSchema,
   serviceSchema,
   webPageSchema,
 } from "@/lib/seo/schemas";
-import { SITE_URL } from "@/lib/site-config";
 import type { SeoLandingPage } from "@/lib/seo/types";
 
 type StructuredDataProps = {
@@ -21,16 +19,6 @@ export function StructuredData({ page }: StructuredDataProps) {
 
   if (page.kind === "service" || page.kind === "programmatic") {
     schemas.push(serviceSchema(page));
-  }
-
-  if (page.kind === "product") {
-    schemas.push(
-      productSchema({
-        name: page.serviceName ?? page.h1,
-        description: page.description,
-        url: `${SITE_URL}${page.path}`,
-      }),
-    );
   }
 
   return (

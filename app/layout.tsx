@@ -106,7 +106,10 @@ export default function RootLayout({
         <SmoothScroll>
           <JsonLd />
           <Navigation />
-          <main id="main-content" className="relative z-10 min-h-screen">
+          <main
+            id="main-content"
+            className="clykur-content-justify relative z-10 min-h-screen"
+          >
             {/* IntersectionObserver target: first ~20px of scroll (no scroll listener for nav background). */}
             <div
               id="nav-scroll-sentinel"

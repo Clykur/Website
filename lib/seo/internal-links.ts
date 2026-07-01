@@ -10,7 +10,10 @@ const SERVICE_EXTRA: Record<string, SeoRelatedLink[]> = {
     { href: "/case-studies", label: "Case studies" },
   ],
   "product-engineering": [
-    { href: "/products/cusown", label: "Cusown product" },
+    {
+      href: "/services/startup-mvp-development",
+      label: "Startup MVP development",
+    },
     { href: "/case-studies", label: "Design system outcomes" },
   ],
   "startup-mvp-development": [
@@ -32,21 +35,6 @@ const SERVICE_EXTRA: Record<string, SeoRelatedLink[]> = {
   ],
 };
 
-const PRODUCT_EXTRA: Record<string, SeoRelatedLink[]> = {
-  cusown: [
-    { href: "/blog/how-we-built-cusown", label: "How we built Cusown" },
-    {
-      href: "/appointment-booking-software-development",
-      label: "Booking software development",
-    },
-    { href: "/industries/healthcare", label: "Healthcare software" },
-  ],
-  freetrust: [
-    { href: "/industries/saas", label: "SaaS development" },
-    { href: "/services/product-engineering", label: "Product engineering" },
-  ],
-};
-
 export function mergeRelatedLinks(page: SeoLandingPage): SeoRelatedLink[] {
   const seen = new Set<string>();
   const out: SeoRelatedLink[] = [];
@@ -61,9 +49,6 @@ export function mergeRelatedLinks(page: SeoLandingPage): SeoRelatedLink[] {
 
   if (page.kind === "service" && SERVICE_EXTRA[page.slug]) {
     SERVICE_EXTRA[page.slug].forEach(push);
-  }
-  if (page.kind === "product" && PRODUCT_EXTRA[page.slug]) {
-    PRODUCT_EXTRA[page.slug].forEach(push);
   }
 
   push({

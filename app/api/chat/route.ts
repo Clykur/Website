@@ -29,6 +29,7 @@ import {
   parseChatRequestBody,
 } from "@/lib/security/chat-guard";
 import { verifyTurnstileToken } from "@/lib/security/turnstile";
+import { isOversizedApiBody } from "@/lib/security/api-request-limits";
 
 export const maxDuration = 30;
 export const runtime = "nodejs";
@@ -39,6 +40,10 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    if (isOversizedApiBody(req)) {
+      return new Response("Payload too large", { status: 413 });
+    }
+
     if (!isAllowedChatOrigin(req)) {
       return new Response("Forbidden", { status: 403 });
     }
@@ -79,7 +84,7 @@ export async function POST(req: Request) {
     if (looksLikePromptInjection(userQuestion)) {
       return staticAssistantUIMessageResponse(
         sanitizeAssistantCopy(
-          "I can only answer questions about Clykur. Try [Services](/services), [Products](/products), or [Contact](/contact).",
+          "I can only answer questions about Clykur. Try [Services](/services), [Process](/process), or [Contact](/contact).",
         ),
       );
     }

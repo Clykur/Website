@@ -6,6 +6,7 @@ type DiscoveryCtaProps = {
   className?: string;
   /** Primary button width on mobile */
   fullWidthMobile?: boolean;
+  primaryLabel?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
 };
@@ -13,6 +14,7 @@ type DiscoveryCtaProps = {
 export function DiscoveryCta({
   className,
   fullWidthMobile = true,
+  primaryLabel = "Start a project",
   secondaryHref = "#services",
   secondaryLabel = "View services",
 }: DiscoveryCtaProps) {
@@ -31,7 +33,7 @@ export function DiscoveryCta({
         href="/contact#inquiry-form"
         className={cn(primaryGradientCtaClassName, width)}
       >
-        Start a project
+        {primaryLabel}
       </Link>
       <Link
         href={secondaryHref}

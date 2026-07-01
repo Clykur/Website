@@ -23,7 +23,7 @@ const OFF_TOPIC_SAMPLES = [
 
 const CLYKUR_SHOULD_LLM = [
   "what services do you offer?",
-  "tell me about cusown",
+  "how does your process work?",
   "do you work with startups in the US",
   "what is on the compliance page",
   "how do I apply for careers",
@@ -147,9 +147,9 @@ const mockChunks: KnowledgeChunkRow[] = [
   },
   {
     id: "4",
-    url: "https://www.clykur.com/products",
-    title: "Products",
-    content: "Cusown and FreeTrust.",
+    url: "https://www.clykur.com/process",
+    title: "Process",
+    content: "Five-stage delivery pipeline.",
     similarity: 0.75,
   },
 ];

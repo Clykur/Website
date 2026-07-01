@@ -1,17 +1,14 @@
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowUpRight,
-  BadgeCheck,
   BookMarked,
   BriefcaseBusiness,
   Building2,
-  CalendarClock,
   Cloud,
   Factory,
   GalleryVerticalEnd,
   GraduationCap,
   HeartPulse,
-  LayoutPanelTop,
   Mail,
   MessageCircleQuestion,
   MonitorSmartphone,
@@ -69,13 +66,8 @@ export const MOBILE_QUICK_LINKS: NavItem[] = [
     id: "quick-services",
     icon: Workflow,
   },
-  {
-    href: "/products",
-    label: "Products",
-    id: "quick-products",
-    icon: LayoutPanelTop,
-  },
   { href: "/work", label: "Work", id: "quick-work", icon: GalleryVerticalEnd },
+  { href: "/process", label: "Process", id: "quick-process", icon: Route },
   { href: "/contact", label: "Contact", id: "quick-contact", icon: Mail },
 ];
 
@@ -118,38 +110,6 @@ export const NAV_STRUCTURE: NavBlock[] = [
             href: "/services",
             label: "View All Services",
             id: "svc-all",
-            icon: ArrowUpRight,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: "group",
-    id: "products",
-    label: "Products",
-    icon: LayoutPanelTop,
-    menuAlign: "center",
-    sections: [
-      {
-        heading: "Products",
-        items: [
-          {
-            href: "/products/cusown",
-            label: "Cusown",
-            id: "prod-cusown",
-            icon: CalendarClock,
-          },
-          {
-            href: "/products/freetrust",
-            label: "FreeTrust",
-            id: "prod-freetrust",
-            icon: BadgeCheck,
-          },
-          {
-            href: "/products",
-            label: "View All Products",
-            id: "prod-all",
             icon: ArrowUpRight,
           },
         ],
@@ -283,11 +243,6 @@ export const FOOTER_LINKS = {
     { href: "/services/product-engineering", label: "Product Engineering" },
     { href: "/services/mvp-development", label: "MVP Development" },
     { href: "/services", label: "All Services" },
-  ],
-  products: [
-    { href: "/products/cusown", label: "Cusown" },
-    { href: "/products/freetrust", label: "FreeTrust" },
-    { href: "/products", label: "All Products" },
   ],
   resources: [
     { href: "/blog", label: "Blog" },

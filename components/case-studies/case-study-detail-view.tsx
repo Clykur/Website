@@ -259,25 +259,6 @@ export function CaseStudyDetailView({ study }: CaseStudyDetailViewProps) {
                 </li>
               ))}
             </ul>
-            {study.productSlugs?.length ? (
-              <div className="mt-6 border-t border-foreground/[0.06] pt-6">
-                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
-                  Related products
-                </p>
-                <ul className="flex flex-wrap gap-3">
-                  {study.productSlugs.map((slug) => (
-                    <li key={slug}>
-                      <Link
-                        href={`/products/${slug}`}
-                        className="text-[14px] font-semibold text-[#ff3b1f] hover:underline"
-                      >
-                        {slug === "freetrust" ? "FreeTrust" : "Cusown"}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
           </aside>
 
           <aside className="mb-14" aria-labelledby="cs-related-studies">

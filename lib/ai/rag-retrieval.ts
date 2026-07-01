@@ -56,7 +56,6 @@ function pageBoost(pathname: string): number {
   if (pathname === "/") return 0.9;
   if (pathname.startsWith("/services")) return 0.8;
   if (pathname.startsWith("/case-studies")) return 0.7;
-  if (pathname.startsWith("/products")) return 0.7;
   if (pathname.startsWith("/blog")) return 0.5;
   if (LEGAL_CAREERS_PATH.test(pathname)) return 0.2;
   if (pathname.startsWith("/careers")) return 0.2;

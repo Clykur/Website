@@ -2,6 +2,7 @@ import {
   StoryPageBackdrop,
   StoryPageHero,
   StoryPageMain,
+  storyBodyProseClass,
   storySectionH2Class,
   storySurfaceCardClass,
 } from "@/components/layout/story-page-shell";
@@ -60,7 +61,7 @@ function ContentSection({
           <p
             key={index}
             className={cn(
-              "text-[15px] leading-[1.85] md:text-[16px]",
+              storyBodyProseClass,
               emphasis === "primary"
                 ? "text-foreground/62"
                 : "text-foreground/55",

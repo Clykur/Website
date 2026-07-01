@@ -60,7 +60,8 @@ export function Footer() {
             </div>
             <p className="text-[14px] leading-[1.75] text-foreground/70">
               Product engineering and software delivery for teams that need
-              execution done right.
+              execution done right. Building AI-native digital products that
+              help startups and enterprises move faster.
             </p>
             <p className="text-[12px] leading-relaxed tracking-wide text-foreground/45">
               © {year} CLYKUR · All rights reserved
@@ -68,7 +69,7 @@ export function Footer() {
           </div>
 
           <div className="md:col-span-1 lg:col-span-9">
-            <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8 lg:grid-cols-5 lg:gap-x-6">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-6">
               <nav
                 className="min-w-0 space-y-4"
                 aria-labelledby="footer-services-heading"
@@ -78,23 +79,6 @@ export function Footer() {
                 </h2>
                 <ul className="space-y-0">
                   {FOOTER_LINKS.services.map((item) => (
-                    <li key={item.href}>
-                      <Link href={item.href} className={linkClass}>
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-              <nav
-                className="min-w-0 space-y-4"
-                aria-labelledby="footer-products-heading"
-              >
-                <h2 id="footer-products-heading" className={navHeadingClass}>
-                  Products
-                </h2>
-                <ul className="space-y-0">
-                  {FOOTER_LINKS.products.map((item) => (
                     <li key={item.href}>
                       <Link href={item.href} className={linkClass}>
                         {item.label}

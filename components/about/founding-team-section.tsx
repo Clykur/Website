@@ -28,8 +28,8 @@ export function FoundingTeamSection() {
           Founding team
         </h2>
         <p className={cn("mb-8 max-w-2xl md:mb-10", storyBodyProseClass)}>
-          Clykur is led by founders who build products and ship client systems
-          with the same standards we hold for Cusown and FreeTrust.
+          Clykur is led by founders who build client systems with production
+          standards across engineering, UX, and delivery.
         </p>
 
         <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8 lg:gap-12">

@@ -1,27 +1,22 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { ScrollReveal } from "@/components/landing/scroll-reveal";
+import { CONTACT_EMAIL, CONTACT_PHONE_WHATSAPP } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 
-const allFaqs = [
-  {
-    question: "What is Cusown?",
-    answer:
-      "Cusown is our smart appointment and slot booking platform for service businesses. It helps manage bookings, reduce no-shows, and scale scheduling with automation and analytics.",
-  },
-  {
-    question: "What is FreeTrust?",
-    answer:
-      "FreeTrust is a trust layer for freelancers and clients. It provides credibility validation, transparent profiles, trust scoring, and a future blockchain verification layer so both sides can work with confidence.",
-  },
-  {
-    question: "Who is Cusown for?",
-    answer:
-      "Cusown is for service businesses that take appointments salons, clinics, consultants, agencies. Anyone who needs reliable booking, fewer no-shows, and scalable scheduling.",
-  },
+const faqInlineLinkClass =
+  "font-semibold text-[#ff3b1f] underline-offset-2 transition-colors hover:underline";
+
+type FaqItem = {
+  question: string;
+  answer: ReactNode;
+};
+
+const allFaqs: FaqItem[] = [
   {
     question: "How long does a typical project take?",
     answer:
@@ -49,8 +44,28 @@ const allFaqs = [
   },
   {
     question: "Can we book a call this week?",
-    answer:
-      "Yes. Submit the [contact form](/contact#inquiry-form) with timeline and budget band, or WhatsApp or email info@clykur.com. We reply with times for a short call.",
+    answer: (
+      <>
+        Yes. Submit our{" "}
+        <Link href="/contact#inquiry-form" className={faqInlineLinkClass}>
+          contact form
+        </Link>{" "}
+        with your timeline and budget band, or message us on{" "}
+        <a
+          href={`https://wa.me/${CONTACT_PHONE_WHATSAPP}`}
+          className={faqInlineLinkClass}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp
+        </a>{" "}
+        or email{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`} className={faqInlineLinkClass}>
+          {CONTACT_EMAIL}
+        </a>
+        . We reply with available times for a short discovery call.
+      </>
+    ),
   },
 ];
 
@@ -103,7 +118,7 @@ export function FAQ({ variant = "full" }: FAQProps) {
             Frequently asked questions
           </h2>
           <p className="mx-auto max-w-xl text-[15px] leading-relaxed text-foreground/52 md:text-base">
-            Our products, services, process, and how we work together.
+            Our services, process, and how we work together.
           </p>
         </header>
 
@@ -145,9 +160,9 @@ export function FAQ({ variant = "full" }: FAQProps) {
                   )}
                 >
                   <div className="min-h-0 overflow-hidden">
-                    <p className="pb-7 pr-2 text-[15px] leading-[1.75] text-foreground/55 md:pb-8 md:text-[15px]">
+                    <div className="pb-7 pr-2 text-pretty text-justify [hyphens:auto] text-[15px] leading-[1.75] text-foreground/55 md:pb-8 md:text-[15px]">
                       {faq.answer}
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ export function getLlmUnavailableReply(): {
     `Our assistant is at capacity for live replies right now. You can still browse:
 
 • [Services](/services)
-• [Products](/products)
+• [Process](/process)
 • [About Clykur](/about)
 • [Contact](/contact)`,
   );

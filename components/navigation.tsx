@@ -4,7 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X, type LucideIcon } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Menu,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { primaryGradientCtaClassName } from "@/lib/cta-styles";
 import {
@@ -17,7 +23,6 @@ import {
 import { cn } from "@/lib/utils";
 
 const PAGE_SECTION_ORDER = [
-  "products",
   "services",
   "about",
   "process",
@@ -31,7 +36,6 @@ const PAGE_SECTION_ORDER = [
 function mapScrollSectionToNavId(raw: string): string {
   if (!raw) return "";
   const navSectionIds = new Set([
-    "products",
     "services",
     "about",
     "process",
@@ -58,8 +62,6 @@ function isNavItemActive(
   if (pathname === href) return true;
   if (href === "/services")
     return pathname === "/services" || pathname.startsWith("/services/");
-  if (href === "/products")
-    return pathname === "/products" || pathname.startsWith("/products/");
   if (href === "/careers")
     return pathname === "/careers" || pathname.startsWith("/careers/");
   if (href.startsWith("/industries/")) return pathname === href;
@@ -96,14 +98,14 @@ function NavIconBadge({
   return (
     <span
       className={cn(
-        "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] transition-[border-color,background-color,color,transform] duration-200",
+        "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border shadow-[0_1px_0_rgba(255,255,255,0.95)_inset] transition-[border-color,background-color,color,transform] duration-200",
         active
           ? "border-[#ff3b1f]/35 bg-gradient-to-br from-[#ff3b1f]/14 via-[#ff3b1f]/[0.06] to-white text-[#ff3b1f]"
           : "border-foreground/[0.08] bg-gradient-to-br from-white via-[#fafaf9] to-[#f5f5f4] text-foreground/50 group-hover/nav-row:border-[#ff3b1f]/22 group-hover/nav-row:text-[#ff3b1f] group-hover/nav-row:shadow-[0_8px_20px_-12px_rgba(255,59,31,0.35)]",
       )}
       aria-hidden
     >
-      <Icon className="h-[17px] w-[17px]" strokeWidth={1.65} />
+      <Icon className="h-[18px] w-[18px]" strokeWidth={1.65} />
     </span>
   );
 }
@@ -132,10 +134,10 @@ function NavProcessSheet({
   return (
     <div className="w-full">
       <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-foreground/[0.1] bg-white/95 shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_28px_64px_-32px_rgba(10,10,10,0.16)] backdrop-blur-xl">
-        <div className="flex items-center gap-3 border-b border-foreground/[0.08] bg-gradient-to-r from-[#fafaf9] via-white to-[#fafaf9] px-4 py-3.5 sm:px-5">
+        <div className="flex items-center gap-3.5 border-b border-foreground/[0.08] bg-gradient-to-r from-[#fafaf9] via-white to-[#fafaf9] px-5 py-4 sm:px-6">
           <NavIconBadge icon={GroupIcon} active />
           <div className="min-w-0">
-            <p className="font-poppins text-[13px] font-semibold tracking-[-0.02em] text-foreground">
+            <p className="font-poppins text-[14px] font-semibold tracking-[-0.02em] text-foreground">
               {group.label}
             </p>
             <p className="font-mono text-[9px] font-medium uppercase tracking-[0.16em] text-foreground/40">
@@ -149,37 +151,41 @@ function NavProcessSheet({
           aria-hidden
         />
 
-        <div className="flex min-h-[11.75rem] flex-col bg-white p-2.5 sm:p-3">
-          <ol className="grid flex-1 grid-cols-2 content-start gap-1.5 lg:grid-cols-3">
+        <div className="flex min-h-[15.5rem] flex-col bg-white p-3 sm:p-4">
+          <ol className="grid flex-1 grid-cols-1 content-start gap-2 sm:grid-cols-2">
             {linkItems.map((item) => {
               const itemActive = isNavItemActive(item, pathname, activeSection);
               const ItemIcon = item.icon;
 
               return (
-                <li key={item.id} className="min-h-[3.25rem]">
+                <li key={item.id}>
                   <Link
                     href={item.href}
                     role="menuitem"
                     onClick={onPick}
                     className={cn(
-                      "group/nav-row flex h-full min-h-[3.25rem] items-center gap-3 rounded-xl px-2.5 py-2.5 transition-all duration-200",
+                      "group/nav-row grid h-full min-h-[3.75rem] grid-cols-[auto_minmax(0,1fr)_1.125rem] items-center gap-3 rounded-xl px-3 py-3 transition-all duration-200",
                       itemActive
                         ? "bg-[#ff3b1f]/[0.07] ring-1 ring-[#ff3b1f]/15"
                         : "hover:bg-[#fafaf9] hover:ring-1 hover:ring-foreground/[0.06]",
                     )}
                   >
                     <NavIconBadge icon={ItemIcon} active={itemActive} />
-                    <span className="min-w-0 flex-1 font-poppins text-[13px] font-medium leading-snug tracking-[-0.02em] text-foreground">
+                    <span className="min-w-0 font-poppins text-[14px] font-medium leading-snug tracking-[-0.02em] text-foreground">
                       {item.label}
                     </span>
-                    <ChevronDown
-                      className={cn(
-                        "h-3.5 w-3.5 shrink-0 -rotate-90 opacity-0 transition-[opacity,transform] duration-200 group-hover/nav-row:opacity-45",
-                        itemActive && "opacity-60 text-[#ff3b1f]",
-                      )}
-                      strokeWidth={2}
+                    <span
+                      className="flex h-full items-center justify-end"
                       aria-hidden
-                    />
+                    >
+                      <ChevronRight
+                        className={cn(
+                          "h-4 w-4 shrink-0 text-foreground/30 transition-colors duration-200 group-hover/nav-row:text-[#ff3b1f]/55",
+                          itemActive && "text-[#ff3b1f]/70",
+                        )}
+                        strokeWidth={2}
+                      />
+                    </span>
                   </Link>
                 </li>
               );
@@ -187,7 +193,7 @@ function NavProcessSheet({
           </ol>
 
           {viewAllItems.length > 0 ? (
-            <div className="mt-2 grid gap-1.5 border-t border-foreground/[0.06] pt-2">
+            <div className="mt-3 grid gap-2 border-t border-foreground/[0.06] pt-3">
               {viewAllItems.map((item) => {
                 const itemActive = isNavItemActive(
                   item,
@@ -201,13 +207,13 @@ function NavProcessSheet({
                     role="menuitem"
                     onClick={onPick}
                     className={cn(
-                      "group/nav-row flex min-h-[2.75rem] items-center justify-center gap-2 rounded-xl border border-dashed border-foreground/[0.12] bg-[#fafaf9]/60 px-3 py-2 text-[13px] font-semibold tracking-[-0.01em] text-foreground/70 transition-colors hover:border-[#ff3b1f]/25 hover:text-[#ff3b1f]",
+                      "group/nav-row relative flex min-h-[3rem] items-center justify-center rounded-xl border border-dashed border-foreground/[0.12] bg-[#fafaf9]/60 px-4 py-2.5 pr-11 text-[14px] font-semibold tracking-[-0.01em] text-foreground/70 transition-colors hover:border-[#ff3b1f]/25 hover:text-[#ff3b1f]",
                       itemActive && "border-[#ff3b1f]/30 text-[#ff3b1f]",
                     )}
                   >
                     {item.label}
-                    <ChevronDown
-                      className="h-3.5 w-3.5 -rotate-90 opacity-50"
+                    <ChevronRight
+                      className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 shrink-0 text-foreground/35 group-hover/nav-row:text-[#ff3b1f]/60"
                       strokeWidth={2}
                       aria-hidden
                     />
@@ -359,7 +365,7 @@ export function Navigation() {
           <div className="pointer-events-none absolute inset-x-0 top-1/2 z-[101] hidden -translate-y-1/2 justify-center md:flex">
             <div
               ref={dropdownContainerRef}
-              className="pointer-events-auto relative w-max max-w-[calc(100vw-10rem)] sm:max-w-[calc(100vw-12rem)] lg:max-w-[calc(100vw-18rem)] xl:max-w-[42rem]"
+              className="pointer-events-auto relative w-max max-w-[calc(100vw-10rem)] sm:max-w-[calc(100vw-12rem)] lg:max-w-[calc(100vw-18rem)]"
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <div className="flex flex-wrap items-center justify-center gap-0.5 lg:gap-1">
@@ -453,7 +459,7 @@ export function Navigation() {
 
               <AnimatePresence mode="wait">
                 {openNavGroup ? (
-                  <div className="absolute left-0 right-0 top-full z-[110] w-full pt-2">
+                  <div className="absolute left-1/2 top-full z-[110] w-[min(calc(100vw-2rem),32rem)] -translate-x-1/2 pt-2.5 sm:w-[min(calc(100vw-2rem),38rem)] lg:w-[min(calc(100vw-2rem),44rem)]">
                     <motion.div
                       key={openNavGroup.id}
                       role="menu"

@@ -2,7 +2,7 @@ import type { RagConfidenceBand } from "@/lib/ai/rag-retrieval";
 import { getChatCanonicalFactsBlock } from "@/lib/ai/chat-grounding";
 import { getClykurAboutSummaryHint } from "@/lib/ai/chat-identity";
 
-const DEFAULT_LINKS = ["/about", "/services", "/products", "/contact"];
+const DEFAULT_LINKS = ["/about", "/services", "/process", "/contact"];
 
 export function buildSystemPrompt(input: {
   confidenceBand: RagConfidenceBand;
@@ -26,7 +26,7 @@ export function buildSystemPrompt(input: {
 
 Rules:
 - Always use provided context when available.
-- If context is weak, use reasoning but stay aligned with Clykur services and products.
+- If context is weak, use reasoning but stay aligned with Clykur services and process.
 - Never mix unrelated pages into one answer (do not combine careers, legal, refund, or hiring copy unless the user asked about those topics).
 - Never show legal or careers content unless the user explicitly asked about it.
 - Be concise and accurate.

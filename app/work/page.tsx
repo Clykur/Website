@@ -24,7 +24,7 @@ export default function WorkIndexPage() {
     <StoryPageBackdrop>
       <StoryPageHero
         titleId="work-page-heading"
-        title="Client work"
+        title="Our Works"
         eyebrow="Portfolio"
         lede="Production sites we design, build, and ship. Every project below is live."
         breadcrumbs={[

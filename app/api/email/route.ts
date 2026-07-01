@@ -2,18 +2,22 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/db/supabase";
 import { sendEmail } from "@/lib/email/resend";
 import { EmailSchema } from "@/lib/types/email";
+import { isOversizedApiBody } from "@/lib/security/api-request-limits";
+
+import { requireAuthenticatedUser } from "@/lib/api/require-authenticated-user";
+
+export const maxDuration = 25;
+export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    const supabase = createClient();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await requireAuthenticatedUser();
 
     if (!user) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
+
+    const supabase = createClient();
 
     const { data, error } = await supabase.from("emails").select("*");
 
@@ -37,6 +41,18 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    if (isOversizedApiBody(req)) {
+      return NextResponse.json(
+        { message: "Payload too large" },
+        { status: 413 },
+      );
+    }
+
+    const user = await requireAuthenticatedUser();
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const validation = EmailSchema.safeParse(body);
 

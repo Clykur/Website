@@ -10,7 +10,6 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/lib/site-config";
-import { PRODUCTS } from "@/lib/products";
 import { formatSocialLinksMarkdown } from "@/lib/social-links";
 
 function absolute(path: string): string {
@@ -29,15 +28,11 @@ export function buildLlmsTxtBrief(): string {
 - Home: ${SITE_URL}/
 - Contact: ${absolute("/contact")}
 - Services: ${absolute("/services")}
-- Products: ${absolute("/products")}
 - Client work (live sites): ${absolute("/work")}
 - Case studies: ${absolute("/case-studies")}
 - Blog: ${absolute("/blog")}
 - FAQ: ${absolute("/faq")}
 - Careers: ${absolute("/careers")}
-
-## Products
-${PRODUCTS.map((p) => `- ${p.name}: ${p.tagline} — ${p.url}`).join("\n")}
 
 ## Contact
 - Email: ${CONTACT_EMAIL}
@@ -85,7 +80,7 @@ export function buildLlmsTxtFull(): string {
 Name: ${SITE_NAME}
 URL: ${SITE_URL}
 Description: ${DEFAULT_META.description}
-Business model: Software product company (Cusown, FreeTrust) and engineering services partner (web, mobile, UI/UX, product engineering, MVP).
+Business model: AI-native product engineering and software delivery (web, mobile, UI/UX, product engineering, MVP).
 
 ## Contact & sales
 Email: ${CONTACT_EMAIL}
@@ -97,15 +92,6 @@ Compliance: ${absolute("/compliance")}
 
 ## Social & trust
 ${formatSocialLinksMarkdown()}
-
-## Products (owned SaaS)
-${PRODUCTS.map(
-  (p) => `### ${p.name}
-URL: ${p.url}
-Tagline: ${p.tagline}
-Summary: ${p.description}
-Benefits: ${p.benefits.join("; ")}`,
-).join("\n\n")}
 
 ## Services
 ${servicesBlock}

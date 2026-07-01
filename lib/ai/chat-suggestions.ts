@@ -18,8 +18,8 @@ export function getDefaultAssistantExtras(): ChatMessageExtras {
     followUps: getDefaultQuickPrompts(),
     relatedPages: [
       { label: "Services", href: "/services" },
-      { label: "Products", href: "/products" },
       { label: "Case studies", href: "/case-studies" },
+      { label: "Process", href: "/process" },
       { label: "Contact", href: "/contact" },
     ],
   };

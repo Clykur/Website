@@ -87,48 +87,6 @@ export const blogPosts0107: BlogPost[] = [
     ],
   },
   {
-    slug: "how-we-built-cusown",
-    title: "How We Built Cusown",
-    description:
-      "Product decisions behind Clykur's appointment booking platform Cusown.",
-    datePublished: "2026-06-01",
-    readingMinutes: 10,
-    sections: [
-      {
-        heading: "Problem focus",
-        paragraphs: [
-          "Service businesses lose revenue to no-shows, double bookings, and manual scheduling across phone, WhatsApp, and spreadsheets.",
-          "Cusown targets reliability and automation first, operators need predictable bookings, not another generic calendar widget with ten unused settings.",
-          "We interviewed salon, clinic, and studio operators early to learn which failures actually cost money versus which features were wish-list noise.",
-        ],
-      },
-      {
-        heading: "Engineering principles",
-        paragraphs: [
-          "Clear state models for slots, staff, services, and notifications reduce support load when edge cases appear in the real world.",
-          "Performance and accessibility are part of the core product, not a late audit before a big client demo.",
-          "We instrument key flows (book, reschedule, cancel) so product and engineering can see drop-off without guessing.",
-        ],
-      },
-      {
-        heading: "Design and onboarding",
-        paragraphs: [
-          "Operators set up in minutes: business hours, services, and staff map to how they already think about their day, not how engineers draw ER diagrams.",
-          "Customer-facing booking stays minimal, few steps, obvious confirmation, and reminders that respect local time and channel preferences.",
-          "Empty states and error copy are written for stressed front-desk staff, not developers reading stack traces.",
-        ],
-      },
-      {
-        heading: "What's next",
-        paragraphs: [
-          "We continue to tighten integrations with payments, CRM, and marketing tools where operators already work.",
-          "Cusown is both a product we sell and a reference for how Clykur ships: opinionated scope, measurable outcomes, and room to grow without a rewrite.",
-          "Explore Cusown on our products page or talk to us if you are building scheduling into your own platform, we often partner on custom product work too.",
-        ],
-      },
-    ],
-  },
-  {
     slug: "choosing-tech-stack-startup-2026",
     title: "How to Choose a Tech Stack for Your Startup in 2026",
     description:

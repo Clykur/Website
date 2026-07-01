@@ -80,7 +80,7 @@ export const blogPosts0814: BlogPost[] = [
         paragraphs: [
           "OpenAPI or typed SDKs reduce integration time for partners and internal front-end teams.",
           "Contract tests between API and clients catch breaking changes in CI before users do.",
-          "Clykur ships APIs with clear boundaries when we build full-stack products for clients and our own platforms like Cusown.",
+          "Clykur ships APIs with clear boundaries when we build full-stack software for clients.",
         ],
       },
     ],

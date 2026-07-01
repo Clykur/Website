@@ -29,7 +29,7 @@ const CONTACT_FAQS = [
   {
     question: "What services does Clykur provide?",
     answer:
-      "Web development, mobile app development, UI/UX design, product engineering, and MVP development, plus our products Cusown and FreeTrust.",
+      "Web development, mobile app development, UI/UX design, product engineering, and MVP development.",
   },
   {
     question: "Who owns the code and IP?",

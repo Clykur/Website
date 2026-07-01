@@ -36,6 +36,8 @@ const llmDailyLimiter = createLimiter(
   "24 h",
 );
 
+import { memorySlidingRateLimit } from "@/lib/security/memory-rate-limit";
+
 type MemoryBucket = { timestamps: number[] };
 
 const memoryBurst = new Map<string, MemoryBucket>();
@@ -48,20 +50,7 @@ function memorySlidingLimit(
   limit: number,
   windowMs: number,
 ): boolean {
-  const now = Date.now();
-  const bucket = store.get(key) ?? { timestamps: [] };
-  bucket.timestamps = bucket.timestamps.filter((t) => now - t < windowMs);
-  if (bucket.timestamps.length >= limit) {
-    store.set(key, bucket);
-    return false;
-  }
-  bucket.timestamps.push(now);
-  store.set(key, bucket);
-  if (store.size > 8000) {
-    const oldest = store.keys().next().value;
-    if (oldest) store.delete(oldest);
-  }
-  return true;
+  return memorySlidingRateLimit(store, key, limit, windowMs).success;
 }
 
 export type ChatRateLimitReason = "burst" | "hourly" | "llm_daily";
@@ -86,8 +75,21 @@ async function limitWithUpstash(
   key: string,
 ): Promise<boolean | null> {
   if (!limiter) return null;
-  const { success } = await limiter.limit(key);
-  return success;
+  try {
+    const { success } = await Promise.race([
+      limiter.limit(key),
+      new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error("upstash_timeout")), 2_500);
+      }),
+    ]);
+    return success;
+  } catch (err) {
+    console.warn(
+      "[chat-rate-limit] Upstash unavailable, using in-memory fallback:",
+      err,
+    );
+    return null;
+  }
 }
 
 export async function limitChatRequest(
@@ -159,6 +161,6 @@ export function rateLimitUserMessage(reason: ChatRateLimitReason): string {
     case "hourly":
       return "You have reached the hourly chat limit. Please try again later or [contact us](/contact) directly.";
     case "llm_daily":
-      return "Live assistant capacity is reached for today. Browse [Services](/services), [Products](/products), or [Contact](/contact).";
+      return "Live assistant capacity is reached for today. Browse [Services](/services), [Case studies](/case-studies), or [Contact](/contact).";
   }
 }

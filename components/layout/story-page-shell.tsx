@@ -41,13 +41,13 @@ export const storyHeroH1Class =
   "font-poppins text-[clamp(2.5rem,6vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.035em] text-foreground";
 
 export const storyHeroLedeClass =
-  "mt-6 max-w-2xl text-[15px] leading-[1.8] text-foreground/48 md:text-lg";
+  "mt-6 max-w-2xl text-pretty text-justify [hyphens:auto] text-[15px] leading-[1.8] text-foreground/48 md:text-lg";
 
 export const storySectionH2Class =
-  "font-poppins text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.02em] text-foreground";
+  "font-poppins text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.02em] text-foreground text-left";
 
 export const storyBodyProseClass =
-  "text-[15px] leading-[1.85] text-foreground/62 md:text-[16px]";
+  "text-pretty text-justify [hyphens:auto] text-[15px] leading-[1.85] text-foreground/62 md:text-[16px]";
 
 export const storySurfaceCardClass =
   "rounded-2xl border border-foreground/[0.08] bg-white shadow-[0_1px_0_rgba(255,255,255,1)_inset,0_24px_48px_-32px_rgba(10,10,10,0.08)]";

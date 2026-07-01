@@ -5,8 +5,8 @@
 ## Company
 Name: Clykur
 URL: https://www.clykur.com
-Description: Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.
-Business model: Software product company (Cusown, FreeTrust) and engineering services partner (web, mobile, UI/UX, product engineering, MVP).
+Description: Clykur is an AI-native product engineering company. We build production-ready software with AI-assisted delivery and experienced engineers who ensure quality, from SaaS products to custom engineering partnerships.
+Business model: AI-native product engineering and software delivery (web, mobile, UI/UX, product engineering, MVP).
 
 ## Contact & sales
 Email: info@clykur.com
@@ -24,19 +24,6 @@ Compliance: https://www.clykur.com/compliance
 • [Product Hunt](https://www.producthunt.com/products/clykur)
 • [Dev.to](https://dev.to/clykur)
 • [Hashnode](https://hashnode.com/@clykur)
-
-## Products (owned SaaS)
-### Cusown
-URL: https://cusown.clykur.com
-Tagline: Smart appointment and slot booking platform
-Summary: A modern scheduling platform that helps businesses manage bookings, appointments, and customer interactions efficiently. Built for service businesses that need reliability at scale.
-Benefits: Automation of bookings and slot scheduling; Customer management and retention; Analytics and actionable insights; Scalable SaaS infrastructure
-
-### FreeTrust
-URL: https://trustbuilder.clykur.com
-Tagline: The Trust Layer Freelancing Deserves
-Summary: A platform designed to improve trust between freelancers and clients through transparent credibility and reputation validation. Institutional-grade protection for the future of work.
-Benefits: Freelancer trust infrastructure and credibility validation; Transparent professional profiles; Trust scoring systems; Future blockchain verification layer
 
 ## Services
 - Web development: https://www.clykur.com/services/web-development
@@ -58,17 +45,11 @@ Benefits: Freelancer trust infrastructure and credibility validation; Transparen
 - Pavan Travels (Travel & Transport): https://pavantravels.vercel.app
 
 ## Content scale
-Blog posts: 21
+Blog posts: 20
 Open roles: 1
-Public sitemap URLs: 68
+Public sitemap URLs: 62
 
 ## FAQ (canonical answers)
-Q: What is Cusown?
-A: Cusown is Clykur's smart appointment and slot booking platform for service businesses.
-
-Q: What is FreeTrust?
-A: FreeTrust is a trust layer for freelancers and clients with credibility validation and transparent profiles.
-
 Q: What services does Clykur provide?
 A: Web development, mobile app development, UI/UX design, product engineering, and startup MVP development.
 
@@ -96,7 +77,6 @@ https://www.clykur.com/blog/choosing-tech-stack-startup-2026
 https://www.clykur.com/blog/cicd-early-stage-startups
 https://www.clykur.com/blog/design-systems-small-teams
 https://www.clykur.com/blog/how-clykur-runs-client-projects
-https://www.clykur.com/blog/how-we-built-cusown
 https://www.clykur.com/blog/in-house-vs-outsourcing-engineering
 https://www.clykur.com/blog/msme-software-partners-india
 https://www.clykur.com/blog/mvp-development-cost-2026
@@ -113,10 +93,8 @@ https://www.clykur.com/blog/writing-technical-brief
 https://www.clykur.com/careers
 https://www.clykur.com/careers/software-engineer-3ye6yv
 https://www.clykur.com/case-studies
-https://www.clykur.com/case-studies/cusown-booking-platform
 https://www.clykur.com/case-studies/ecommerce-marketplace-frontend
 https://www.clykur.com/case-studies/enterprise-saas-design-system
-https://www.clykur.com/case-studies/freetrust-trust-platform
 https://www.clykur.com/case-studies/live-collaboration-workspace
 https://www.clykur.com/case-studies/yogisthaan-cafe-website
 https://www.clykur.com/compliance
@@ -137,9 +115,6 @@ https://www.clykur.com/nextjs-product-team-extension
 https://www.clykur.com/privacy-policy
 https://www.clykur.com/process
 https://www.clykur.com/product-development-company-india
-https://www.clykur.com/products
-https://www.clykur.com/products/cusown
-https://www.clykur.com/products/freetrust
 https://www.clykur.com/refund-policy
 https://www.clykur.com/security
 https://www.clykur.com/services

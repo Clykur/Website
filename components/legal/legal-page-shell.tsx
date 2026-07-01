@@ -16,9 +16,8 @@ export const LEGAL_VENUE_CITY = "Bengaluru, Karnataka, India";
 const linkClass =
   "font-medium text-[#ff3b1f] underline-offset-[3px] transition-colors hover:underline";
 
-/** Left-aligned on small screens (justified narrow columns read poorly); justify from md up. */
-const justifyProse =
-  "text-left break-words text-pretty md:text-justify md:[hyphens:auto]";
+/** Justified body copy in legal and policy pages. */
+const justifyProse = "break-words text-pretty text-justify [hyphens:auto]";
 
 export const legalSectionClass = "space-y-4 md:space-y-5";
 

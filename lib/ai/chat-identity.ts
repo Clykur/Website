@@ -34,7 +34,7 @@ export function getIdentityCanonicalResponse(): {
   const p2 = ABOUT_HUB.sections[0]?.paragraphs[1] ?? ABOUT_HUB.lede;
 
   const text = sanitizeAssistantCopy(
-    `**Clykur** is a software product company and engineering partner.
+    `**Clykur** is an AI-native product engineering company.
 
 ${p1}
 

@@ -120,17 +120,14 @@ export function About() {
           </h3>
           <div className="mt-8 w-full space-y-6 text-justify text-[15px] leading-[1.75] text-foreground/55 md:text-base">
             <p>
-              Clykur exists to ship software that matters products that solve
-              real problems and partnerships that hit dates, specs, and quality
-              bars without excuses. Craft, clarity, and measurable impact are
-              the standard, not talking points.
+              Clykur exists to ship software that matters: partnerships that hit
+              dates, specs, and quality bars without excuses. Craft, clarity,
+              and measurable impact are the standard, not talking points.
             </p>
             <p>
-              Cusown and FreeTrust are not demos on a slide: we build them to
-              compete in-market and to hold ourselves to the same rigor we bring
-              to client work. Alongside that, we partner with companies to
-              deliver production-grade systems one playbook: strong engineering,
-              product-led judgment, and execution you can build a roadmap on.
+              We partner with companies to deliver production-grade systems with
+              one playbook: strong engineering, product-led judgment, and
+              execution you can build a roadmap on.
             </p>
           </div>
           <p className="mt-8 w-full border-l-2 border-[#ff3b1f]/45 pl-5 text-justify text-[15px] font-medium leading-[1.75] text-foreground md:text-base">

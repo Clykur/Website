@@ -45,7 +45,7 @@ export function ClientWorks() {
                 id="client-works-heading"
                 className="font-poppins text-[clamp(2.25rem,5vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.03em] text-foreground"
               >
-                Client Works
+                Our Works
               </h2>
               <p className="mt-5 max-w-lg text-[15px] leading-[1.75] text-foreground/48 md:text-base">
                 A selection of digital experiences crafted with precision and

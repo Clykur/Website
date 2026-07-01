@@ -11,7 +11,6 @@ export const CONTACT_PHONE_WHATSAPP = "8179299096";
 
 /** Public trust metrics for marketing (update when numbers change). */
 export const COMPANY_TRUST_STATS = {
-  productsLaunched: 2,
   clientProjectsDelivered: 12,
   industriesServed: 6,
   yearsBuilding: 3,
@@ -30,14 +29,13 @@ export const SOCIAL_PROFILES = [
 export const DEFAULT_META = {
   title: "Clykur - A Click Away",
   description:
-    "Clykur is a software product company and engineering partner. We build category-defining SaaS (appointment booking software, freelancer trust platform) and partner with companies to ship exceptional software. Frontend development, design-to-code, scalable systems.",
+    "Clykur is an AI-native product engineering company. We build production-ready software with AI-assisted delivery and experienced engineers who ensure quality, from SaaS products to custom engineering partnerships.",
   keywords: [
-    "software product company",
-    "SaaS startup",
-    "appointment booking software",
-    "slot booking platform",
-    "freelancer trust platform",
+    "AI-native product engineering",
     "software engineering services",
+    "product engineering company",
+    "SaaS development",
     "frontend development company",
+    "MVP development",
   ].join(", "),
 };

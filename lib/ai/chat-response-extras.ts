@@ -40,13 +40,13 @@ export function buildExtrasForTopic(input: {
     };
   }
 
-  if (mentions(/\b(cusown|freetrust|product)\b/)) {
+  if (mentions(/\b(process|how do you work|delivery)\b/)) {
     return {
       actions: [
-        { label: "Products", href: "/products", variant: "primary" },
+        { label: "Our process", href: "/process", variant: "primary" },
         { label: "Contact", href: "/contact", variant: "secondary" },
       ],
-      relatedPages: [{ label: "Products", href: "/products" }],
+      relatedPages: [{ label: "Process", href: "/process" }],
       followUps: [],
     };
   }

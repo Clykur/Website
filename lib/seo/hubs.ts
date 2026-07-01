@@ -14,14 +14,14 @@ export const ABOUT_HUB: HubPageContent = {
   path: "/about",
   title: "About Clykur",
   description:
-    "Learn about Clykur, a software product company and engineering partner building Cusown, FreeTrust, and client systems worldwide.",
+    "Learn about Clykur, an AI-native product engineering partner building client systems worldwide.",
   h1: "About Clykur",
-  lede: "We build products we own and partner with teams that need execution done right, remote-first, global, and long-term oriented.",
+  lede: "We partner with teams that need execution done right, remote-first, global, and long-term oriented.",
   sections: [
     {
       title: "What Clykur does",
       paragraphs: [
-        "Clykur is a dual system: we operate as a software product company and as an engineering studio. That means we ship our own SaaS, Cusown for appointment booking and FreeTrust for freelancer trust, and we embed with companies to deliver web development, mobile UI, UI/UX design, and product engineering.",
+        "Clykur is an AI-native product engineering studio. We embed with companies to deliver web development, mobile UI, UI/UX design, and product engineering with AI-assisted workflows and experienced engineers who review every release.",
         "Our clients include startups validating MVPs and established teams modernizing complex interfaces. We favor clear scope, written milestones, and code your team can own after handoff.",
       ],
     },
@@ -36,7 +36,7 @@ export const ABOUT_HUB: HubPageContent = {
     {
       question: "What services does Clykur provide?",
       answer:
-        "Clykur provides web development, mobile app development, UI/UX design, cloud-ready product engineering, and startup MVP development, alongside our own products Cusown and FreeTrust.",
+        "Clykur provides web development, mobile app development, UI/UX design, cloud-ready product engineering, and startup MVP development.",
     },
   ],
 };
@@ -47,7 +47,7 @@ export const SERVICES_HUB: HubPageContent = {
   description:
     "Explore Clykur services: web development, mobile apps, UI/UX design, product engineering, and startup MVP development.",
   h1: "Engineering services",
-  lede: "Production-grade software partnerships with the same rigor we apply to our own products.",
+  lede: "Production-grade software partnerships with clear scope, steady delivery, and outcomes you can plan around.",
   sections: [
     {
       title: "What services does Clykur provide?",
@@ -81,21 +81,11 @@ export const FAQ_HUB: HubPageContent = {
   path: "/faq",
   title: "FAQ",
   description:
-    "Frequently asked questions about Clykur products, services, process, and engagements.",
+    "Frequently asked questions about Clykur services, process, and engagements.",
   h1: "Frequently asked questions",
-  lede: "Direct answers about Clykur products, services, and how we partner with teams.",
+  lede: "Direct answers about Clykur services and how we partner with teams.",
   sections: [],
   faqs: [
-    {
-      question: "What is Cusown?",
-      answer:
-        "Cusown is Clykur's smart appointment and slot booking platform for service businesses.",
-    },
-    {
-      question: "What is FreeTrust?",
-      answer:
-        "FreeTrust is a trust layer for freelancers and clients with credibility validation and transparent profiles.",
-    },
     {
       question: "What services does Clykur provide?",
       answer:

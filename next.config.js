@@ -7,6 +7,31 @@ const nextConfig = {
         destination: "/industries/education",
         permanent: true,
       },
+      {
+        source: "/products",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/products/:path*",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/blog/how-we-built-cusown",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/cusown-booking-platform",
+        destination: "/case-studies",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/freetrust-trust-platform",
+        destination: "/case-studies",
+        permanent: true,
+      },
     ];
   },
   async headers() {

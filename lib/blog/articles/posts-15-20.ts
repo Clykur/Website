@@ -247,7 +247,7 @@ export const blogPosts1520: BlogPost[] = [
         heading: "Why teams choose Clykur",
         paragraphs: [
           "We combine product engineering for global founders with Bengaluru-based execution and remote-first collaboration.",
-          "From MVPs to Cusown-class products, we emphasize measurable outcomes and maintainable codebases.",
+          "From MVPs to enterprise platforms, we emphasize measurable outcomes and maintainable codebases.",
           "Start a conversation on our contact page, we work with startups and established businesses worldwide.",
         ],
       },

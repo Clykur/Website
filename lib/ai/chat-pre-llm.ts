@@ -8,7 +8,7 @@ import type { ChatMessageExtras } from "@/lib/ai/chat-types";
 import type { RagRetrievalResult } from "@/lib/ai/rag-retrieval";
 
 const CLYKUR_INTENT =
-  /\b(clykur|cusown|freetrust|service|product|mvp|web dev|mobile|case stud|portfolio|client work|contact|pricing|quote|discovery|project|engineer|software|design|ui\/ux|faq|about|career|hire|team|process|industr|blog|work with)\b/i;
+  /\b(clykur|service|mvp|web dev|mobile|case stud|portfolio|client work|contact|pricing|quote|discovery|project|engineer|software|design|ui\/ux|faq|about|career|hire|team|process|industr|blog|work with)\b/i;
 
 const GREETING =
   /^(hi|hey|hello|howdy|yo)(\s+(there|good\s+(morning|afternoon|evening)|morning|afternoon|evening))?\s*[!?.]*$/i;
@@ -58,7 +58,7 @@ export function resolvePreLlmTurn(message: string): PreLlmTurn | null {
     return {
       mode: "canonical",
       text: sanitizeAssistantCopy(
-        `Good to meet you. I am the Clykur Assistant. Ask about our **services**, **products** (Cusown, FreeTrust), **case studies**, or [starting a project](/contact).`,
+        `Good to meet you. I am the Clykur Assistant. Ask about our **services**, **case studies**, **process**, or [starting a project](/contact).`,
       ),
       extras: getDefaultAssistantExtras(),
     };
@@ -104,10 +104,10 @@ export function getLowConfidenceHelpReply(): {
 } {
   return {
     text: sanitizeAssistantCopy(
-      `I am not sure I understood that. I can help with Clykur **services**, **products**, **case studies**, and **contact**.
+      `I am not sure I understood that. I can help with Clykur **services**, **case studies**, **process**, and **contact**.
 
 • [Services](/services)
-• [Products](/products)
+• [Process](/process)
 • [Start a project](/contact)`,
     ),
     extras: getOffTopicExtras(),

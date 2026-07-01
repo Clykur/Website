@@ -1,7 +1,7 @@
 /** Clykur-only scope: block clearly off-site topics before the LLM runs. */
 
 const CLYKUR_SCOPE =
-  /\b(clykur|cusown|freetrust|your (company|team|studio|product|service|website|site)|this (site|website|page))\b/i;
+  /\b(clykur|your (company|team|studio|service|website|site)|this (site|website|page))\b/i;
 
 const OFF_TOPIC_PATTERNS: RegExp[] = [
   /\b(chatgpt|openai|gemini|claude|gpt-?\d|llama|copilot|bard|deepseek)\b/i,
@@ -55,12 +55,12 @@ export const OFF_TOPIC_REPLY = `Sorry, I can only help with Clykur.
 **Explore Clykur**
 • [Services](/services)
 • [Case studies](/case-studies)
-• [Products](/products)
+• [Process](/process)
 • [Start a project](/contact)`;
 
 export const CHAT_OPENING_WELCOME = `Hey! I am the Clykur Assistant.
 
-Ask me anything about our **services**, **products**, **case studies**, **process**, or how to **start a project**.`;
+Ask me anything about our **services**, **case studies**, **process**, or how to **start a project**.`;
 
 /** Normalize assistant copy: no em dashes, tighter spacing for UI. */
 export function sanitizeAssistantCopy(text: string): string {

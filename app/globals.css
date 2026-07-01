@@ -102,6 +102,33 @@
     @apply mx-auto w-full max-w-6xl;
   }
 
+  /*
+   * Body copy: fill the content column with justified text (main landmark only).
+   * Headings, UI labels, and explicit align utilities stay unchanged.
+   */
+  #main-content.clykur-content-justify :where(p, li, dd) {
+    text-align: justify;
+    hyphens: auto;
+    text-wrap: pretty;
+  }
+
+  #main-content.clykur-content-justify .not-prose :where(p, li, dd),
+  #main-content.clykur-content-justify :where(p, li, dd)[class*="text-center"],
+  #main-content.clykur-content-justify :where(p, li, dd)[class*="text-left"],
+  #main-content.clykur-content-justify
+    p[class*="uppercase"][class*="tracking-"] {
+    text-align: unset;
+    hyphens: manual;
+  }
+
+  #main-content.clykur-content-justify :where(p, li, dd)[class*="text-center"] {
+    text-align: center;
+  }
+
+  #main-content.clykur-content-justify :where(p, li, dd)[class*="text-left"] {
+    text-align: left;
+  }
+
   .clykur-button-hover {
     transition:
       transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),

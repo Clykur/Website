@@ -1,12 +1,23 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/db/supabase";
 import { EmailSchema } from "@/lib/types/email";
+import { requireAuthenticatedUser } from "@/lib/api/require-authenticated-user";
+
+export const maxDuration = 25;
+export const runtime = "nodejs";
+
+async function unauthorized() {
+  return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+}
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const user = await requireAuthenticatedUser();
+    if (!user) return unauthorized();
+
     const { id } = await params;
     const supabase = createClient();
     const { data, error } = await supabase
@@ -45,6 +56,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const user = await requireAuthenticatedUser();
+    if (!user) return unauthorized();
+
     const { id } = await params;
     const body = await req.json();
     const validation = EmailSchema.partial().safeParse(body);
@@ -89,6 +103,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const user = await requireAuthenticatedUser();
+    if (!user) return unauthorized();
+
     const { id } = await params;
     const supabase = createClient();
     const { error } = await supabase.from("emails").delete().eq("id", id);

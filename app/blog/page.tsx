@@ -8,7 +8,7 @@ import { storySurfaceCardClass } from "@/components/layout/story-page-shell";
 export const metadata: Metadata = buildPageMetadata({
   title: "Blog",
   description:
-    "Clykur blog: MVP development, Next.js for SaaS, product engineering, and how we build Cusown.",
+    "Clykur blog: MVP development, Next.js for SaaS, and AI-native product engineering.",
   path: "/blog",
 });
 

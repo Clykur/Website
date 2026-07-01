@@ -10,7 +10,6 @@ export type CaseStudy = {
   industry: string;
   services: string[];
   serviceSlugs: string[];
-  productSlugs?: string[];
   technologies: string[];
   challenge: string;
   solution: string;
@@ -126,41 +125,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     datePublished: "2025-10-15",
   },
   {
-    title: "Cusown appointment platform",
-    slug: "cusown-booking-platform",
-    client: "Cusown (Clykur product)",
-    industry: "SaaS",
-    services: ["Product engineering", "MVP development", "Web development"],
-    serviceSlugs: ["product-engineering", "mvp-development", "web-development"],
-    productSlugs: ["cusown"],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    challenge:
-      "Service businesses needed reliable scheduling, fewer no-shows, and a customer experience that felt professional on every device.",
-    solution:
-      "Clykur built Cusown as a focused booking platform with automation, clear availability, and analytics owners can act on.",
-    implementation: [
-      "Designed booking flows for staff and customers with mobile-first layouts.",
-      "Implemented slot rules, reminders, and management dashboards.",
-      "Shipped marketing site and product surfaces on a shared design language.",
-      "Optimized performance for signup and booking conversion paths.",
-    ],
-    results:
-      "Cusown is live as Clykur's own product, validating booking UX and infra before client rollouts.",
-    metrics: [
-      { label: "Product status", value: "Live in market" },
-      { label: "Audience", value: "Service businesses" },
-      { label: "Stack", value: "Modern React / Next.js" },
-    ],
-    projectUrl: "https://cusown.clykur.com",
-    featuredImage: "/Product Images/Cusown.webp",
-    featuredImageAlt: "Cusown appointment booking platform",
-    featured: true,
-    seoTitle: "Cusown Booking Platform Case Study | Clykur",
-    seoDescription:
-      "How Clykur built Cusown, an appointment and slot booking platform for service businesses.",
-    datePublished: "2025-08-01",
-  },
-  {
     title: "Yogisthaan Cafe digital experience",
     slug: "yogisthaan-cafe-website",
     client: "Yogisthaan Cafe",
@@ -193,41 +157,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     seoDescription:
       "Clykur designed and built the Yogisthaan Cafe marketing website for hospitality and wellness branding.",
     datePublished: "2025-07-12",
-  },
-  {
-    title: "FreeTrust freelancer trust layer",
-    slug: "freetrust-trust-platform",
-    client: "FreeTrust (Clykur product)",
-    industry: "FinTech",
-    services: ["Product engineering", "Web development"],
-    serviceSlugs: ["product-engineering", "web-development"],
-    productSlugs: ["freetrust"],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    challenge:
-      "Freelancers and clients lack shared trust infrastructure, leading to hesitation, disputes, and slower deal closure.",
-    solution:
-      "FreeTrust provides credibility signals, transparent profiles, and a roadmap toward stronger verification over time.",
-    implementation: [
-      "Shipped marketing and product surfaces explaining the trust model.",
-      "Built profile and reputation patterns designed for future scoring.",
-      "Focused on clarity and accessibility for global users.",
-      "Aligned engineering with iterative product validation.",
-    ],
-    results:
-      "A public product foundation that communicates trust before heavy blockchain dependencies.",
-    metrics: [
-      { label: "Product", value: "TrustBuilder live" },
-      { label: "Users", value: "Freelancers + clients" },
-      { label: "Roadmap", value: "Verification layer" },
-    ],
-    projectUrl: "https://trustbuilder.clykur.com",
-    featuredImage: "/client-works/trustbuilder.webp",
-    featuredImageAlt: "FreeTrust trust platform marketing site",
-    featured: false,
-    seoTitle: "FreeTrust Platform Case Study | Clykur",
-    seoDescription:
-      "Case study on building FreeTrust, Clykur's trust layer for freelancers and clients.",
-    datePublished: "2025-06-18",
   },
   {
     title: "Live collaboration workspace",

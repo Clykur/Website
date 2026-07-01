@@ -3,7 +3,6 @@
 const EXACT_PATHS = new Set([
   "/",
   "/services",
-  "/products",
   "/case-studies",
   "/work",
   "/contact",
@@ -12,12 +11,7 @@ const EXACT_PATHS = new Set([
   "/faq",
 ]);
 
-const PREFIX_PATHS = [
-  "/services/",
-  "/products/",
-  "/case-studies/",
-  "/industries/",
-];
+const PREFIX_PATHS = ["/services/", "/case-studies/", "/industries/"];
 
 const BLOCKED_PREFIXES = [
   "/privacy-policy",

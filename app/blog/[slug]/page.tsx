@@ -110,10 +110,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                 Services
               </Link>
               <Link
-                href="/products"
+                href="/process"
                 className="font-semibold text-[#ff3b1f] hover:underline"
               >
-                Products
+                Process
               </Link>
               <Link
                 href="/case-studies"
