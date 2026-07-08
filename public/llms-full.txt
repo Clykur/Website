@@ -33,7 +33,7 @@ Compliance: https://www.clykur.com/compliance
 - Startup MVP development: https://www.clykur.com/services/startup-mvp-development
 - MVP development: https://www.clykur.com/services/mvp-development
 
-## Live client work (9 showcases)
+## Live client work (10 showcases)
 - Elevatum (Brand & Web): https://elevatum.vercel.app
 - GreyLabs AI (AI & Technology): https://greylabsai.vercel.app
 - Neev Phygital Library (Education & Media): https://nev-phygital-library.vercel.app
@@ -43,6 +43,7 @@ Compliance: https://www.clykur.com/compliance
 - Aurelia Visuals (Photography & Branding): https://aureliavisuals.clykur.com
 - Yogisthaan Cafe (Café & Wellness Experience): https://yogisthaancafe.clykur.com
 - Pavan Travels (Travel & Transport): https://pavantravels.vercel.app
+- Drapeva (Fashion): https://drapeva.in
 
 ## Content scale
 Blog posts: 20
