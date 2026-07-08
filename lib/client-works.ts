@@ -70,4 +70,11 @@ export const CLIENT_WORKS: readonly ClientWork[] = [
     category: "Travel & Transport",
     image: "/client-works/pavan-travels.webp",
   },
+  {
+    name: "Drapeva",
+    href: "https://drapeva.in",
+    tagline: "Redefining style for the modern Indian woman.",
+    category: "Fashion",
+    image: "/client-works/drapeva.webp",
+  },
 ];
